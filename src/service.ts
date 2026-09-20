@@ -7,7 +7,7 @@ const xml = (value: string): string =>
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&apos;");
 export function serviceLabel(cwd: string): string {
-  return `local.clanker.${createHash("sha256").update(cwd).digest("hex").slice(0, 16)}`;
+  return `local.relentless.${createHash("sha256").update(cwd).digest("hex").slice(0, 16)}`;
 }
 /** Generate only. Installation into the user's service manager is an explicit lifecycle operation. */
 export function launchAgent(node: string, cli: string, cwd: string): string {

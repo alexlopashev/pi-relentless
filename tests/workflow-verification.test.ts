@@ -32,7 +32,9 @@ const c = (provider: string) => ({
   efforts: ["low"],
 });
 function fixture() {
-  const root = realpathSync(mkdtempSync(join(tmpdir(), "clanker-workflow-")));
+  const root = realpathSync(
+    mkdtempSync(join(tmpdir(), "relentless-workflow-")),
+  );
   roots.push(root);
   const coding = new CodingJournal(join(root, "coding.sqlite"));
   handles.push(coding);

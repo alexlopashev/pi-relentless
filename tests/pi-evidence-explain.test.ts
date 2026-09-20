@@ -2,7 +2,7 @@ import { mkdtemp, mkdir, writeFile, rm } from "node:fs/promises";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 import { test, expect, vi } from "vitest";
-import { clankerCommand } from "../src/pi-extension.js";
+import { relentlessCommand } from "../src/pi-extension.js";
 test.each([undefined, "high"])(
   "evidence explanation enumerates permitted efforts with session pin %s and never dispatches",
   async (effortPin) => {
@@ -22,7 +22,7 @@ test.each([undefined, "high"])(
       await writeFile(
         join(root, ".pi/settings.json"),
         JSON.stringify({
-          clanker: {
+          relentless: {
             version: 1,
             routing: {
               candidates: [
@@ -64,7 +64,7 @@ test.each([undefined, "high"])(
           metric: "cost",
         },
       };
-      await clankerCommand(
+      await relentlessCommand(
         "explain coder " + JSON.stringify(task),
         context,
         execute,
@@ -80,7 +80,7 @@ test.each([undefined, "high"])(
       expect(message).toContain('"effort": "high"');
       expect(message).not.toContain("private task");
       expect(execute).not.toHaveBeenCalled();
-      await clankerCommand(
+      await relentlessCommand(
         "explain coder " + JSON.stringify({ ...task, provider: "b" }),
         context,
         execute,

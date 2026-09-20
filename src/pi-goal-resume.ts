@@ -14,8 +14,8 @@ export async function resumePiGoal(context: Context, run = runPiGoal) {
   const source = readPiSettingsSnapshot(root);
   if (source === undefined) return null;
   const project = z
-    .looseObject({ clanker: piProjectConfigSchema.optional() })
-    .parse(JSON.parse(source) as unknown).clanker;
+    .looseObject({ relentless: piProjectConfigSchema.optional() })
+    .parse(JSON.parse(source) as unknown).relentless;
   const intent = project?.resumeGoal;
   if (!intent) return null;
 

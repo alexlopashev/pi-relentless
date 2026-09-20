@@ -37,5 +37,5 @@ export function localCatalog(): Parameters<
 }
 
 export function registerLocalProvider(runtime: ModelRuntime): void {
-  runtime.registerProvider("clanker-local", localCatalog());
+  runtime.registerProvider("relentless-local", localCatalog());
 }

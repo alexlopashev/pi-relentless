@@ -18,7 +18,10 @@ export function renderConfigTarget(
 ): string {
   const target =
     JSON.stringify(
-      { ...parseSettings(source), clanker: piProjectConfigSchema.parse(after) },
+      {
+        ...parseSettings(source),
+        relentless: piProjectConfigSchema.parse(after),
+      },
       null,
       2,
     ) + "\n";
@@ -53,13 +56,13 @@ export function buildConfigProposal(
   next: unknown,
 ) {
   const settings = parseSettings(source);
-  const before = Object.hasOwn(settings, "clanker")
-    ? settings["clanker"]
+  const before = Object.hasOwn(settings, "relentless")
+    ? settings["relentless"]
     : null;
   if (before !== null) piProjectConfigSchema.parse(before);
   // A present null namespace is invalid, rather than equivalent to absence.
-  if (Object.hasOwn(settings, "clanker") && before === null)
-    throw new Error("Invalid existing Clanker settings");
+  if (Object.hasOwn(settings, "relentless") && before === null)
+    throw new Error("Invalid existing Relentless settings");
   const after = piProjectConfigSchema.parse(next);
   const body = {
     version: 1 as const,

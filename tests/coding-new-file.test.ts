@@ -35,7 +35,7 @@ const config = configSchema.parse({
   ],
 });
 async function fixture() {
-  const sourceRoot = await mkdtemp(join(tmpdir(), "clanker-new-"));
+  const sourceRoot = await mkdtemp(join(tmpdir(), "relentless-new-"));
   roots.push(sourceRoot);
   return {
     sourceRoot,
@@ -204,7 +204,7 @@ test("Pi persists declared absence without creating the source file", async () =
   await writeFile(
     join(request.sourceRoot, ".pi/settings.json"),
     JSON.stringify({
-      clanker: {
+      relentless: {
         version: 1,
         routing: { candidates },
         roles: { coder: ["author"], reviewer: ["review-a", "review-b"] },

@@ -1,8 +1,8 @@
 # Local fallback
 
-Status: local tool-free inference adapter implemented and CPU smoke-tested through Clanker and Pi. Durable goal scheduling and explicit JSON acceptance checks are now available through `goal` commands; the local model remains advisory. See [durable operations](durable-operations.md). Model answers are advisory text; they cannot authorize commands or alter task boundaries.
+Status: local tool-free inference adapter implemented and CPU smoke-tested through Relentless and Pi. Durable goal scheduling and explicit JSON acceptance checks are now available through `goal` commands; the local model remains advisory. See [durable operations](durable-operations.md). Model answers are advisory text; they cannot authorize commands or alter task boundaries.
 
-Choice: **Qwen3.5 4B Q4_K_M through llama.cpp**, integrated using Pi 0.85.1's public `ModelRuntime.registerProvider` API and OpenAI-compatible transport. Pi's interactive CLI has native `/login llama.cpp` and `/llama` controls, but that extension is not exported by its SDK. Clanker avoids importing Pi private files. Its dedicated `clanker-local` provider uses a fixed `http://127.0.0.1:18080/v1` endpoint, an empty credential store, no tools or resource discovery, and no cloud login. It does not share Pi's interactive llama model manager.
+Choice: **Qwen3.5 4B Q4_K_M through llama.cpp**, integrated using Pi 0.85.1's public `ModelRuntime.registerProvider` API and OpenAI-compatible transport. Pi's interactive CLI has native `/login llama.cpp` and `/llama` controls, but that extension is not exported by its SDK. Relentless avoids importing Pi private files. Its dedicated `relentless-local` provider uses a fixed `http://127.0.0.1:18080/v1` endpoint, an empty credential store, no tools or resource discovery, and no cloud login. It does not share Pi's interactive llama model manager.
 
 The development machine is an M3 Pro with 18 GB unified memory. The current configuration permits one worker, effort `off`, 8,192 context tokens and at most 512 output tokens. Pi reserves 4,096 context tokens internally; the initially proposed 4K context caused output to clamp to one token, reproduced in a regression test. Server context limits remain authoritative. Retaining all 512 output tokens leaves roughly 3,584 estimated input tokens including system context; larger inputs can reduce the output allowance. Long prompts can fail; this is not a long-context coding worker.
 
@@ -35,10 +35,10 @@ In another terminal:
 
 ```sh
 mise exec -- pnpm build
-mise exec -- pnpm clanker swarm examples/local.config.json examples/local.tasks.json
+mise exec -- pnpm relentless swarm examples/local.config.json examples/local.tasks.json
 ```
 
-Stop the server with Ctrl-C in its terminal. Clanker does not own or kill externally started servers; `scripts/teardown` does not stop this foreground process. This external-server mode introduces no daemon, auto-download, global login changes, or remote spend. The smoke-test server used during development is stopped after testing.
+Stop the server with Ctrl-C in its terminal. Relentless does not own or kill externally started servers; `scripts/teardown` does not stop this foreground process. This external-server mode introduces no daemon, auto-download, global login changes, or remote spend. The smoke-test server used during development is stopped after testing.
 
 Example tasks ask for retry advice, not actual scheduling. The result remains plain text: do not execute model-generated actions. The legacy `swarm` command records a failed worker and exits nonzero if local inference is unavailable. The `goal` commands instead retain the goal and schedule a bounded retry. Future deterministic scheduling must work even with no model available and must preserve policy denials, explicit model/effort floors, and task constraints.
 
@@ -62,7 +62,7 @@ readiness. Cycle079 below adds an explicit managed alternative.
 ## Optional managed lifecycle — cycle079
 
 The routing configuration accepts `managedLocal`, absent by default. In Pi this
-belongs at `clanker.routing.managedLocal` in `.pi/settings.json`. It contains
+belongs at `relentless.routing.managedLocal` in `.pi/settings.json`. It contains
 `executable` and `model` artifacts (each an absolute `path` and lowercase SHA-256
 `sha256`), a required `libraries` map from `.dylib` basenames to the same artifact
 shape, and `startupMs` from 1,000 to 120,000. Pin trusted runtime artifacts and all

@@ -108,7 +108,7 @@ export async function createPiWork(
     }
   }
   const project = await loadPiProjectConfig(root, true);
-  if (!project) throw new Error("Missing Clanker project settings");
+  if (!project) throw new Error("Missing Relentless project settings");
   const { reviewTask, maxReviewPairs, ...codingInput } = input;
   const request = codingSchema.parse({ ...codingInput, sourceRoot: root });
   const files: Record<string, string | null> = {};

@@ -21,7 +21,7 @@ if (sourceInstall) {
     { cwd: fileURLToPath(root), stdio: "inherit" },
   );
   if (result.error) throw result.error;
-  if (result.status !== 0) throw new Error("Clanker worker build failed");
+  if (result.status !== 0) throw new Error("Relentless worker build failed");
 }
 // Packed installs already contain these outputs and require no compiler run.
 for (const entry of ["worker-entry.js", "managed-local-entry.js", "cli.js"]) {

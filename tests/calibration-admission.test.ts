@@ -13,7 +13,7 @@ import {
   loadPiProjectConfig,
   piProjectConfigSchema,
 } from "../src/pi-project-config.js";
-import { clankerCommand } from "../src/pi-extension.js";
+import { relentlessCommand } from "../src/pi-extension.js";
 import { readPiCalibrationReport } from "../src/pi-calibration-report.js";
 import { route } from "../src/router.js";
 import { join } from "node:path";
@@ -107,7 +107,7 @@ test("admits a complete mixed-result cohort, preserves failed/unknown slots and 
     /not been admitted/,
   );
   const messages: string[] = [];
-  await clankerCommand(`calibration-admit ${contract.id}`, {
+  await relentlessCommand(`calibration-admit ${contract.id}`, {
     ...f.context,
     ui: {
       notify: (message, type) => {

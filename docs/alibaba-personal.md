@@ -1,6 +1,6 @@
 # Alibaba Token Plan Personal trial
 
-Clanker uses Pi's built-in `qwen-token-plan-individual` provider and its narrower Personal catalog. Authentication is an API key from the Personal subscription, saved through Pi's `/login` → Qwen Token Plan (Individual). Do not put credentials in this repository or chat. This is not a purchase flow.
+Relentless uses Pi's built-in `qwen-token-plan-individual` provider and its narrower Personal catalog. Authentication is an API key from the Personal subscription, saved through Pi's `/login` → Qwen Token Plan (Individual). Do not put credentials in this repository or chat. This is not a purchase flow.
 
 The adapter permits subscription billing for this provider only when Pi reports API-key authentication and the model has the exact dedicated endpoint `https://token-plan.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1`. Missing/mismatched endpoints fail before inference. Generic Alibaba API keys/endpoints are not an automatic fallback. The endpoint selects subscription quota; an API key is not inherently evidence of metered billing.
 
@@ -10,15 +10,15 @@ The initial trial is one user-initiated, tool-free code review using `qwen3.6-fl
 mise exec -- pnpm exec pi
 # /login → Qwen Token Plan (Individual), enter your subscription key in Pi
 mise exec -- pnpm build
-mise exec -- pnpm clanker plan examples/personal.config.json examples/personal.tasks.json
-mise exec -- pnpm clanker swarm examples/personal.config.json examples/personal.tasks.json
+mise exec -- pnpm relentless plan examples/personal.config.json examples/personal.tasks.json
+mise exec -- pnpm relentless swarm examples/personal.config.json examples/personal.tasks.json
 ```
 
 The example uses read-only Pi authentication because this Codex sandbox cannot write Pi's global credential store. It reads the existing key, never copies it to local artifacts. Request/result artifacts are saved under `.harness/runs/`. The expected result for the adulthood boundary task is `{"fixedExpression":"age >= 18","testInput":18,"testExpected":true}`; inspect and validate the output, not just the worker completion status.
 
 ## Live verification
 
-Passed through the actual Clanker CLI using the saved Pi Personal credential, `qwen3.6-flash`, thinking off, one request and no metered fallback. Run: `7bd982f8-255a-495d-86d4-4017ada6cb08` under `.harness/runs/`.
+Passed through the actual Relentless CLI using the saved Pi Personal credential, `qwen3.6-flash`, thinking off, one request and no metered fallback. Run: `7bd982f8-255a-495d-86d4-4017ada6cb08` under `.harness/runs/`.
 
 Returned JSON:
 
@@ -36,7 +36,7 @@ Full gate: 96 unit tests plus lifecycle/process checks, lint, types, build and f
 
 ## Current coding catalog
 
-Pi 0.85.1 was still the latest published npm version when checked. A project-local supplement adds `deepseek-v4.1-flash` and `glm-5.3` through Pi's public provider-registration API, preserving the built-in Personal models and saved subscription authentication. No dependencies or global credential/catalog files were changed. The source is `src/personal-catalog.ts`; `.pi/extensions/personal-catalog.ts` exposes the same supplement to interactive Pi in this project. Restart Pi or use `/reload` to discover it. Other projects do not inherit this extension automatically; Clanker's own runtime and `clanker models` register it directly.
+Pi 0.85.1 was still the latest published npm version when checked. A project-local supplement adds `deepseek-v4.1-flash` and `glm-5.3` through Pi's public provider-registration API, preserving the built-in Personal models and saved subscription authentication. No dependencies or global credential/catalog files were changed. The source is `src/personal-catalog.ts`; `.pi/extensions/personal-catalog.ts` exposes the same supplement to interactive Pi in this project. Restart Pi or use `/reload` to discover it. Other projects do not inherit this extension automatically; Relentless's own runtime and `relentless models` register it directly.
 
 Current example routes:
 
@@ -47,7 +47,7 @@ Current example routes:
 | `personal-deepseek`             | `deepseek-v4.1-flash` | high      |
 | `personal-glm`                  | `glm-5.3`             | low       |
 
-Each prefix has a `.config.json` and `.tasks.json`. Run one with `pnpm clanker swarm examples/<prefix>.config.json examples/<prefix>.tasks.json`. This is an explicit routing example, not a change to existing persisted goals or model pins. Model quality tiers in these tiny examples are routing policy values, not benchmark claims.
+Each prefix has a `.config.json` and `.tasks.json`. Run one with `pnpm relentless swarm examples/<prefix>.config.json examples/<prefix>.tasks.json`. This is an explicit routing example, not a change to existing persisted goals or model pins. Model quality tiers in these tiny examples are routing policy values, not benchmark claims.
 
 New model entries use conservative operational caps of 65,536 context tokens and 8,192 output tokens pending larger-context validation. These are not advertised provider maxima. Zero Pi dollar-price fields do not mean free usage: Alibaba consumes shared subscription credits. Existing built-in models keep their original limits. New entries are added only if absent, allowing future upstream definitions to take precedence.
 

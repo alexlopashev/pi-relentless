@@ -28,7 +28,7 @@ const project = piProjectConfigSchema.parse({
       },
       {
         name: "local",
-        provider: "clanker-local",
+        provider: "relentless-local",
         model: "qwen3.5-4b",
         enabled: true,
         billing: "local",
@@ -45,7 +45,7 @@ const project = piProjectConfigSchema.parse({
 const available = [
   { provider: "cloud", model: "one", efforts: ["low", "high"] },
   { provider: "paid", model: "two", efforts: ["low"] },
-  { provider: "clanker-local", model: "qwen3.5-4b", efforts: ["off"] },
+  { provider: "relentless-local", model: "qwen3.5-4b", efforts: ["off"] },
 ];
 test("role routing intersects project, available models, billing and provider cooldown", () => {
   expect(
@@ -112,7 +112,7 @@ test("local role eligibility never lowers task effort or quality floors", () => 
     project,
     "scheduler",
     available,
-    [{ provider: "clanker-local", model: "qwen3.5-4b" }],
+    [{ provider: "relentless-local", model: "qwen3.5-4b" }],
     {},
     100,
   );
@@ -180,7 +180,7 @@ test("workload evidence can outrank policy tiers but cannot override scope or in
   const observations = ["cloud", "local"].flatMap((name) =>
     ["one", "two", "one", "two"].map((caseId, index) => ({
       id: `${name}-${String(index)}`,
-      provider: name === "cloud" ? "cloud" : "clanker-local",
+      provider: name === "cloud" ? "cloud" : "relentless-local",
       model: name === "cloud" ? "one" : "qwen3.5-4b",
       billing: name === "cloud" ? "subscription" : "local",
       effort: name === "cloud" ? "low" : "off",
@@ -224,7 +224,7 @@ test("workload evidence can outrank policy tiers but cannot override scope or in
     project,
     "scheduler",
     available,
-    [{ provider: "clanker-local", model: "qwen3.5-4b" }],
+    [{ provider: "relentless-local", model: "qwen3.5-4b" }],
     {},
     150,
   );

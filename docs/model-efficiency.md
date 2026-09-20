@@ -1,6 +1,6 @@
 # Evidence-based model routing
 
-Clanker can now rank explicitly eligible routes using task-specific evaluation evidence. This is opt-in. Tasks without `optimization` retain the original quality/preference order. Quality remains a user policy floor, not a benchmark result.
+Relentless can now rank explicitly eligible routes using task-specific evaluation evidence. This is opt-in. Tasks without `optimization` retain the original quality/preference order. Quality remains a user policy floor, not a benchmark result.
 
 When `optimization` is present, the router compares every configured, supported
 model/effort combination at or above the task's effort floor. Each combination
@@ -8,7 +8,7 @@ must independently qualify on evidence for that exact effort. A higher effort ma
 win if its measured cost or time per successful outcome is lower; unknown metrics
 and insufficient evidence cannot win. Pi session effort pins restrict this pool
 before comparison. Without optimization, selection keeps the lowest permitted
-effort and the existing quality/preference ordering. `/clanker explain` reports
+effort and the existing quality/preference ordering. `/relentless explain` reports
 the same combinations used for selection.
 
 ## Collect observations
@@ -22,7 +22,7 @@ This performs real inference. It evaluates eligible configured candidates, seria
 
 The host checks responses against declared JSON/contains predicates, hashes the suite's workload and cases, and records each route's provider, model, billing mode, actual selected effort, case, timestamp, acceptance and elapsed time. Models do not grade themselves. Metered cost estimates travel through validated child IPC and are bound to the same host-checked case outcome; they come from Pi's token usage and catalog prices; these are estimates, not invoiced charges or a hard spending ceiling. Missing/zero-priced catalog estimates and subscription opportunity costs remain unknown. No arbitrary evaluator code runs.
 
-The CLI prints a private `.harness/evaluations/<id>/` directory with the request, SQLite checkpoint, report and a config containing observations. Each dispatch is reserved before inference; each completed observation is committed before the next call. Use `clanker evaluation status <directory>` to inspect the checkpoint and `clanker evaluation resume <directory>` to continue between completed calls or rebuild terminal report files. Resume retains the original deadline and immutable normalized suite/configuration. An in-flight reservation means execution is active or ambiguous after interruption: resume refuses to replay it. No automatic reconciliation or budget refund is available. Older evaluation directories without a checkpoint cannot be resumed. Provider failures remain terminal for this evaluation; resume does not retry them. Raw observation input is a trusted local configuration boundary, not cryptographic proof against tampering. Do not accept model-written observations as host measurements.
+The CLI prints a private `.harness/evaluations/<id>/` directory with the request, SQLite checkpoint, report and a config containing observations. Each dispatch is reserved before inference; each completed observation is committed before the next call. Use `relentless evaluation status <directory>` to inspect the checkpoint and `relentless evaluation resume <directory>` to continue between completed calls or rebuild terminal report files. Resume retains the original deadline and immutable normalized suite/configuration. An in-flight reservation means execution is active or ambiguous after interruption: resume refuses to replay it. No automatic reconciliation or budget refund is available. Older evaluation directories without a checkpoint cannot be resumed. Provider failures remain terminal for this evaluation; resume does not retry them. Raw observation input is a trusted local configuration boundary, not cryptographic proof against tampering. Do not accept model-written observations as host measurements.
 
 ## Request optimized routing
 
@@ -68,7 +68,7 @@ Report: `.harness/evaluations/b9c048cf-64f1-44e2-858f-9ec112c57a11/`; analysis a
 The cycle-019 process-worker transport check repeated the same four review cases once per model. Both passed 4/4; Luna averaged 3.82 seconds and Muse 6.08 seconds including process overhead. The baseline ranked Luna; the stricter policy rejected both for insufficient per-case samples. Muse's total estimate was $0.0004423. These small measurements do not authorize a general model ranking. Evidence is retained in `.harness/self-improve-019/ranking.json`.
 
 Pi integration now supports explicit project-local evaluation journal references
-through `clanker.evidence.evaluations`. Completed, unambiguous cohorts feed existing
+through `relentless.evidence.evaluations`. Completed, unambiguous cohorts feed existing
 workload-specific routing and are frozen into newly created tasks. The loader
 retains negative trials, avoids duplicate sample inflation and imports no provider
 permissions. See [Pi evidence loading and trust limits](pi-package.md#local-evaluation-evidence--cycle-037).
@@ -76,7 +76,7 @@ permissions. See [Pi evidence loading and trust limits](pi-package.md#local-eval
 ## Live controller classification cohort — cycle 038
 
 The [controller recovery suite](../examples/controller-recovery.suite.json) ran
-through Clanker's process/Pi workers: three synthetic cases, two repetitions per
+through Relentless's process/Pi workers: three synthetic cases, two repetitions per
 provider, low effort, serial calls, maximum 12 calls and a four-minute deadline.
 Cases cover a pinned model's quota wait, a confirmed policy block, and expired-lease
 ambiguity. The host checked the declared JSON fields; models did not grade results.
@@ -148,7 +148,7 @@ cost measurements remain unfinished.
 
 ## Live scheduler-contract workflow cohort — cycle 071
 
-The frozen `clanker-scheduler-071` cohort compared GPT-5.6 Luna and GPT-5.6 Terra
+The frozen `relentless-scheduler-071` cohort compared GPT-5.6 Luna and GPT-5.6 Terra
 at low effort on dependency eligibility and revision-aware fact merging, twice
 per case/model. Qwen3.8 Flash and Muse Contributor were the same independent
 reviewer routes for both authors. Each trial allowed one author attempt and one

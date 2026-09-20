@@ -54,7 +54,7 @@ export const configSchema = z
   .refine(
     (config) =>
       config.candidates.every((c) => {
-        if (c.provider !== "clanker-local") return c.billing !== "local";
+        if (c.provider !== "relentless-local") return c.billing !== "local";
         return (
           c.billing === "local" &&
           c.model === "qwen3.5-4b" &&
@@ -62,7 +62,7 @@ export const configSchema = z
           config.maxConcurrency === 1
         );
       }),
-    "Local inference requires clanker-local/qwen3.5-4b, local billing, effort off, and concurrency 1",
+    "Local inference requires relentless-local/qwen3.5-4b, local billing, effort off, and concurrency 1",
   )
   .refine(
     (config) =>

@@ -3,7 +3,7 @@ import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 import { test, expect, vi } from "vitest";
-import { clankerCommand } from "../src/pi-extension.js";
+import { relentlessCommand } from "../src/pi-extension.js";
 test("auth inspection and retry cannot initialize missing journals or dispatch", async () => {
   const root = await mkdtemp(join(tmpdir(), "pi-auth-retry-"));
   try {
@@ -14,7 +14,7 @@ test("auth inspection and retry cannot initialize missing journals or dispatch",
       "review-auth-status id",
       "review-auth-retry id " + "a".repeat(64),
     ]) {
-      await clankerCommand(cmd, context, execute);
+      await relentlessCommand(cmd, context, execute);
       expect(notify).toHaveBeenLastCalledWith(
         expect.stringContaining("authentication recovery unavailable"),
         "error",
@@ -77,19 +77,19 @@ test("Pi auth commands expose digest and reopen only explicit matching setup fai
     const notify = vi.fn(),
       execute = vi.fn();
     const context = { cwd: root, isProjectTrusted: () => true, ui: { notify } };
-    await clankerCommand("review-auth-status " + id, context, execute);
+    await relentlessCommand("review-auth-status " + id, context, execute);
     expect(notify).toHaveBeenLastCalledWith(
       expect.stringContaining(digest),
       "info",
     );
     expect(workflows.storageDigest(id)).toBe(digest);
-    await clankerCommand(
+    await relentlessCommand(
       "review-auth-retry " + id + " " + digest,
       { ...context, isProjectTrusted: () => false },
       execute,
     );
     expect(workflows.storageDigest(id)).toBe(digest);
-    await clankerCommand(
+    await relentlessCommand(
       "review-auth-retry " + id + " " + digest,
       context,
       execute,

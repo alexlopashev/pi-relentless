@@ -140,12 +140,12 @@ class PromotionTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'settings'):
             promotion.apply(self.request,self.run,revoke)
         self.assertFalse((self.project/'x.ts').exists())
-        backups=list(self.project.glob('.clanker-*.before'))
+        backups=list(self.project.glob('.relentless-*.before'))
         self.assertEqual(len(backups),1);self.assertEqual(backups[0].read_text(),'old')
         path.write_bytes(original)
         self.assertEqual(promotion.apply(self.request,self.run)['status'],'applied')
         self.assertEqual((self.project/'x.ts').read_text(),'new')
-        self.assertEqual(list(self.project.glob('.clanker-*.before')),backups)
+        self.assertEqual(list(self.project.glob('.relentless-*.before')),backups)
 
     def test_guarded_promotion_rejects_missing_expired_and_other_owners_before_writes(self):
         self.enable_goal();now=int(time.time()*1000);lease={'owner':'scheduler','until':now+10000}
@@ -163,11 +163,11 @@ class PromotionTest(unittest.TestCase):
             def expire(_path):clock[0]=(lease['until']+1)/1000
             with self.assertRaises(ValueError):promotion.apply(self.request,self.run,expire,lease=lease)
         self.assertFalse((self.project/'x.ts').exists())
-        backups=list(self.project.glob('.clanker-*.before'));self.assertEqual(len(backups),1);self.assertEqual(backups[0].read_text(),'old')
+        backups=list(self.project.glob('.relentless-*.before'));self.assertEqual(len(backups),1);self.assertEqual(backups[0].read_text(),'old')
         next_lease={'owner':'successor','until':now+20000};self.set_lease(next_lease)
         self.assertEqual(promotion.apply(self.request,self.run,lease=next_lease)['status'],'applied')
         self.assertEqual((self.project/'x.ts').read_text(),'new')
-        self.assertEqual(list(self.project.glob('.clanker-*.before')),backups)
+        self.assertEqual(list(self.project.glob('.relentless-*.before')),backups)
         saved=json.loads((self.run/'state.json').read_text())
         self.assertNotIn('lease',saved['value']['request'])
 
@@ -206,7 +206,7 @@ class PromotionTest(unittest.TestCase):
             def expire(_path):current[0]=(deadline+1)/1000
             with self.assertRaises(ValueError):promotion.apply(self.request,self.run,expire)
         self.assertFalse((self.project/'x.ts').exists())
-        self.assertEqual(next(self.project.glob('.clanker-*.before')).read_text(),'old')
+        self.assertEqual(next(self.project.glob('.relentless-*.before')).read_text(),'old')
         self.assertNotIn('new',[path.read_text() for path in self.project.glob('x.ts')])
 
     def test_promotes_and_retains_original_then_resumes_without_overwrite(self):
@@ -234,7 +234,7 @@ class PromotionTest(unittest.TestCase):
         with self.assertRaises(ValueError):promotion.apply(self.request,self.run,race)
         self.assertEqual((self.project/'x.ts').read_text(),'concurrent edit')
         with self.assertRaises(ValueError):promotion.apply(self.request,self.run)
-        backups=list(self.project.glob('.clanker-*.before'))
+        backups=list(self.project.glob('.relentless-*.before'))
         self.assertEqual(len(backups),1)
         self.assertEqual(backups[0].read_text(),'old')
 
@@ -243,7 +243,7 @@ class PromotionTest(unittest.TestCase):
         self.addCleanup(file.close)
         def race(_path):file.seek(0);file.write('EDIT');file.flush()
         with self.assertRaises(ValueError):promotion.apply(self.request,self.run,race)
-        self.assertIn('EDIT',next(self.project.glob('.clanker-*.before')).read_text())
+        self.assertIn('EDIT',next(self.project.glob('.relentless-*.before')).read_text())
 
     def test_symlink_and_traversal_rejected(self):
         (self.project/'x.ts').unlink();(self.project/'x.ts').symlink_to(self.project/'context.ts')
@@ -269,12 +269,12 @@ class PromotionTest(unittest.TestCase):
         original=promotion.exclusive_rename
         def stop(parent,source,target):
             # Approximate a crash during staging using an owned staged prefix.
-            stage=next(self.project.glob('.clanker-*.new'));stage.write_text('partial')
+            stage=next(self.project.glob('.relentless-*.new'));stage.write_text('partial')
             raise RuntimeError('interrupted stage')
         with patch.object(promotion,'exclusive_rename',side_effect=stop):
             with self.assertRaises(RuntimeError):promotion.apply(self.request,self.run)
         self.assertEqual(promotion.apply(self.request,self.run)['status'],'applied')
-        self.assertTrue(any(p.read_text()=='partial' for p in self.project.glob('.clanker-*.new')))
+        self.assertTrue(any(p.read_text()=='partial' for p in self.project.glob('.relentless-*.new')))
 
     def test_writer_owns_fence_after_parent_death_and_releases_on_own_death(self):
         request=self.root/'request.json';request.write_text(json.dumps(self.request))
@@ -346,7 +346,7 @@ p.apply(json.loads(Path(REQUEST).read_text()),Path(OUTPUT))
         self.assertEqual(result.returncode,74,result.stderr)
         self.assertEqual((self.project/'x.ts').read_text(),'old')
         self.assertEqual(promotion.apply(self.request,self.run)['status'],'applied')
-        self.assertTrue(any(path.read_text()=='n' for path in self.project.glob('.clanker-*.new')))
+        self.assertTrue(any(path.read_text()=='n' for path in self.project.glob('.relentless-*.new')))
 
     def test_complete_unsynced_stage_is_synced_before_capture_on_recovery(self):
         request=self.root/'request.json';request.write_text(json.dumps(self.request))
@@ -366,7 +366,7 @@ p.apply(json.loads(Path(REQUEST).read_text()),Path(OUTPUT))
 """.replace('SCRIPTS',repr(str(ROOT/'scripts'))).replace('REQUEST',repr(str(request))).replace('OUTPUT',repr(str(self.run)))
         result=subprocess.run([sys.executable,'-c',code],capture_output=True,timeout=5)
         self.assertEqual(result.returncode,74,result.stderr)
-        stage=next(self.project.glob('.clanker-*.new'))
+        stage=next(self.project.glob('.relentless-*.new'))
         self.assertEqual(stage.read_text(),'new')
         stage_identity=promotion.identity(stage.stat());synced=[]
         fsync=promotion.os.fsync;rename=promotion.exclusive_rename

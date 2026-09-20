@@ -13,7 +13,7 @@ const config = {
     candidates: [
       {
         name: "local",
-        provider: "clanker-local",
+        provider: "relentless-local",
         model: "qwen3.5-4b",
         billing: "local",
         enabled: true,
@@ -31,7 +31,7 @@ test("project settings carry extension config without claiming measured strength
   await mkdir(join(root, ".pi"));
   await writeFile(
     join(root, ".pi/settings.json"),
-    JSON.stringify({ theme: "dark", clanker: config }),
+    JSON.stringify({ theme: "dark", relentless: config }),
   );
   const parsed = await loadPiProjectConfig(root, true);
   expect(parsed?.roles.scheduler).toEqual(["local"]);
@@ -63,14 +63,14 @@ test("missing config is distinct from malformed or redirected settings", async (
   expect(await loadPiProjectConfig(root, true)).toBeNull();
   await mkdir(join(root, ".pi"));
   const target = join(root, "other.json");
-  await writeFile(target, JSON.stringify({ clanker: config }));
+  await writeFile(target, JSON.stringify({ relentless: config }));
   await symlink(target, join(root, ".pi/settings.json"));
   await expect(loadPiProjectConfig(root, true)).rejects.toThrow();
 });
 
-test("Pi preserves the Clanker namespace when changing native project settings", async () => {
+test("Pi preserves the Relentless namespace when changing native project settings", async () => {
   const contents: Record<string, string> = {
-    project: JSON.stringify({ clanker: config }),
+    project: JSON.stringify({ relentless: config }),
   };
   const manager = SettingsManager.fromStorage(
     {
@@ -84,7 +84,7 @@ test("Pi preserves the Clanker namespace when changing native project settings",
   manager.setProjectPackages([]);
   await manager.flush();
   expect(JSON.parse(contents["project"] ?? "{}")).toEqual({
-    clanker: config,
+    relentless: config,
     packages: [],
   });
 });

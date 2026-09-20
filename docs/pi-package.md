@@ -1,7 +1,7 @@
-# Clanker as a Pi package
+# Relentless as a Pi package
 
-Clanker is both a reusable TypeScript engine and a local Pi package. Pi extensions
-register `/clanker` and the existing Meta and Alibaba catalogs. The durable engine
+Relentless is both a reusable TypeScript engine and a local Pi package. Pi extensions
+register `/relentless` and the existing Meta and Alibaba catalogs. The durable engine
 keeps its SQLite journals, billing constraints, provider health and worker process
 boundaries; those responsibilities do not move into chat history.
 
@@ -9,7 +9,7 @@ For a portable local archive, follow [alpha installation](release-alpha.md). The
 
 For GitHub installation use `pi install -l git:github.com/alexlopashev/pi-relentless`; npm installs dependencies and builds worker entrypoints automatically.
 
-Build Clanker first for development from this checkout:
+Build Relentless first for development from this checkout:
 
 ```sh
 mise exec -- pnpm build
@@ -23,7 +23,7 @@ pi install -l /absolute/path/to/pi-relentless
 ```
 
 Start Pi in that project, or `/reload` after installing. The current checkout
-also discovers `.pi/extensions/clanker.ts` after project trust is established.
+also discovers `.pi/extensions/relentless.ts` after project trust is established.
 Local packaging needs no npm publication. Rebuild after engine changes: Pi loads
 extension source, while subprocess workers execute the compiled `dist` entry.
 The development installation follows this checkout. The alpha archive can instead be extracted into a stable directory with its own production dependencies.
@@ -31,50 +31,50 @@ The development installation follows this checkout. The alpha archive can instea
 Local installation and model discovery have also been exercised through the
 ordinary Pi CLI in a fresh project outside this checkout, with an isolated Pi
 agent directory. The package loaded its extensions and configuration skill.
-`/clanker inventory` works before a `clanker` settings section exists: it lists
+`/relentless inventory` works before a `relentless` settings section exists: it lists
 session-visible models with no configured roles or dispatch permissions. Invalid
 existing configuration still fails validation. This startup/discovery check does
 not establish stock-CLI live coding or subscription authentication on its own. The separate user-operated cycle111 subsequently verified live authoring, review, VM verification and installation through the ordinary CLI.
 
 Available commands:
 
-- `/clanker inventory [offset]` inspects the active Pi registry, project roles and recorded health without provider probes.
+- `/relentless inventory [offset]` inspects the active Pi registry, project roles and recorded health without provider probes.
 
-- `/skill:clanker-configure` discovers models and proposes task-specific policy
+- `/skill:relentless-configure` discovers models and proposes task-specific policy
   changes for human review. It is included in the installed Pi package.
-- `/clanker goal-status <goal-id>` reads goal-recorded progress and observed coding attempts without dispatch.
-- `/clanker goal-create <contract-json>` saves a goal using current project routing without inference.
-- `/clanker goal-run <goal-id>` keeps advancing workflow tasks and waits for saved retry times.
-- `/clanker goal-step <goal-id>` advances one eligible declared goal workflow action.
-- `/clanker config-propose <clanker-json>` saves an exact configuration proposal without applying it.
-- `/clanker config-apply <proposal-id>` requests interactive confirmation and applies an unchanged proposal.
-- `/clanker config` validates and displays the project policy.
-- `/clanker route <role> <task-json>` previews a permitted model selection.
-- `/clanker create <task-json>` snapshots a bounded coding/review workflow.
-- `/clanker calibration-plan <suite-json>` previews a prospective coding cohort.
-- `/clanker calibration-create <suite-json>` saves the complete cohort without inference.
-- `/clanker calibration-status <cohort-id>` inspects that saved cohort offline.
-- `/clanker calibration-report <cohort-id>` accounts for every planned trial without dispatch.
-- `/clanker calibration-admit <cohort-id>` validates and records complete coding evidence without changing routing policy.
-- `/clanker calibration-prepare <trial-json>` prepares one reserved coding workflow.
-- `/clanker calibration-step <trial-json>` explicitly advances that trial through coding/review or verification.
-- `/clanker status <coding-id>` reads the active project's workflow.
-- `/clanker run-verified <coding-id> <execution.json>` runs the bounded review/verify/repair loop.
-- `/clanker resume <coding-id>` explicitly advances one bounded workflow step,
+- `/relentless goal-status <goal-id>` reads goal-recorded progress and observed coding attempts without dispatch.
+- `/relentless goal-create <contract-json>` saves a goal using current project routing without inference.
+- `/relentless goal-run <goal-id>` keeps advancing workflow tasks and waits for saved retry times.
+- `/relentless goal-step <goal-id>` advances one eligible declared goal workflow action.
+- `/relentless config-propose <relentless-json>` saves an exact configuration proposal without applying it.
+- `/relentless config-apply <proposal-id>` requests interactive confirmation and applies an unchanged proposal.
+- `/relentless config` validates and displays the project policy.
+- `/relentless route <role> <task-json>` previews a permitted model selection.
+- `/relentless create <task-json>` snapshots a bounded coding/review workflow.
+- `/relentless calibration-plan <suite-json>` previews a prospective coding cohort.
+- `/relentless calibration-create <suite-json>` saves the complete cohort without inference.
+- `/relentless calibration-status <cohort-id>` inspects that saved cohort offline.
+- `/relentless calibration-report <cohort-id>` accounts for every planned trial without dispatch.
+- `/relentless calibration-admit <cohort-id>` validates and records complete coding evidence without changing routing policy.
+- `/relentless calibration-prepare <trial-json>` prepares one reserved coding workflow.
+- `/relentless calibration-step <trial-json>` explicitly advances that trial through coding/review or verification.
+- `/relentless status <coding-id>` reads the active project's workflow.
+- `/relentless run-verified <coding-id> <execution.json>` runs the bounded review/verify/repair loop.
+- `/relentless resume <coding-id>` explicitly advances one bounded workflow step,
   using its saved model, review and billing configuration.
 
 Workflows live in that project's `.harness` journals. Calibration-step supports
 verification and receipt reconciliation for saved trials; other verification
 workflows and source promotion use the CLI. Loading the package
 does not launch workers. The adapter does not yet offer a background service,
-model-callable dispatch tools. Interactive commands show immediate footer activity and elapsed time; goal-step/run also sample saved workflow phases every two seconds. Footer cleanup is fenced on completion, pause, abort and session changes. The display reports persisted observations, not provider streaming or proof that remote inference has stopped. The read-only `clanker_inventory`
+model-callable dispatch tools. Interactive commands show immediate footer activity and elapsed time; goal-step/run also sample saved workflow phases every two seconds. Footer cleanup is fenced on completion, pause, abort and session changes. The display reports persisted observations, not provider streaming or proof that remote inference has stopped. The read-only `relentless_inventory`
 tool lets the setup skill discover session models, including before configuration;
 its only input is an optional nonnegative integer `offset`. It uses the same
 inventory projection and pagination as the command, rejects stale, cancelled or
 untrusted sessions, and cannot apply policy or dispatch work.
-`clanker_config_propose` accepts a `configuration` namespace object and saves its
+`relentless_config_propose` accepts a `configuration` namespace object and saves its
 validated, content-bound proposal. It returns the before/after policy, digests and
-exact `/clanker config-apply` command for human confirmation. It has no approval
+exact `/relentless config-apply` command for human confirmation. It has no approval
 argument or apply operation; saving a proposal cannot authorize dispatch. The
 setup skill uses these tools to discover and draft, then hands application to the
 user. Cycle 032 adds normal
@@ -87,7 +87,7 @@ prove the worker subprocess starts and rejects input without provider inference.
 
 ## Pi-first direction and project configuration
 
-The packaged [clanker-configure skill](../skills/clanker-configure/SKILL.md)
+The packaged [relentless-configure skill](../skills/relentless-configure/SKILL.md)
 guides model discovery, role assignment and bounded calibration planning. It
 reads project constraints and Pi's effective registry, distinguishes entitlement
 and cooldowns from measured capability, and presents an exact settings diff before
@@ -105,23 +105,23 @@ project trust and session lifecycle. The engine remains reusable internal module
 the CLI is for diagnostics and recovery. Durable facts, goals, budgets and pending
 operations remain in the engine's journal rather than depending on chat context.
 
-Project policy now has a validated extension-owned `clanker` namespace in Pi's
-project `settings.json` (normally `.pi/settings.json`). No `pi-clanker.toml` is
-needed. `/clanker config` reads and validates it only in a trusted project. The
+Project policy now has a validated extension-owned `relentless` namespace in Pi's
+project `settings.json` (normally `.pi/settings.json`). No `pi-relentless.toml` is
+needed. `/relentless config` reads and validates it only in a trusted project. The
 installed Pi 0.85.1 settings manager preserves the namespace when writing native
 settings; a compatibility regression verifies this. Pi's typed Settings interface
-does not itself define the field. Clanker reads project policy without inheriting
+does not itself define the field. Relentless reads project policy without inheriting
 implicit global billing permissions and never rewrites unrelated settings.
 
 ```json
 {
-  "clanker": {
+  "relentless": {
     "version": 1,
     "routing": {
       "candidates": [
         {
           "name": "local-controller",
-          "provider": "clanker-local",
+          "provider": "relentless-local",
           "model": "qwen3.5-4b",
           "billing": "local",
           "enabled": true,
@@ -157,12 +157,12 @@ deterministic retry scheduling itself must remain available without any model.
 
 ## Role routing and dispatch scope — cycle 031
 
-`/clanker route <role> <task-json>` previews the route for a task without inference.
+`/relentless route <role> <task-json>` previews the route for a task without inference.
 The task uses the existing task schema: `id`, `prompt`, `minQuality`, `effort`, and
 optional provider/model pins or workload optimization policy. For example:
 
 ```text
-/clanker route scheduler {"id":"retry-plan","prompt":"Plan pending retries","minQuality":1,"effort":"off"}
+/relentless route scheduler {"id":"retry-plan","prompt":"Plan pending retries","minQuality":1,"effort":"off"}
 ```
 
 Selection intersects the configured role pool with Pi's currently available model
@@ -179,13 +179,13 @@ The package now registers the local Qwen provider in Pi using the same fixed
 loopback catalog as the workers. Registration does not start its server or prove
 its capacity. Other model catalogs and credentials continue through Pi.
 
-Actual `/clanker resume` also rechecks each coding/reviewer selection before its
+Actual `/relentless resume` also rechecks each coding/reviewer selection before its
 worker starts. It requires a valid trusted project policy and a current Pi model
 snapshot; selected identity, billing, reasoning and role must remain permitted.
 It conservatively requires the current policy tier to cover the saved tier. An
 incompatible selection blocks rather than silently revising the durable workflow.
 Thus pre-existing workflows with no project policy can still be inspected, but
-need a matching `clanker` configuration before Pi can dispatch them. Saved time,
+need a matching `relentless` configuration before Pi can dispatch them. Saved time,
 review and attempt budgets are not replaced by new project settings. Existing
 workflow code still enforces author/reviewer independence and provider health.
 
@@ -197,7 +197,7 @@ custom providers present only in an interactive Pi registry may not be executabl
 by the separate worker runtime. The CLI remains a separate diagnostic/recovery
 entry point and does not implicitly acquire a Pi session scope.
 
-Clanker's own `.pi/settings.json` now enumerates the existing ten-model ensemble
+Relentless's own `.pi/settings.json` now enumerates the existing ten-model ensemble
 and initial role eligibility, including the local scheduler. These are policy
 assignments, not measured strengths. The existing billing permissions are retained;
 Anthropic API access remains disabled. The file contains no credentials and does
@@ -240,12 +240,12 @@ replay is still unfinished; see [coding recovery behavior](coding-workers.md#amb
 
 ## Creating work inside Pi — cycle 035
 
-`/clanker create <JSON>` snapshots a bounded coding request and its independent
+`/relentless create <JSON>` snapshots a bounded coding request and its independent
 review policy from the active trusted project's `.pi/settings.json`. There is no
 separate routing file. Example (enter as one command):
 
 ```text
-/clanker create {"task":{"id":"fix-sum","prompt":"Correct sum; preserve the public signature.","minQuality":1,"effort":"low"},"files":[{"path":"src/sum.ts","writable":true,"requiredExports":["sum"]}],"maxAttempts":2,"reviewTask":{"id":"review-sum","prompt":"Review correctness and regressions against the requested change.","minQuality":1,"effort":"low"},"maxReviewPairs":1}
+/relentless create {"task":{"id":"fix-sum","prompt":"Correct sum; preserve the public signature.","minQuality":1,"effort":"low"},"files":[{"path":"src/sum.ts","writable":true,"requiredExports":["sum"]}],"maxAttempts":2,"reviewTask":{"id":"review-sum","prompt":"Review correctness and regressions against the requested change.","minQuality":1,"effort":"low"},"maxReviewPairs":1}
 ```
 
 Optional `context` contains explicit `requirements` and background `facts` arrays.
@@ -253,7 +253,7 @@ The source root is the active Pi project; overrides are rejected. Input is bound
 to 64 KiB and uses the existing coding file/snapshot limits. Only existing declared
 files are snapshotted. Creation never invokes inference, runs candidate code,
 changes source files, or starts an unattended loop. It returns the coding ID;
-`/clanker status <id>` inspects it and `/clanker resume <id>` advances it.
+`/relentless status <id>` inspects it and `/relentless resume <id>` advances it.
 
 Coder and reviewer configurations are copied from the project policy, intersected
 with Pi's available catalog and exact session model/effort scope. Task pins,
@@ -279,7 +279,7 @@ Pi-created tasks. Older tasks without that intent require explicit recovery.
 ## Idempotent creation recovery — cycle 036
 
 A new Pi task's `task.id` is its project-local creation key (1–200 characters).
-Repeating `/clanker create` with the same normalized input returns the same coding
+Repeating `/relentless create` with the same normalized input returns the same coding
 ID. Reusing the key with changed task text, files, context, attempt budget, review
 request or review budget is rejected. Use a new task ID for genuinely new work;
 creation does not revise an existing task.
@@ -316,7 +316,7 @@ user repeats the creation command.
 ## Local evaluation evidence — cycle 037
 
 Pi role previews and newly created work can load completed evaluation journals
-listed in the project's `clanker.evidence` settings. Add this alongside `version`,
+listed in the project's `relentless.evidence` settings. Add this alongside `version`,
 `routing` and `roles`:
 
 ```json
@@ -327,7 +327,7 @@ listed in the project's `clanker.evidence` settings. Add this alongside `version
 }
 ```
 
-The existing `clanker evaluate <config.json> <suite.json>` command creates these
+The existing `relentless evaluate <config.json> <suite.json>` command creates these
 directories. Merely listing a directory, opening Pi, previewing a route or creating
 work never runs an evaluation or starts a model. Evaluation execution remains an
 explicit, separately bounded operation. Paths must name immediate directories
@@ -363,7 +363,7 @@ selection, coding-outcome calibration and unattended evaluation remain unfinishe
 
 ## Prospective coding calibration preview — cycle 041
 
-`/clanker calibration-plan <suite-json>` uses the active project's coder and
+`/relentless calibration-plan <suite-json>` uses the active project's coder and
 reviewer roles intersected with Pi's available/scoped models. Input supplies
 `version: 1`, `id`, `workload`, `repeats`, `maxReviewPairs`, `reviewTask` and
 `cases`. Each case supplies `id`, a coding `request` rooted at the canonical
@@ -388,7 +388,7 @@ can supply coding capability observations. A preview does not authorize executio
 
 ## Durable calibration cohorts — cycle 042
 
-`/clanker calibration-create` accepts the same JSON as the preview. It saves the
+`/relentless calibration-create` accepts the same JSON as the preview. It saves the
 normalized contract and all planned slots atomically in the active project's
 `.harness/calibration.sqlite`. The user-supplied cohort `id` is the creation key:
 repeating the same resolved contract returns the saved state, including existing
@@ -397,7 +397,7 @@ A changed project policy or available model set can therefore make repeated
 creation conflict. Use status to inspect the original contract; nothing silently
 migrates its cohort or permissions.
 
-`/clanker calibration-status <cohort-id>` opens the journal read-only and needs no
+`/relentless calibration-status <cohort-id>` opens the journal read-only and needs no
 model registry or provider connection. The stored root must match the active
 project. Both commands report `persisted:true`, `dispatched:false` and
 `artifactsVerified:false`. Creation freezes declared pins; it does not inspect
@@ -425,10 +425,10 @@ and independently verified outcome admission remain unfinished.
 
 ## Preparing coding trials — cycle 043
 
-`/clanker calibration-prepare {"cohortId":"your-cohort","trialId":"<trial-hash>"}`
+`/relentless calibration-prepare {"cohortId":"your-cohort","trialId":"<trial-hash>"}`
 connects a saved trial to a coding workflow. It returns `codingId`, `phase`,
 `dispatched:false`, `sourcePinsVerified:true` and `artifactPinsVerified:true`.
-Use the existing `/clanker resume <codingId>` to explicitly advance coding or
+Use the existing `/relentless resume <codingId>` to explicitly advance coding or
 review under Pi's current pre-dispatch role/scope/billing checks. Preparation
 itself never calls a model, packages an image, launches a VM or grants acceptance.
 
@@ -465,7 +465,7 @@ complete failure accounting and routing-observation admission remain next.
 
 ## Advancing a trial — cycle 044
 
-`/clanker calibration-step {"cohortId":"your-cohort","trialId":"<trial-hash>"}`
+`/relentless calibration-step {"cohortId":"your-cohort","trialId":"<trial-hash>"}`
 prepares or recovers the trial, then performs one bounded workflow advancement.
 Coding and independent review use the existing worker budgets and the shared Pi
 pre-dispatch guard. A reviewed candidate is packaged and tested using the cohort's
@@ -498,7 +498,7 @@ explicit bounded interactions; this adds no unattended service or cohort loop.
 
 ## Cohort accounting — cycle 045
 
-`/clanker calibration-report <cohort-id>` reads the saved cohort and local coding/
+`/relentless calibration-report <cohort-id>` reads the saved cohort and local coding/
 workflow journals without contacting a model or creating missing databases. Every
 planned slot remains in the report with its case, model, billing mode and effort.
 Unreserved slots are `planned`; reserved identities without coding creation are
@@ -530,7 +530,7 @@ remain unfinished.
 Declare `"measurement": "author-attempts-v1"` when creating the prospective
 calibration contract. This protocol is part of the suite identity; older cohorts
 cannot acquire it retrospectively. Once every planned trial is terminal, use
-`/clanker calibration-admit <cohort-id>`. Pending or ambiguous trials prevent
+`/relentless calibration-admit <cohort-id>`. Pending or ambiguous trials prevent
 admission. Failed/cancelled slots remain failed observations, including unknown
 timing and cost; they are never discarded to improve a model's score.
 
@@ -542,13 +542,13 @@ neither launches inference nor changes project settings. Artifact corruption or
 subsequent workflow changes cause evidence loading to fail closed.
 
 To authorize use of an admitted cohort, review a project settings proposal adding
-its ID under `clanker.evidence.calibrations`, for example:
+its ID under `relentless.evidence.calibrations`, for example:
 
 ```json
 { "evidence": { "calibrations": ["typescript-cohort-001"] } }
 ```
 
-This fragment belongs inside the existing `clanker` object, not at the top level
+This fragment belongs inside the existing `relentless` object, not at the top level
 of Pi settings. `evaluations` and `calibrations` may coexist; at least one nonempty
 source list is required. Loading revalidates every calibration's artifacts and
 checkpoint provenance without dispatch or timestamp refresh, then merges its
@@ -624,8 +624,8 @@ report coverage, not certainty of every individual measurement.
 
 ## Continuous verification and repair — cycle 053
 
-Run `/clanker run-verified <coding-id> <execution.json>` in a trusted Pi project
-(or `clanker workflow run-verified <coding-id> <execution.json>` from the CLI).
+Run `/relentless run-verified <coding-id> <execution.json>` in a trusted Pi project
+(or `relentless workflow run-verified <coding-id> <execution.json>` from the CLI).
 The JSON uses the existing execution schema: pinned package/runtime/test artifacts
 plus the declared acceptance rule. The file must be a regular file of at most
 64 KiB. Relative paths are resolved against the active project.
@@ -697,7 +697,7 @@ routing guard. No unknown or blocking failure becomes a cooldown automatically.
 
 ## Reviewer replacement within a pair — cycle 058
 
-Before each reviewer call, Clanker checks current eligibility under the saved
+Before each reviewer call, Relentless checks current eligibility under the saved
 policy. It prefers the preselected route; if unavailable, it can select another
 permitted provider excluding the author and all reviewers already used in the pair.
 This retains completed assessments, records actual routes and uses the existing
@@ -708,7 +708,7 @@ waiting is not implemented yet.
 
 ## Durable partial reviewer waits — cycle 059
 
-When eligible remaining reviewers are temporarily cooling down, Clanker persists
+When eligible remaining reviewers are temporarily cooling down, Relentless persists
 a `waiting_retry` report and its deadline in the workflow. Restart validates the
 exact source checkpoint, review request, routes, findings and attempt provenance
 before reusing completed evidence. Only missing reviewers are dispatched; a saved
@@ -747,7 +747,7 @@ arbitrary JSON file formatting. Existing text acceptance continues unchanged.
 Create the goal through the existing goal contract interface, then invoke in Pi:
 
 ```text
-/clanker goal-work {"goalId":"<goal-id>","taskId":"fix-parser","expectedRevision":1,"files":[{"path":"src/parser.ts","writable":true}]}
+/relentless goal-work {"goalId":"<goal-id>","taskId":"fix-parser","expectedRevision":1,"files":[{"path":"src/parser.ts","writable":true}]}
 ```
 
 This snapshots source and creates a recoverable workflow without inference. The
@@ -783,7 +783,7 @@ accounting remain unfinished.
 
 ## Verified goal artifact admission — cycle 061
 
-Run `/clanker goal-admit <coding-id>` for a goal-bound workflow that has reached
+Run `/relentless goal-admit <coding-id>` for a goal-bound workflow that has reached
 `verified`. This command makes no provider calls, reruns no VM, and changes no
 project source files. It inspects the saved execution specification, manifest,
 supervisor assessment and report; verifies the final independent review pair;
@@ -809,7 +809,7 @@ dependent task must perform and verify that explicit step.
 
 ## Unfinished goal workflow accounting — cycle 062
 
-Use `/clanker goal-sync <coding-id>` to synchronize a bound workflow's progress
+Use `/relentless goal-sync <coding-id>` to synchronize a bound workflow's progress
 into its goal task. The command reads fresh coding/workflow checkpoints under
 goal→coding→workflow locks held through the goal commit. It performs no inference,
 VM execution, retry or source write. Cancellation, changed revision/context, lost
@@ -851,7 +851,7 @@ polling, automatic admission, or a dependency scheduler.
 
 ## Bounded goal scheduling — cycle 064
 
-`/clanker goal-step <goal-id>` advances one eligible workflow task through its
+`/relentless goal-step <goal-id>` advances one eligible workflow task through its
 next action: coding/review, verification, or verified-artifact admission. Selection
 is deterministic in contract order and does not require a scheduler LLM. A single
 coding/review action may make multiple calls within the workflow's existing bounds.
@@ -895,14 +895,14 @@ still pending; repeatedly invoking this command does not bypass those boundaries
 
 ## Reviewed configuration application — cycle 065
 
-Use `/clanker config-propose <clanker-json>` with the complete proposed `clanker`
+Use `/relentless config-propose <relentless-json>` with the complete proposed `relentless`
 namespace. The command validates policy and saves a content-addressed proposal
 under `.harness/config-proposals/`; it neither edits settings nor calls a provider.
-The proposal retains the old Clanker namespace, normalized new namespace and
+The proposal retains the old Relentless namespace, normalized new namespace and
 hashes of the exact source/target settings bytes. Unrelated setting values are
 not copied into the proposal or shown in the dialog.
 
-`/clanker config-apply <proposal-id>` shows the project, source digest and full
+`/relentless config-apply <proposal-id>` shows the project, source digest and full
 before/after namespace through Pi's confirmation UI. Declining, lacking interactive
 UI, cancellation, lost trust, changed settings or an invalid proposal prevents
 application. Confirmation covers settings only: it does not certify entitlement,
@@ -920,12 +920,12 @@ that ignore the cooperative lock are outside this serialization guarantee.
 If exact target bytes are already present, the command reports `already_matches`
 without writing or claiming a new approval. A crash may leave a temporary file or
 lock; inspect the owner/process and current settings before recovery, rather than
-blindly deleting them. This approval flow protects Clanker's command path, not
+blindly deleting them. This approval flow protects Relentless's command path, not
 arbitrary shell edits by software with the user's filesystem privileges.
 
 ## Foreground goal execution — cycle 066
 
-`/clanker goal-run <goal-id>` repeatedly invokes the bounded goal scheduler for
+`/relentless goal-run <goal-id>` repeatedly invokes the bounded goal scheduler for
 one goal revision. It advances eligible coding/review, verification and admission
 without separate commands between stages. Selection and waiting are deterministic;
 no local or cloud model is needed to manage the loop itself.
@@ -983,20 +983,20 @@ new parent directories, service restart and deployment are outside this path.
 ## Opted-in Pi session restart — cycle 069
 
 Project configuration can include `"resumeGoal": { "id": "<goal-id>", "revision": 1 }`
-inside `clanker`. Prepare and review this through `config-propose`/`config-apply`.
+inside `relentless`. Prepare and review this through `config-propose`/`config-apply`.
 The confirmation explicitly authorizes future trusted Pi session-start execution
 within the goal's existing attempt, billing, verification and integration limits.
 Applying settings does not itself start execution. Inspect the actual goal and
 revision before approving; there is no default opt-in or revision migration.
 
-On startup, resume, new session, fork or reload, Clanker can launch the named goal
+On startup, resume, new session, fork or reload, Relentless can launch the named goal
 asynchronously without blocking Pi startup. Session ownership excludes overlapping
 commands, and a prior cancelled run must settle before a successor can run. If it
 is still settling, automatic resume reports that condition; it does not force a
 second runner or promise a daemon retry. Goal/workflow leases still govern other
 processes. No OS service is installed and Pi must be running.
 
-`/clanker pause` remains reachable while busy, aborts this session's work and
+`/relentless pause` remains reachable while busy, aborts this session's work and
 suppresses its late notifications. It preserves restart configuration. Pause, then
 remove `resumeGoal` through configuration review to disable future starts. Unchanged
 settings bytes, the exact goal revision, current trust, session generation and
@@ -1016,7 +1016,7 @@ without the settings pin require reconciliation if their request no longer match
 Register a new coding calibration with `measurement: "workflow-active-v1"` to
 measure summed author, review and verification stage time. After all trials settle,
 `calibration-admit` validates the existing proof requirements and preserves failed
-or unknown slots. Reference the admitted cohort through `clanker.evidence.calibrations`
+or unknown slots. Reference the admitted cohort through `relentless.evidence.calibrations`
 and request `optimization.metric: "activeTime"` with its exact suite/workload/cases.
 The same samples cannot satisfy latency or cost optimization: those fields remain
 unknown. An old cohort cannot be upgraded by changing its measurement declaration.
@@ -1037,9 +1037,9 @@ See [configuration, bounds and limitations](local-inference.md#optional-managed-
 
 ## Creating a goal inside Pi — cycle080
 
-`/clanker goal-create <contract-json>` accepts the goal contract defined by
+`/relentless goal-create <contract-json>` accepts the goal contract defined by
 `src/goal-types.ts`, with the `config` field omitted. It freezes the current
-project's `clanker.routing` configuration and preserves the supplied objective,
+project's `relentless.routing` configuration and preserves the supplied objective,
 constraints, memories, task dependencies, acceptance requirements and budgets.
 An explicit `config` override is rejected. The command returns `goalId` and
 revision 1; it does not dispatch models, install source, change settings or add
@@ -1049,8 +1049,8 @@ before goal creation.
 For coding goals, declare workflow acceptance with `work.files`, the prepared
 `work.verificationFile`, its `specificationSha256`, independent `reviewTask` and
 `maxReviewPairs`. Existing-file installation additionally requires explicit
-`work.integration: "verified"`. Then use `/clanker goal-step <goal-id>` for one
-bounded action or `/clanker goal-run <goal-id>` for the foreground workflow loop.
+`work.integration: "verified"`. Then use `/relentless goal-step <goal-id>` for one
+bounded action or `/relentless goal-run <goal-id>` for the foreground workflow loop.
 Those execution commands retain their current billing, scope and verification
 checks. The Pi loop handles declared workflow tasks; creating a JSON/contains
 advice goal does not make that loop support tool-free tasks.
@@ -1061,7 +1061,7 @@ command alone is not a natural-language project planner or end-to-end proof.
 
 ## Inspecting goal progress — cycle087
 
-`/clanker goal-status <goal-id>` reports the saved objective, revision and task
+`/relentless goal-status <goal-id>` reports the saved objective, revision and task
 statuses alongside each associated coding run. `goalRecordedAttempts` comes from
 the goal ledger; `work[].authorAttempts` comes from the coding journal and can be
 higher before progress synchronization or admission. Older goal revisions are
@@ -1084,7 +1084,7 @@ of silently truncating. Missing goals do not initialize databases.
 
 ## Session model inventory — cycle088
 
-`/clanker inventory` uses the active Pi registry rather than constructing the
+`/relentless inventory` uses the active Pi registry rather than constructing the
 CLI's separate registry. Configured rows distinguish catalog presence, Pi available
 model presence, project role membership, permitted role pools, billing permission
 and future provider cooldowns. Available models absent from project policy appear
@@ -1095,7 +1095,7 @@ task's quality floor, provider/model pin or evidence optimization requirements.
 Capacity and capability remain unverified by this read. Availability is not proof
 of entitlement, remaining quota or local server readiness. No credentials are
 printed, provider probes run, servers started or evidence invented. The command
-requires trusted session models; missing Clanker policy is supported for initial
+requires trusted session models; missing Relentless policy is supported for initial
 discovery. Unknown catalog input remains null for non-native callers. Health is a
 non-atomic read across existing journals.
 It uses the same busy command queue as other Pi commands.
@@ -1113,7 +1113,7 @@ Proposal coverage is returned as current advice; it is not stored in the proposa
 or included in its digest and is not approval to dispatch.
 
 The unconfigured discovery list is paginated in groups of20. Use
-`/clanker inventory 20` (or the reported `nextOffset`) to continue. Responses
+`/relentless inventory 20` (or the reported `nextOffset`) to continue. Responses
 include the total, current offset and null continuation on the final page. All
 configured models remain visible. Pages are independent observations, so changes
 to the live catalog can shift entries between reads. This pagination was added
@@ -1121,7 +1121,7 @@ after a real terminal run exposed hundreds of unconfigured model entries.
 
 ### Explain evidence without dispatch
 
-`/clanker explain <role> <task-json>` requires an explicit task `optimization`
+`/relentless explain <role> <task-json>` requires an explicit task `optimization`
 policy and uses the same configured/admitted evidence as route preview. It reports
 matching samples, per-case success rates and confidence bounds, qualification
 and exclusion codes. Scores remain null for unqualified routes. Normal Pi scope,
@@ -1132,9 +1132,9 @@ evidence for the declared workload/suite, not general model competence or quota.
 
 ### Resume after reviewer login repair
 
-`/clanker review-auth-status <coding-id>` reads the current workflow digest and
+`/relentless review-auth-status <coding-id>` reads the current workflow digest and
 review budget. After repairing login, explicitly use
-`/clanker review-auth-retry <coding-id> <workflow-digest>` to reopen an eligible
+`/relentless review-auth-retry <coding-id> <workflow-digest>` to reopen an eligible
 authentication failure from reviewer setup. This changes only saved workflow
 state; use the normal goal-step/resume command afterward. It does not refresh
 credentials, dispatch a model or reset attempts. See
@@ -1153,10 +1153,10 @@ requires independent reviews and the exact pinned verification proof.
 
 ## Preview evidence under a proposed configuration
 
-After `/clanker config-propose <clanker-json>` saves a proposal, use:
+After `/relentless config-propose <relentless-json>` saves a proposal, use:
 
 ```text
-/clanker explain-proposal <proposal-id> <role> <task-json-with-optimization>
+/relentless explain-proposal <proposal-id> <role> <task-json-with-optimization>
 ```
 
 This reads the proposal's roles, billing policy and evidence references, revalidates
@@ -1166,9 +1166,9 @@ model/effort combinations. The result is explicitly `proposed: true`,
 `configured: false` and `dispatched: false`; it does not approve or apply settings,
 start workers, refresh credentials or establish remaining quota. Stale settings,
 wrong project roots and changed proposals are rejected before display. Existing
-`/clanker config-apply <proposal-id>` still requires Pi's configuration confirmation.
+`/relentless config-apply <proposal-id>` still requires Pi's configuration confirmation.
 
-The command must be registered by the installed Clanker package. The SDK diagnostic
+The command must be registered by the installed Relentless package. The SDK diagnostic
 now checks registration before exposing its terminal: an earlier misconfigured
 launcher lacked the package and Pi treated slash text as a chat request. See
 cycle106 validation for that retained setup failure and successful read-only run.

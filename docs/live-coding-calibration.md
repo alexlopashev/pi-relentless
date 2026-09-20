@@ -1,7 +1,7 @@
 # Live coding calibration: cycle 047
 
 Completed supervised pilot: `.harness/self-improve-047/project`, cohort
-`clanker-primitives-047-v2`. Clanker ran six actual author calls and eleven review
+`relentless-primitives-047-v2`. Relentless ran six actual author calls and eleven review
 calls under frozen limits of six author/twelve review calls. The three utility
 contracts covered bounded retry delay, own-key facts merge and balanced case
 counts. Authors were Luna and Muse; each successful result received two independent

@@ -2,12 +2,12 @@
 
 Task: identify and correct `function isAdult(age) { return age > 18; }` for a rule that adulthood starts at age 18 inclusive. The checked response is `{"fixedExpression":"age >= 18","testInput":18,"testExpected":true}`.
 
-| Worker                     | Pin / effort                     | Observed result                                                                                   |
-| -------------------------- | -------------------------------- | ------------------------------------------------------------------------------------------------- |
-| Grok through Pi            | `xai/grok-4.6`, low              | OAuth preflight passes. Task failed; isolated diagnostic received HTTP 403. No successful answer. |
-| Claude Code CLI            | `claude-opus-5`, low             | Correct checked JSON, native Pro subscription login. Included-only billing was not established.   |
-| Codex through Pi           | `openai-codex/gpt-5.6-luna`, low | Correct checked JSON using Pi OAuth.                                                              |
-| Local llama.cpp through Pi | `clanker-local/qwen3.5-4b`, off  | Correct checked JSON; Q4_K_M on CPU, no cloud credentials.                                        |
+| Worker                     | Pin / effort                       | Observed result                                                                                   |
+| -------------------------- | ---------------------------------- | ------------------------------------------------------------------------------------------------- |
+| Grok through Pi            | `xai/grok-4.6`, low                | OAuth preflight passes. Task failed; isolated diagnostic received HTTP 403. No successful answer. |
+| Claude Code CLI            | `claude-opus-5`, low               | Correct checked JSON, native Pro subscription login. Included-only billing was not established.   |
+| Codex through Pi           | `openai-codex/gpt-5.6-luna`, low   | Correct checked JSON using Pi OAuth.                                                              |
+| Local llama.cpp through Pi | `relentless-local/qwen3.5-4b`, off | Correct checked JSON; Q4_K_M on CPU, no cloud credentials.                                        |
 
 The live ledger goal is `709ffa8d-15c8-4fc6-b946-170eb612e63e`, revision 2. Claude, Codex and local tasks completed; Grok remains `waiting_input`, with its original normalized `unknown` failure and two attempts. One separate diagnostic request established HTTP 403; historical ledger events were not rewritten or budgets reset. HTTP 401/403 normalization is now tested for future Pi errors. Revision 1 encountered global Pi credential-lock permissions and native Codex startup failure. Revision 2 used read-only Pi credentials and switched the Codex adapter explicitly while preserving the model and effort.
 
@@ -33,8 +33,8 @@ The local server must be started separately as documented in `local-inference.md
 
 ## Grok routing repair
 
-The installed Pi 0.85.1 xAI provider used `https://api.x.ai/v1` for OAuth requests. Clanker now clones the selected subscription model with `https://cli-chat-proxy.grok.com/v1` and the OAuth proxy headers. Explicitly metered routes retain the public endpoint. The required client-version header carries Pi's actual exported version; client identifier/User-Agent identify Clanker. No Grok release version is fabricated. Source: [xAI endpoint and header implementation](https://github.com/xai-org/grok-build/blob/b189869b7755d2b482969acf6c92da3ecfeffd36/crates/codegen/xai-grok-shell/src/agent/config.rs#L4640).
+The installed Pi 0.85.1 xAI provider used `https://api.x.ai/v1` for OAuth requests. Relentless now clones the selected subscription model with `https://cli-chat-proxy.grok.com/v1` and the OAuth proxy headers. Explicitly metered routes retain the public endpoint. The required client-version header carries Pi's actual exported version; client identifier/User-Agent identify Relentless. No Grok release version is fabricated. Source: [xAI endpoint and header implementation](https://github.com/xai-org/grok-build/blob/b189869b7755d2b482969acf6c92da3ecfeffd36/crates/codegen/xai-grok-shell/src/agent/config.rs#L4640).
 
 After the user refreshed Pi's login, a bounded new goal (`f1895257-d4fa-43ec-af48-e7860d042098`) exposed HTTP 426 for the missing client-version header. With version negotiation added, goal `fe55569c-aff7-457e-baac-28f6454989df` and a separate redacted diagnostic reached **HTTP 402: “Grok Build usage balance exhausted.”** The earlier unknown ledger outcomes remain historical evidence; budgets were not reset. This establishes a current account usage blocker, not a missing login. It does not establish when the balance resets or whether every model is affected.
 
-The updated failure normalizer recognizes Pi's HTTP wrapper and this specific exhaustion response as `quota`; generic HTTP 402 stays unknown, and policy denials retain precedence. No additional live inference was attempted after identifying exhaustion. A successful Grok answer remains unverified until account capacity is available. Metered fallback remains disabled. The read-only runner still cannot refresh credentials itself; normal Clanker execution outside this sandbox uses Pi's normal credential storage unless read-only mode is selected.
+The updated failure normalizer recognizes Pi's HTTP wrapper and this specific exhaustion response as `quota`; generic HTTP 402 stays unknown, and policy denials retain precedence. No additional live inference was attempted after identifying exhaustion. A successful Grok answer remains unverified until account capacity is available. Metered fallback remains disabled. The read-only runner still cannot refresh credentials itself; normal Relentless execution outside this sandbox uses Pi's normal credential storage unless read-only mode is selected.

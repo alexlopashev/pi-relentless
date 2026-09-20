@@ -50,7 +50,7 @@ class PiCreationRecoveryTests(unittest.TestCase):
         (root / 'x.ts').write_text('export const x=1;')
         candidates = [dict(name=n, provider=n, model=n, billing='subscription', enabled=True,
                            quality=1, preference=1, efforts=['low']) for n in ['author','review-a','review-b']]
-        (root / '.pi/settings.json').write_text(json.dumps({'clanker':{'version':1,'routing':{'candidates':candidates,'maxConcurrency':1},'roles':{'coder':['author'],'reviewer':['review-a','review-b']}}}))
+        (root / '.pi/settings.json').write_text(json.dumps({'relentless':{'version':1,'routing':{'candidates':candidates,'maxConcurrency':1},'roles':{'coder':['author'],'reviewer':['review-a','review-b']}}}))
 
     def run_creation(self, env):
         result = subprocess.run(['node','--input-type=module','-e',SCRIPT],cwd=ROOT,env=env,
@@ -77,7 +77,7 @@ coding.close();workflows.close();
 
     def test_sigkill_at_three_creation_boundaries(self):
         for stage in ['uncommitted','before-workflow','after-workflow']:
-            with self.subTest(stage=stage), tempfile.TemporaryDirectory(prefix='clanker-pi-create-') as directory:
+            with self.subTest(stage=stage), tempfile.TemporaryDirectory(prefix='relentless-pi-create-') as directory:
                 root=Path(directory);self.fixture(root)
                 env={**os.environ,'FIXTURE_ROOT':directory}
                 child=subprocess.Popen(['node','--input-type=module','-e',SCRIPT],cwd=ROOT,
@@ -100,7 +100,7 @@ coding.close();workflows.close();
                 self.assertEqual((root/'x.ts').read_text(),'export const x=1;')
 
     def test_concurrent_creations_share_one_intent_and_task(self):
-        with tempfile.TemporaryDirectory(prefix='clanker-pi-concurrent-') as directory:
+        with tempfile.TemporaryDirectory(prefix='relentless-pi-concurrent-') as directory:
             root=Path(directory);self.fixture(root)
             env={**os.environ,'FIXTURE_ROOT':directory}
             # Initialize the journal schema; concurrent insertion is the boundary under test.

@@ -2,13 +2,13 @@ import { mkdtemp, mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 import { expect, test, vi } from "vitest";
-import { clankerCommand, registerClanker } from "../src/pi-extension.js";
+import { relentlessCommand, registerRelentless } from "../src/pi-extension.js";
 
 test("registration does not start work", () => {
   const registerCommand = vi.fn();
-  registerClanker({ registerCommand, on: vi.fn() });
+  registerRelentless({ registerCommand, on: vi.fn() });
   expect(registerCommand).toHaveBeenCalledTimes(1);
-  expect(registerCommand.mock.calls[0]?.[0]).toBe("clanker");
+  expect(registerCommand.mock.calls[0]?.[0]).toBe("relentless");
 });
 
 test("commands use the active Pi project and bounded workflow resume", async () => {
@@ -16,7 +16,7 @@ test("commands use the active Pi project and bounded workflow resume", async () 
     Promise.resolve({ phase: "verification_required" }),
   );
   const notify = vi.fn();
-  await clankerCommand(
+  await relentlessCommand(
     "resume task-id",
     { cwd: "/project-b", isProjectTrusted: () => true, ui: { notify } },
     execute,
@@ -32,7 +32,7 @@ test("unsupported and malformed commands never execute", async () => {
   const execute = vi.fn();
   const notify = vi.fn();
   for (const args of ["", "run id", "resume id extra", "promote id", "resume"])
-    await clankerCommand(
+    await relentlessCommand(
       args,
       { cwd: "/project", isProjectTrusted: () => true, ui: { notify } },
       execute,
@@ -43,13 +43,13 @@ test("unsupported and malformed commands never execute", async () => {
 
 test("command errors stay in Pi without exposing exception contents", async () => {
   const notify = vi.fn();
-  await clankerCommand(
+  await relentlessCommand(
     "status id",
     { cwd: "/project", isProjectTrusted: () => true, ui: { notify } },
     () => Promise.reject(new Error("private details")),
   );
   expect(notify).toHaveBeenCalledWith(
-    "Clanker command failed; inspect the project journal using the CLI.",
+    "Relentless command failed; inspect the project journal using the CLI.",
     "error",
   );
 });
@@ -57,7 +57,7 @@ test("command errors stay in Pi without exposing exception contents", async () =
 test("untrusted project commands cannot read or dispatch work", async () => {
   const execute = vi.fn();
   const notify = vi.fn();
-  await clankerCommand(
+  await relentlessCommand(
     "resume id",
     { cwd: "/project", isProjectTrusted: () => false, ui: { notify } },
     execute,
@@ -71,13 +71,13 @@ test("Pi role preview uses project policy and session scope without dispatch", a
   await writeFile(
     join(root, ".pi/settings.json"),
     JSON.stringify({
-      clanker: {
+      relentless: {
         version: 1,
         routing: {
           candidates: [
             {
               name: "local",
-              provider: "clanker-local",
+              provider: "relentless-local",
               model: "qwen3.5-4b",
               billing: "local",
               enabled: true,
@@ -100,12 +100,12 @@ test("Pi role preview uses project policy and session scope without dispatch", a
     ui: { notify },
     models: () => ({
       available: [
-        { provider: "clanker-local", model: "qwen3.5-4b", efforts: ["off"] },
+        { provider: "relentless-local", model: "qwen3.5-4b", efforts: ["off"] },
       ],
       scoped: [],
     }),
   };
-  await clankerCommand(
+  await relentlessCommand(
     'route scheduler {"id":"schedule","prompt":"plan retries","minQuality":1,"effort":"off"}',
     context,
     execute,
@@ -116,7 +116,7 @@ test("Pi role preview uses project policy and session scope without dispatch", a
   );
   expect(execute).not.toHaveBeenCalled();
   notify.mockClear();
-  await clankerCommand(
+  await relentlessCommand(
     'route scheduler {"id":"schedule","prompt":"plan retries","minQuality":1,"effort":"low"}',
     context,
     execute,
@@ -129,7 +129,7 @@ test("Pi role preview uses project policy and session scope without dispatch", a
 
 test("explicit continuous verification command preserves execution path", async () => {
   const execute = vi.fn(() => Promise.resolve({ phase: "verified" }));
-  await clankerCommand(
+  await relentlessCommand(
     "run-verified task-id checks.json",
     { cwd: "/project", isProjectTrusted: () => true, ui: { notify: vi.fn() } },
     execute,

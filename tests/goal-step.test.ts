@@ -131,7 +131,7 @@ async function fixture(single = false, integrate = false) {
   await writeFile(
     join(root, ".pi/settings.json"),
     JSON.stringify({
-      clanker: {
+      relentless: {
         version: 1,
         routing: { candidates },
         roles: { coder: ["author"], reviewer: ["a", "b"] },
@@ -368,9 +368,9 @@ test("declared goal files cannot be replaced through manual goal creation", asyn
 test("Pi exposes a bounded goal step and inactive goals do not start its executor", async () => {
   const f = await fixture();
   f.ledger.cancel(f.goalId, 1, "user cancellation");
-  const { clankerCommand } = await import("../src/pi-extension.js");
+  const { relentlessCommand } = await import("../src/pi-extension.js");
   const messages: string[] = [];
-  await clankerCommand(
+  await relentlessCommand(
     `goal-step ${f.goalId}`,
     { ...f.context, ui: { notify: (m) => messages.push(m) } },
     () => {
@@ -660,8 +660,8 @@ test("goal run rejects unattended Personal use before creation or model dispatch
   const { loadPiProjectConfig } = await import("../src/pi-project-config.js");
   const project = await loadPiProjectConfig(f.root, true);
   if (!project) throw Error("fixture");
-  const settings = { clanker: project };
-  settings.clanker.routing.candidates.push({
+  const settings = { relentless: project };
+  settings.relentless.routing.candidates.push({
     name: "personal",
     provider: "qwen-token-plan-individual",
     model: "qwen",
@@ -726,12 +726,12 @@ test("goal run observes cancellation and revisions while waiting without another
 });
 
 test("Pi goal-run reports a cancelled goal without dispatch", async () => {
-  const { clankerCommand } = await import("../src/pi-extension.js");
+  const { relentlessCommand } = await import("../src/pi-extension.js");
   const { vi } = await import("vitest");
   const f = await fixture();
   f.ledger.cancel(f.goalId, 1, "test");
   const notify = vi.fn();
-  await clankerCommand("goal-run " + f.goalId, {
+  await relentlessCommand("goal-run " + f.goalId, {
     ...f.context,
     ui: { notify },
   });
@@ -901,16 +901,16 @@ test("session resume uses exact opt-in and loses authority when settings change"
   const path = join(f.root, ".pi/settings.json");
   const raw: unknown = JSON.parse(await readFile(path, "utf8"));
   const settings = z
-    .object({ clanker: z.record(z.string(), z.unknown()) })
+    .object({ relentless: z.record(z.string(), z.unknown()) })
     .parse(raw);
-  settings.clanker["resumeGoal"] = { id: f.goalId, revision: 1 };
+  settings.relentless["resumeGoal"] = { id: f.goalId, revision: 1 };
   await writeFile(path, JSON.stringify(settings));
   let called = 0;
   await resumePiGoal(f.context, async (id, context) => {
     called++;
     expect(id).toBe(f.goalId);
     expect(context.isProjectTrusted()).toBe(true);
-    delete settings.clanker["resumeGoal"];
+    delete settings.relentless["resumeGoal"];
     await writeFile(path, JSON.stringify(settings));
     expect(context.isProjectTrusted()).toBe(false);
     return { goalId: id, reason: "trust_lost", actions: 0, last: null };
@@ -928,9 +928,9 @@ test("session resume rejects changed goal revision without dispatch", async () =
   const f = await fixture(true);
   const path = join(f.root, ".pi/settings.json");
   const settings = z
-    .object({ clanker: z.record(z.string(), z.unknown()) })
+    .object({ relentless: z.record(z.string(), z.unknown()) })
     .parse(JSON.parse(await readFile(path, "utf8")) as unknown);
-  settings.clanker["resumeGoal"] = { id: f.goalId, revision: 2 };
+  settings.relentless["resumeGoal"] = { id: f.goalId, revision: 2 };
   await writeFile(path, JSON.stringify(settings));
   expect(
     await resumePiGoal(f.context, () => {
@@ -951,9 +951,9 @@ test("revoking restart during model validation prevents candidate publication", 
   const path = join(f.root, ".pi/settings.json");
   const originalSettings = await readFile(path, "utf8");
   const settings = z
-    .object({ clanker: z.record(z.string(), z.unknown()) })
+    .object({ relentless: z.record(z.string(), z.unknown()) })
     .parse(JSON.parse(originalSettings) as unknown);
-  settings.clanker["resumeGoal"] = { id: f.goalId, revision: 1 };
+  settings.relentless["resumeGoal"] = { id: f.goalId, revision: 1 };
   await writeFile(path, JSON.stringify(settings));
   const worker = await import("../src/process-worker.js");
   const checks = await import("../src/coding-worker.js");
@@ -1005,9 +1005,9 @@ test("removing resume opt-in during a retry wait stops without a second step", a
   const path = join(f.root, ".pi/settings.json");
   const source = await readFile(path, "utf8");
   const settings = z
-    .object({ clanker: z.record(z.string(), z.unknown()) })
+    .object({ relentless: z.record(z.string(), z.unknown()) })
     .parse(JSON.parse(source) as unknown);
-  settings.clanker["resumeGoal"] = { id: f.goalId, revision: 1 };
+  settings.relentless["resumeGoal"] = { id: f.goalId, revision: 1 };
   await writeFile(path, JSON.stringify(settings));
   let steps = 0;
   const result = await resumePiGoal(f.context, (id, context) =>

@@ -252,7 +252,7 @@ export async function runCoding(
     ) > 131072
   )
     throw new Error("Coding source budget exceeded");
-  const directory = await mkdtemp(join(tmpdir(), "clanker-coding-"));
+  const directory = await mkdtemp(join(tmpdir(), "relentless-coding-"));
   const writable = new Set(
     request.files.filter((f) => f.writable).map((f) => f.path),
   );

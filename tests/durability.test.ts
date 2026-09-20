@@ -7,7 +7,7 @@ import { Supervisor } from "../src/supervisor.js";
 import { Failure } from "../src/failures.js";
 const directories: string[] = [];
 function path(): string {
-  const dir = mkdtempSync(join(tmpdir(), "clanker-durable-"));
+  const dir = mkdtempSync(join(tmpdir(), "relentless-durable-"));
   directories.push(dir);
   return join(dir, "state.db");
 }

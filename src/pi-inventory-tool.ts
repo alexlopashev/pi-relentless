@@ -1,7 +1,7 @@
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { Type } from "typebox";
 import { z } from "zod";
-import { clankerCommand } from "./pi-extension.js";
+import { relentlessCommand } from "./pi-extension.js";
 import { catalogEfforts } from "./inventory-runtime.js";
 
 const parameters = Type.Object(
@@ -19,7 +19,7 @@ const paramsSchema = z.strictObject({
 
 type InventoryParams = z.infer<typeof paramsSchema>;
 
-export function registerClankerInventory(
+export function registerRelentlessInventory(
   pi: Pick<ExtensionAPI, "registerTool" | "on">,
 ): void {
   let generation = 0;
@@ -35,8 +35,8 @@ export function registerClankerInventory(
   });
 
   pi.registerTool({
-    name: "clanker_inventory",
-    label: "Clanker inventory",
+    name: "relentless_inventory",
+    label: "Relentless inventory",
     description:
       "Discovery only: list native session models; not quota, capability, billing, or permission.",
     promptSnippet: "Discovery only, not quota/capability/billing/permission.",
@@ -57,7 +57,7 @@ export function registerClankerInventory(
 
       const captured: string[] = [];
       try {
-        await clankerCommand(
+        await relentlessCommand(
           `inventory${params.offset === undefined ? "" : ` ${String(params.offset)}`}`,
           {
             cwd: context.cwd,
@@ -92,10 +92,10 @@ export function registerClankerInventory(
           },
         );
       } catch {
-        throw new Error("Clanker inventory unavailable");
+        throw new Error("Relentless inventory unavailable");
       }
       if (!active() || captured.length === 0)
-        throw new Error("Clanker inventory unavailable");
+        throw new Error("Relentless inventory unavailable");
       return {
         content: [{ type: "text", text: captured.join("\n") }],
         details: null,

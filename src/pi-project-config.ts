@@ -68,7 +68,7 @@ export async function loadPiProjectConfig(
   root: string,
   trusted: boolean,
 ): Promise<PiProjectConfig | null> {
-  if (!trusted) throw new Error("Clanker requires a trusted Pi project");
+  if (!trusted) throw new Error("Relentless requires a trusted Pi project");
   const directory = join(root, CONFIG_DIR_NAME);
   let file;
   try {
@@ -102,11 +102,11 @@ export async function loadPiProjectConfig(
     }
     if (length > limit) throw new Error("Project settings exceed limit");
     const settings = z
-      .looseObject({ clanker: z.unknown().optional() })
+      .looseObject({ relentless: z.unknown().optional() })
       .parse(JSON.parse(bytes.subarray(0, length).toString("utf8")) as unknown);
-    return settings.clanker === undefined
+    return settings.relentless === undefined
       ? null
-      : piProjectConfigSchema.parse(settings.clanker);
+      : piProjectConfigSchema.parse(settings.relentless);
   } finally {
     await file.close();
   }

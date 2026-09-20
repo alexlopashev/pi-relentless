@@ -3,7 +3,7 @@ import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 import { expect, test, vi } from "vitest";
-import { clankerCommand } from "../src/pi-extension.js";
+import { relentlessCommand } from "../src/pi-extension.js";
 import { CodingJournal } from "../src/coding-journal.js";
 import { CodingWorkflows } from "../src/coding-workflow.js";
 const candidates = ["author", "review-a", "review-b"].map((name) => ({
@@ -44,7 +44,7 @@ async function fixture() {
   await writeFile(
     join(root, ".pi/settings.json"),
     JSON.stringify({
-      clanker: {
+      relentless: {
         version: 1,
         routing: { candidates, maxConcurrency: 1 },
         roles: { coder: ["author"], reviewer: ["review-a", "review-b"] },
@@ -57,7 +57,7 @@ test("Pi creates a frozen coding and review workflow without executing inference
   const root = await fixture();
   const notify = vi.fn();
   const execute = vi.fn();
-  await clankerCommand(
+  await relentlessCommand(
     `create ${JSON.stringify(input)}`,
     { cwd: root, isProjectTrusted: () => true, models, ui: { notify } },
     execute,
@@ -98,7 +98,7 @@ test("creation rejects root overrides and unavailable independent reviewers befo
   for (const override of [true, false]) {
     const root = await fixture();
     const notify = vi.fn();
-    await clankerCommand(
+    await relentlessCommand(
       `create ${JSON.stringify(override ? { ...input, sourceRoot: "/elsewhere" } : input)}`,
       {
         cwd: root,
@@ -118,7 +118,7 @@ test("revoked trust or session cancellation prevents creation after asynchronous
     const notify = vi.fn();
     const controller = new AbortController();
     let trusted = true;
-    await clankerCommand(`create ${JSON.stringify(input)}`, {
+    await relentlessCommand(`create ${JSON.stringify(input)}`, {
       cwd: root,
       signal: controller.signal,
       isProjectTrusted: () => trusted,
@@ -143,7 +143,7 @@ test("a workflow attachment failure returns the retained coding id without infer
       throw new Error("disk failure");
     });
   try {
-    await clankerCommand(`create ${JSON.stringify(input)}`, {
+    await relentlessCommand(`create ${JSON.stringify(input)}`, {
       cwd: root,
       isProjectTrusted: () => true,
       models,
@@ -191,7 +191,7 @@ test("retrying identical creation recovers attachment and keeps the first snapsh
       throw new Error("interrupted attachment");
     });
   try {
-    await clankerCommand(`create ${JSON.stringify(input)}`, context);
+    await relentlessCommand(`create ${JSON.stringify(input)}`, context);
   } finally {
     fail.mockRestore();
   }
@@ -199,7 +199,7 @@ test("retrying identical creation recovers attachment and keeps the first snapsh
   await writeFile(join(root, "x.ts"), "export const x = 999;");
   await writeFile(join(root, ".pi/settings.json"), "{}");
   notify.mockClear();
-  await clankerCommand(`create ${JSON.stringify(input)}`, context);
+  await relentlessCommand(`create ${JSON.stringify(input)}`, context);
   const second: unknown = JSON.parse(String(notify.mock.calls[0]?.[0]));
   expect(first).toMatchObject({ phase: "creation_incomplete" });
   expect(second).toMatchObject({ phase: "coding", dispatched: false });
@@ -220,7 +220,7 @@ test("retrying identical creation recovers attachment and keeps the first snapsh
     coding.close();
   }
   notify.mockClear();
-  await clankerCommand(`create ${JSON.stringify(input)}`, context);
+  await relentlessCommand(`create ${JSON.stringify(input)}`, context);
   expect(JSON.parse(String(notify.mock.calls[0]?.[0]))).toEqual(second);
 });
 
@@ -233,9 +233,9 @@ test("reusing a task id for a changed creation contract is rejected", async () =
     models,
     ui: { notify },
   };
-  await clankerCommand(`create ${JSON.stringify(input)}`, context);
+  await relentlessCommand(`create ${JSON.stringify(input)}`, context);
   notify.mockClear();
-  await clankerCommand(
+  await relentlessCommand(
     `create ${JSON.stringify({ ...input, maxAttempts: 3 })}`,
     context,
   );

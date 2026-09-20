@@ -24,7 +24,7 @@ class ManagedLocalProcessTest(unittest.TestCase):
                 probe.bind(("127.0.0.1", 18080))
             except OSError:
                 self.skipTest("Fixed local inference port is externally occupied")
-        self.directory = Path(tempfile.mkdtemp(prefix="clanker-managed-"))
+        self.directory = Path(tempfile.mkdtemp(prefix="relentless-managed-"))
         self.parents = []
         self.pidfile = self.directory / "server.pid"
         executable = self.directory / "server"

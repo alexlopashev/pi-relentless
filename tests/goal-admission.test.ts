@@ -143,7 +143,7 @@ async function fixture(
   await writeFile(
     join(root, ".pi/settings.json"),
     JSON.stringify({
-      clanker: {
+      relentless: {
         version: 1,
         routing: { candidates },
         roles: { coder: ["author"], reviewer: ["a", "b"] },
@@ -304,9 +304,9 @@ test("revision removes admission and completed artifact access never bypasses ca
 
 test("Pi exposes explicit admission without invoking an inference executor", async () => {
   const f = await fixture();
-  const { clankerCommand } = await import("../src/pi-extension.js");
+  const { relentlessCommand } = await import("../src/pi-extension.js");
   const messages: { text: string; level: string }[] = [];
-  await clankerCommand(
+  await relentlessCommand(
     `goal-admit ${f.id}`,
     {
       ...f.context,

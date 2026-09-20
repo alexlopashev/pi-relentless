@@ -1,6 +1,6 @@
 """Experimental, explicitly invoked VM verification; manifests are operator inputs.
 
-A trusted, reviewed image must contain /clanker-init and the root-only result
+A trusted, reviewed image must contain /relentless-init and the root-only result
 channel protocol. This runner does not certify an arbitrary image or test oracle.
 """
 import hashlib
@@ -138,10 +138,10 @@ def run(request, directory):
                '-display', 'none', '-monitor', 'none', '-serial', 'stdio',
                '-no-reboot', '-kernel', str(directory / 'kernel'),
                '-initrd', str(directory / 'image'), '-append',
-               'console=ttyAMA0 rdinit=/clanker-init panic=1 quiet',
+               'console=ttyAMA0 rdinit=/relentless-init panic=1 quiet',
                '-chardev', 'file,id=proof,path=' + str(controller_path),
-               '-device', 'virtio-serial-pci,id=clanker-serial', '-device',
-               'virtserialport,bus=clanker-serial.0,chardev=proof,name=clanker.result']
+               '-device', 'virtio-serial-pci,id=relentless-serial', '-device',
+               'virtserialport,bus=relentless-serial.0,chardev=proof,name=relentless.result']
     def limits():
         resource.setrlimit(resource.RLIMIT_CPU, (request['wallSeconds'], request['wallSeconds']))
         resource.setrlimit(resource.RLIMIT_FSIZE, (65536, 65536))

@@ -56,7 +56,8 @@ export function verifyAccess(
   baseUrl?: string,
 ): void {
   if (billing === "local") {
-    if (provider !== "clanker-local") throw new Error("Invalid local provider");
+    if (provider !== "relentless-local")
+      throw new Error("Invalid local provider");
     return;
   }
   if (auth === undefined)
@@ -150,7 +151,7 @@ export async function createPiWorker(
     const model = runtime.getModel(candidate.provider, candidate.model);
     if (!model)
       throw new Error(
-        `Unknown model ${candidate.provider}/${candidate.model}; run pnpm clanker models`,
+        `Unknown model ${candidate.provider}/${candidate.model}; run pnpm relentless models`,
       );
     const auth = await runtime.checkAuth(candidate.provider, {
       signal: AbortSignal.timeout(15_000),
@@ -186,8 +187,8 @@ export async function createPiWorker(
               "X-XAI-Token-Auth": "xai-grok-cli",
               "x-authenticateresponse": "authenticate-response",
               "x-grok-client-version": PI_VERSION,
-              "x-grok-client-identifier": "clanker",
-              "User-Agent": `clanker pi/${PI_VERSION}`,
+              "x-grok-client-identifier": "relentless",
+              "User-Agent": `relentless pi/${PI_VERSION}`,
             },
           }
         : localHeaders

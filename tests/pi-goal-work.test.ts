@@ -36,7 +36,7 @@ async function fixture() {
   await writeFile(
     join(root, ".pi/settings.json"),
     JSON.stringify({
-      clanker: {
+      relentless: {
         version: 1,
         routing: { candidates },
         roles: { coder: ["author"], reviewer: ["a", "b"] },
@@ -380,9 +380,9 @@ test.each(["author", "a"])(
 );
 test("Pi command exposes the goal handoff without starting its executor", async () => {
   const f = await fixture();
-  const { clankerCommand } = await import("../src/pi-extension.js");
+  const { relentlessCommand } = await import("../src/pi-extension.js");
   const messages: { message: string; level: string | undefined }[] = [];
-  await clankerCommand(
+  await relentlessCommand(
     `goal-work ${f.input}`,
     {
       ...f.context,

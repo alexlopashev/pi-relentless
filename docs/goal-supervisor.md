@@ -4,7 +4,7 @@ Status: the tool-free subset is implemented: SQLite goals/events, revisions, exp
 
 ## Persistence contract
 
-Clanker must retain a goal until its acceptance criteria are verified or the user cancels or supersedes it. A worker crash, provider outage, exhausted quota, failed resume, or denied action must not silently discard the goal or report it complete. Persist progress and the reason work cannot currently advance. Keep independent authorized tasks running where possible.
+Relentless must retain a goal until its acceptance criteria are verified or the user cancels or supersedes it. A worker crash, provider outage, exhausted quota, failed resume, or denied action must not silently discard the goal or report it complete. Persist progress and the reason work cannot currently advance. Keep independent authorized tasks running where possible.
 
 Goal persistence does not mean an endless stream of model calls. Workers have bounded attempts and runtime; the supervisor retains the goal and waits for a meaningful trigger when those limits are reached. If no authorized solution exists within current constraints, keep the goal blocked and explain what must change. Neither a local model nor a new provider can guarantee that an impossible or restricted task will become feasible.
 
@@ -41,7 +41,7 @@ A pending approval, active command, or long model response must not be mistaken 
 
 ## Retry and fallback rules
 
-Use structured adapter error categories first. For retryable errors, apply bounded exponential backoff with jitter and honor provider retry-after values. Persist cooldowns and attempt counts so restarting Clanker cannot reset them. Use a provider circuit breaker to suppress repeated failures; permit a small probe after cooldown. Avoid waking every task simultaneously when a quota window resets.
+Use structured adapter error categories first. For retryable errors, apply bounded exponential backoff with jitter and honor provider retry-after values. Persist cooldowns and attempt counts so restarting Relentless cannot reset them. Use a provider circuit breaker to suppress repeated failures; permit a small probe after cooldown. Avoid waking every task simultaneously when a quota window resets.
 
 Route selection must still satisfy access, capabilities, model/effort floors, data destination constraints, permissions and billing. A change of model, provider, adapter or session does not reset task budgets or erase a denial. Metered fallback remains opt-in. Unknown quota is not unlimited; unknown reset times use conservative bounded probes rather than invented capacity.
 
@@ -107,15 +107,15 @@ Track recovery latency, duplicate-action count, lost-checkpoint count, unnecessa
 A task may now declare `acceptance.kind: "workflow"` with a complete execution
 contract digest, a review task and a review-pair budget. The text supervisor skips
 these tasks without spending attempts or accepting textual claims of success.
-Use Pi's `/clanker goal-work` to create the bound workflow; see
+Use Pi's `/relentless goal-work` to create the bound workflow; see
 [the handoff contract](pi-package.md#goal-to-workflow-handoff--cycle-060).
-Use `/clanker goal-admit <coding-id>` after verification to admit the artifact and
+Use `/relentless goal-admit <coding-id>` after verification to admit the artifact and
 unlock dependencies. Bounded dependency selection is available through
 `goal-step` below; continuous dispatch remains unfinished.
 Source/context revisions block stale work while preserving its
 creation identity; automatic migration to the new revision remains pending.
 
-`/clanker goal-sync` records unfinished workflow usage and waits in an optional
+`/relentless goal-sync` records unfinished workflow usage and waits in an optional
 `workflowProgress` observation. The text supervisor preserves it and still skips
 workflow execution. Its counters are not additive with admitted task attempts;
 resuming work must consult the coding/workflow journals. Historical observations
@@ -127,7 +127,7 @@ the cached observation as fresh execution authority. Manual `goal-sync` remains
 available. `goal-step` below also collects after its action; periodic collection
 and continuous dependency dispatch remain unfinished.
 
-Cycle 064 adds `/clanker goal-step <goal-id>` for one bounded workflow action.
+Cycle 064 adds `/relentless goal-step <goal-id>` for one bounded workflow action.
 Tasks opt in with declared files and a verification file under workflow acceptance.
 The deterministic planner skips cooling/blocked work and checks current verified
 dependencies. A shared supervisor lease fences all result publication. Admission
@@ -136,7 +136,7 @@ hashes. This supersedes the earlier absence of dependency selection; periodic
 wakeups, automatic source promotion and revision migration remain unimplemented.
 See [Pi scheduling](pi-package.md#bounded-goal-scheduling--cycle-064).
 
-Cycle 066 adds `/clanker goal-run <goal-id>` to advance multiple workflow stages
+Cycle 066 adds `/relentless goal-run <goal-id>` to advance multiple workflow stages
 and wait on known retry times in one foreground invocation. The controller needs
 no LLM for waiting, and resumes saved work when explicitly restarted. Untimed
 blocks return `needs_attention`; source promotion and automatic process/service
@@ -155,7 +155,7 @@ and representative full-workflow efficiency evidence remain unfinished. See
 Cycle 069 adds explicit Pi session-start restart intent via project `resumeGoal`
 with an exact goal ID/revision and execution-aware configuration confirmation.
 Session cancellation and exact settings checks fence resumed work; the native
-installer also checks settings authorization. `/clanker pause` is available while
+installer also checks settings authorization. `/relentless pause` is available while
 busy. This is Pi lifecycle attachment, not an OS service or forced takeover of
 draining work. Revision migration, representative calibration and measured
 full-workflow efficiency remain open. See

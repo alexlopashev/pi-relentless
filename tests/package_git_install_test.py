@@ -9,7 +9,7 @@ import subprocess
 import tempfile
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-with tempfile.TemporaryDirectory(prefix="clanker-git-install-") as temp:
+with tempfile.TemporaryDirectory(prefix="relentless-git-install-") as temp:
     package = pathlib.Path(temp) / "package"
     package.mkdir()
     for name in ("package.json", "tsconfig.json", "tsconfig.build.json"):
@@ -36,8 +36,8 @@ const probe=join(cwd,'probe.ts');
 await writeFile(probe, `import {processWorker} from ${JSON.stringify(resolve('src/process-worker.ts'))};
 export default async function(){try{await processWorker({config:{timeoutMs:1000},selection:{candidate:{billing:'subscription'}}},new AbortController().signal);throw Error('Unexpected success');}catch(e){if(e.kind!=='unknown')throw e;}}`);
 const loaded=await discoverAndLoadExtensions([...manifest.pi.extensions.map(p=>resolve(p)),probe],cwd,join(cwd,'agent'));
-assert.deepEqual(loaded.errors,[]);assert.ok(loaded.extensions.some(e=>e.commands.has('clanker')));
-assert.ok(loadSkillsFromDir({dir:resolve('skills'),source:'git-install'}).skills.some(s=>s.name==='clanker-configure'));
+assert.deepEqual(loaded.errors,[]);assert.ok(loaded.extensions.some(e=>e.commands.has('relentless')));
+assert.ok(loadSkillsFromDir({dir:resolve('skills'),source:'git-install'}).skills.some(s=>s.name==='relentless-configure'));
 console.log('Fresh source installation: extensions, skill, demo and worker validation passed.');
 '''
     subprocess.run(["node", "--input-type=module", "-"], input=script, text=True, cwd=package, env=env, check=True)

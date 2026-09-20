@@ -1,6 +1,6 @@
 # Execution isolation status
 
-General behavioral project execution is not enabled. A QEMU TCG prototype now runs a pinned Node runtime and fixed supervised tests of one reviewed Clanker helper; it is not yet a production verification backend. Coding workers run fixed host syntax/JSON checks only; passing them is not evidence that project behavior is correct. A Git worktree is not an execution sandbox.
+General behavioral project execution is not enabled. A QEMU TCG prototype now runs a pinned Node runtime and fixed supervised tests of one reviewed Relentless helper; it is not yet a production verification backend. Coding workers run fixed host syntax/JSON checks only; passing them is not evidence that project behavior is correct. A Git worktree is not an execution sandbox.
 
 ## Verified environment probe — 2026-09-17
 
@@ -12,7 +12,7 @@ The first attempt also established a Colima configuration detail: in version 0.1
 
 ## Required verification before enabling project execution
 
-A backend must run successfully before Clanker treats behavioral tests as available. Verification must cover an immutable runtime image, only explicitly supplied project inputs, no provider credentials or host control socket, disabled network by default, an unprivileged process, bounded CPU/memory/process count/output/time, reliable cancellation/cleanup, and attempts to access resources outside the supplied workspace. Results must bind to the exact tested source and immutable acceptance specification.
+A backend must run successfully before Relentless treats behavioral tests as available. Verification must cover an immutable runtime image, only explicitly supplied project inputs, no provider credentials or host control socket, disabled network by default, an unprivileged process, bounded CPU/memory/process count/output/time, reliable cancellation/cleanup, and attempts to access resources outside the supplied workspace. Results must bind to the exact tested source and immutable acceptance specification.
 
 A configured endpoint or passing argument-construction unit test is insufficient. The backend needs an actual isolation and failure-recovery demonstration. A user-provided running container backend or separately authorized remote runner can later satisfy this requirement. No cloud resource, remote runner, background service or unrestricted project shell has been enabled.
 
@@ -49,8 +49,8 @@ This remains a supervised fixed-code experiment. Protected OS exit status and fi
 
 ## Experimental reusable supervisor — cycle 024
 
-`clanker verify-vm run <manifest.json> <new-directory>` now runs a prepared,
-operator-reviewed ARM64 guest image. `clanker verify-vm status <directory>` reads
+`relentless verify-vm run <manifest.json> <new-directory>` now runs a prepared,
+operator-reviewed ARM64 guest image. `relentless verify-vm status <directory>` reads
 its terminal record or reports an unfinished run as ambiguous. This is an explicit
 experimental command, not an enabled coding-workflow backend.
 
@@ -60,7 +60,7 @@ The strict manifest contains `version: 1`, absolute `emulator`, `kernel` and
 files; kernel, image and emulator are copied into a new private run directory and
 checked against their declared hashes. The emulator snapshot is executed. Its
 installed shared libraries and firmware are not included in the binary hash.
-The image must implement the reviewed `/clanker-init` protocol from cycle 023:
+The image must implement the reviewed `/relentless-init` protocol from cycle 023:
 unprivileged test process, closed result descriptor, and a root-only virtio port
 reporting exactly `exitCode`, `candidateSha256`, and `testSha256`.
 
@@ -94,7 +94,7 @@ are the next implementation steps.
 
 ## Reusable source and test packaging — cycle 025
 
-`clanker verify-vm package <package.json> <new-directory>` now creates a prepared
+`relentless verify-vm package <package.json> <new-directory>` now creates a prepared
 image and `manifest.json` for `verify-vm run`. Packaging launches no emulator and
 executes no supplied source or tests. The package request contains:
 
@@ -121,7 +121,7 @@ manifest is published. Existing output directories are never overwritten.
 
 The base is still an operator-reviewed executable artifact. It must supply the
 compatible BusyBox/Node runtime and must not contain conflicting `/workspace` or
-`/clanker-proof` entries, symlink ancestors or alternate startup behavior. The
+`/relentless-proof` entries, symlink ancestors or alternate startup behavior. The
 builder does not inspect or certify arbitrary base archives. The live example
 reuses the reviewed cycle-023 image; its earlier fixture files remain in that
 base, though the new controller and workspace drive this run.
@@ -141,7 +141,7 @@ workflow. This command does not yet transition workflows or promote changes.
 
 ## Binding a reviewed coding checkpoint — cycle 026
 
-`clanker workflow package <coding-id> <specification.json> <new-directory>` now
+`relentless workflow package <coding-id> <specification.json> <new-directory>` now
 selects the exact saved candidate from the project's coding/workflow journals and
 calls the package builder. The specification uses the cycle-025 package shape
 without `sources`: callers supply pinned runtime artifacts, tests, entrypoint and
@@ -176,7 +176,7 @@ bundle digests and a reaped emulator. Evidence is in `.harness/self-improve-026/
 
 ## Declared-rule workflow verification — cycle 027
 
-`clanker workflow verify <coding-id> <execution.json> <new-directory>` now performs
+`relentless workflow verify <coding-id> <execution.json> <new-directory>` now performs
 checkpoint selection, packaging, VM execution and evidence assessment in one
 command. Its strict execution specification is:
 

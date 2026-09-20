@@ -14,9 +14,9 @@ test("Pi extension and workers share the same loopback-only local catalog", asyn
     },
   });
   registerLocalProvider(runtime);
-  const first = runtime.getModel("clanker-local", "qwen3.5-4b");
-  runtime.registerProvider("clanker-local", localCatalog());
-  expect(runtime.getModel("clanker-local", "qwen3.5-4b")).toEqual(first);
+  const first = runtime.getModel("relentless-local", "qwen3.5-4b");
+  runtime.registerProvider("relentless-local", localCatalog());
+  expect(runtime.getModel("relentless-local", "qwen3.5-4b")).toEqual(first);
   expect(first?.baseUrl).toBe("http://127.0.0.1:18080/v1");
   expect(first?.reasoning).toBe(false);
 });

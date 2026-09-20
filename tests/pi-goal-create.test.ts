@@ -14,7 +14,7 @@ const routing = {
   candidates: [
     {
       name: "local",
-      provider: "clanker-local",
+      provider: "relentless-local",
       model: "qwen3.5-4b",
       billing: "local",
       enabled: true,
@@ -44,7 +44,7 @@ async function fixture() {
   await mkdir(join(cwd, ".pi"));
   await writeFile(
     join(cwd, ".pi/settings.json"),
-    JSON.stringify({ clanker: { version: 1, routing, roles: {} } }),
+    JSON.stringify({ relentless: { version: 1, routing, roles: {} } }),
   );
   return { cwd, isProjectTrusted: () => true };
 }
@@ -85,10 +85,10 @@ test("creation rejects routing overrides, malformed contracts, cancelled or untr
 });
 
 test("Pi command exposes the saved goal ID without dispatching", async () => {
-  const { clankerCommand } = await import("../src/pi-extension.js");
+  const { relentlessCommand } = await import("../src/pi-extension.js");
   const context = await fixture();
   const messages: string[] = [];
-  await clankerCommand(
+  await relentlessCommand(
     `goal-create ${JSON.stringify(input)}`,
     {
       ...context,

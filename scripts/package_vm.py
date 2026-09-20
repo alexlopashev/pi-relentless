@@ -61,16 +61,16 @@ set -eu
 /bin/busybox mkdir -p /tmp
 /bin/busybox chmod 1777 /tmp
 exec 3>/dev/vport0p1
-/bin/busybox sha256sum -c /clanker-proof/checksums >/dev/null
+/bin/busybox sha256sum -c /relentless-proof/checksums >/dev/null
 if (exec 3>&-; /bin/busybox setpriv --no-new-privs /bin/busybox su -s /bin/sh nobody -c 'cd /workspace; ulimit -u 32; ulimit -f 2048; ulimit -t 15; exec /usr/local/bin/node --max-old-space-size=64 ./ENTRYPOINT'); then
   status=0
 else
   status=$?
 fi
-/bin/busybox sha256sum -c /clanker-proof/checksums >/dev/null
-candidate=$(/bin/busybox sha256sum /clanker-proof/sources.json)
+/bin/busybox sha256sum -c /relentless-proof/checksums >/dev/null
+candidate=$(/bin/busybox sha256sum /relentless-proof/sources.json)
 candidate=${candidate%% *}
-tests=$(/bin/busybox sha256sum /clanker-proof/tests.json)
+tests=$(/bin/busybox sha256sum /relentless-proof/tests.json)
 tests=${tests%% *}
 printf '{"exitCode":%s,"candidateSha256":"%s","testSha256":"%s"}\\n' "$status" "$candidate" "$tests" >&3
 exec 3>&-
@@ -125,12 +125,12 @@ def build(request, directory):
     files['workspace'] = (stat.S_IFDIR | 0o555, b'')
     for parent in parents:
         files['workspace/' + parent] = (stat.S_IFDIR | 0o555, b'')
-    files['clanker-proof'] = (stat.S_IFDIR | 0o700, b'')
-    files['clanker-proof/sources.json'] = (stat.S_IFREG | 0o400, bundles['sources'])
-    files['clanker-proof/tests.json'] = (stat.S_IFREG | 0o400, bundles['tests'])
+    files['relentless-proof'] = (stat.S_IFDIR | 0o700, b'')
+    files['relentless-proof/sources.json'] = (stat.S_IFREG | 0o400, bundles['sources'])
+    files['relentless-proof/tests.json'] = (stat.S_IFREG | 0o400, bundles['tests'])
     checksums = ''.join(f"{hashlib.sha256(files['workspace/' + name][1]).hexdigest()}  /workspace/{name}\n" for name in sorted(names))
-    files['clanker-proof/checksums'] = (stat.S_IFREG | 0o400, checksums.encode())
-    files['clanker-init'] = (stat.S_IFREG | 0o700, controller(entrypoint))
+    files['relentless-proof/checksums'] = (stat.S_IFREG | 0o400, checksums.encode())
+    files['relentless-init'] = (stat.S_IFREG | 0o700, controller(entrypoint))
     directory.mkdir(mode=0o700)
     atomic(directory / 'package.json', request)
     image = directory / 'image.initramfs'

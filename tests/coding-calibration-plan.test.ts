@@ -71,7 +71,7 @@ test("Pi plans from project roles and scope without accepting request-supplied r
   const { mkdtemp, mkdir, writeFile, realpath } =
     await import("node:fs/promises");
   const { tmpdir } = await import("node:os");
-  const { clankerCommand } = await import("../src/pi-extension.js");
+  const { relentlessCommand } = await import("../src/pi-extension.js");
   const root = await mkdtemp(join(tmpdir(), "pi-calibration-"));
   await mkdir(join(root, ".pi"));
   const contract = fixture();
@@ -82,7 +82,7 @@ test("Pi plans from project roles and scope without accepting request-supplied r
   await writeFile(
     join(root, ".pi/settings.json"),
     JSON.stringify({
-      clanker: {
+      relentless: {
         version: 1,
         routing: { candidates, allowMetered: false },
         roles: { coder: ["a", "b"], reviewer: ["review-a", "review-b"] },
@@ -124,19 +124,19 @@ test("Pi plans from project roles and scope without accepting request-supplied r
       },
     },
   };
-  await clankerCommand("calibration-plan " + JSON.stringify(input), context);
+  await relentlessCommand("calibration-plan " + JSON.stringify(input), context);
   const result: unknown = JSON.parse(notices[0]?.message ?? "null");
   expect(result).toMatchObject({ dispatched: false, persisted: false });
   expect(result).toHaveProperty("trials.length", 8);
   notices.length = 0;
-  await clankerCommand(
+  await relentlessCommand(
     "calibration-plan " +
       JSON.stringify({ ...input, config: { candidates, allowMetered: true } }),
     context,
   );
   expect(notices[0]?.type).toBe("error");
   notices.length = 0;
-  await clankerCommand(
+  await relentlessCommand(
     "calibration-plan " +
       JSON.stringify({
         ...input,
@@ -149,7 +149,7 @@ test("Pi plans from project roles and scope without accepting request-supplied r
   );
   expect(notices[0]?.type).toBe("error");
   notices.length = 0;
-  await clankerCommand("calibration-plan " + JSON.stringify(input), {
+  await relentlessCommand("calibration-plan " + JSON.stringify(input), {
     ...context,
     models: () => ({
       ...context.models(),
@@ -176,7 +176,7 @@ test("Pi can persist a cohort without inference and read it after the model regi
   const { mkdtemp, mkdir, writeFile, realpath } =
     await import("node:fs/promises");
   const { tmpdir } = await import("node:os");
-  const { clankerCommand } = await import("../src/pi-extension.js");
+  const { relentlessCommand } = await import("../src/pi-extension.js");
   const root = await realpath(
     await mkdtemp(join(tmpdir(), "pi-cohort-create-")),
   );
@@ -189,7 +189,7 @@ test("Pi can persist a cohort without inference and read it after the model regi
   await writeFile(
     join(root, ".pi/settings.json"),
     JSON.stringify({
-      clanker: {
+      relentless: {
         version: 1,
         routing: { candidates },
         roles: { coder: ["a", "b"], reviewer: ["review-a", "review-b"] },
@@ -226,7 +226,10 @@ test("Pi can persist a cohort without inference and read it after the model regi
       },
     },
   };
-  await clankerCommand("calibration-create " + JSON.stringify(input), context);
+  await relentlessCommand(
+    "calibration-create " + JSON.stringify(input),
+    context,
+  );
   expect(notices[0]?.type).toBe("info");
   const created: unknown = JSON.parse(notices[0]?.message ?? "null");
   expect(created).toMatchObject({
@@ -236,7 +239,7 @@ test("Pi can persist a cohort without inference and read it after the model regi
     bindings: {},
   });
   notices.length = 0;
-  await clankerCommand("calibration-status " + input.id, {
+  await relentlessCommand("calibration-status " + input.id, {
     ...context,
     models: () => {
       throw new Error("offline");
@@ -244,7 +247,7 @@ test("Pi can persist a cohort without inference and read it after the model regi
   });
   expect(JSON.parse(notices[0]?.message ?? "null") as unknown).toEqual(created);
   notices.length = 0;
-  await clankerCommand(
+  await relentlessCommand(
     "calibration-create " + JSON.stringify({ ...input, repeats: 1 }),
     context,
   );

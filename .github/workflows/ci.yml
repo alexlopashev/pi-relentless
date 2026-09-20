@@ -22,4 +22,4 @@ jobs:
           mkdir -p .harness/releases
           npm pack --pack-destination .harness/releases
           package_store=$(pnpm store path)
-          python3 tests/package_release_test.py .harness/releases/clanker-0.1.0-alpha.2.tgz "$(dirname "$package_store")"
+          python3 tests/package_release_test.py .harness/releases/relentless-0.1.0-alpha.3.tgz "$(dirname "$package_store")"

@@ -32,7 +32,7 @@ it("requires explicit opt-in for metered calls even with OAuth", () => {
 });
 it("permits keyless local inference only for the dedicated local provider", () => {
   expect(() => {
-    verifyAccess("clanker-local", "local", undefined, false);
+    verifyAccess("relentless-local", "local", undefined, false);
   }).not.toThrow();
   expect(() => {
     verifyAccess("xai", "local", undefined, false);

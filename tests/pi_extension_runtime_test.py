@@ -13,14 +13,14 @@ import {mkdtemp,mkdir,writeFile,readFile,access,rm,readdir} from 'node:fs/promis
 import {tmpdir} from 'node:os';
 import {join,resolve} from 'node:path';
 import assert from 'node:assert/strict';
-const root=await mkdtemp(join(tmpdir(),'clanker-proposal-tool-'));
+const root=await mkdtemp(join(tmpdir(),'relentless-proposal-tool-'));
 try {
- const loaded=await discoverAndLoadExtensions([resolve('.pi/extensions/clanker.ts')],root,join(root,'agent'));
+ const loaded=await discoverAndLoadExtensions([resolve('.pi/extensions/relentless.ts')],root,join(root,'agent'));
  assert.equal(loaded.errors.length,0);
- const extension=loaded.extensions.find(e=>e.tools.has('clanker_config_propose'));
+ const extension=loaded.extensions.find(e=>e.tools.has('relentless_config_propose'));
  assert.ok(extension,'Missing model-callable configuration proposal');
- assert.ok(!extension.tools.has('clanker_config_apply'));
- const tool=extension.tools.get('clanker_config_propose').definition;
+ assert.ok(!extension.tools.has('relentless_config_apply'));
+ const tool=extension.tools.get('relentless_config_propose').definition;
  const configuration={version:1,routing:{candidates:[{name:'candidate',provider:'p',model:'m',billing:'subscription',enabled:false,quality:1,preference:1,efforts:['low']}]},roles:{coder:['candidate']}};
  let trusted=false;
  const context={cwd:root,signal:undefined,isProjectTrusted:()=>trusted,scopedModels:[],modelRegistry:{getAvailable:()=>[{provider:'p',id:'m',reasoning:true}],getAll:()=>[{provider:'p',id:'m',reasoning:true}]},ui:{confirm:()=>{throw Error('No confirmation allowed');}}};
@@ -42,7 +42,7 @@ try {
  assert.equal(body.reviewCoverage.scope,'current_role_pools');
  assert.equal(body.reviewCoverage.allEligibleAuthors.sufficient,false);
  assert.match(body.id,/^[a-f0-9]{64}$/);
- assert.equal(body.applyCommand,'/clanker config-apply '+body.id);
+ assert.equal(body.applyCommand,'/relentless config-apply '+body.id);
  assert.equal(await readFile(join(root,'.pi/settings.json'),'utf8'),before);
  const saved=JSON.parse(await readFile(join(root,'.harness/config-proposals',body.id+'.json'),'utf8'));
  assert.equal(saved.id,body.id);assert.equal(saved.before,null);assert.equal(saved.after.routing.candidates[0].enabled,false);
@@ -67,13 +67,13 @@ import {mkdtemp,mkdir,writeFile,readFile,access,rm} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join,resolve} from 'node:path';
 import assert from 'node:assert/strict';
-const root=await mkdtemp(join(tmpdir(),'clanker-inventory-tool-'));
+const root=await mkdtemp(join(tmpdir(),'relentless-inventory-tool-'));
 try {
- const loaded=await discoverAndLoadExtensions([resolve('.pi/extensions/clanker.ts')],root,join(root,'agent'));
+ const loaded=await discoverAndLoadExtensions([resolve('.pi/extensions/relentless.ts')],root,join(root,'agent'));
  assert.equal(loaded.errors.length,0);
- const extension=loaded.extensions.find(e=>e.tools.has('clanker_inventory'));
+ const extension=loaded.extensions.find(e=>e.tools.has('relentless_inventory'));
  assert.ok(extension,'Missing model-callable inventory tool');
- const tool=extension.tools.get('clanker_inventory').definition;
+ const tool=extension.tools.get('relentless_inventory').definition;
  const models=Array.from({length:25},(_,i)=>({provider:'test',id:'model-'+i,reasoning:false}));
  let trusted=true;
  const context={cwd:root,signal:undefined,isProjectTrusted:()=>trusted,scopedModels:[],modelRegistry:{getAvailable:()=>models,getAll:()=>models}};
@@ -94,7 +94,7 @@ try {
  trusted=true;
  await assert.rejects(run({},AbortSignal.abort()));
  await mkdir(join(root,'.pi'));
- await writeFile(join(root,'.pi/settings.json'),'{"clanker":{"version":999},"privateMarker":"DO_NOT_EXPOSE"}');
+ await writeFile(join(root,'.pi/settings.json'),'{"relentless":{"version":999},"privateMarker":"DO_NOT_EXPOSE"}');
  await assert.rejects(run(),error=>!String(error).includes('DO_NOT_EXPOSE'));
  const before=await readFile(join(root,'.pi/settings.json'),'utf8');
  assert.ok(before.includes('DO_NOT_EXPOSE'));
@@ -117,7 +117,7 @@ import {discoverAndLoadExtensions} from '@earendil-works/pi-coding-agent';
 import {mkdtemp,writeFile} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join,resolve} from 'node:path';
-const root=await mkdtemp(join(tmpdir(),'clanker-pi-worker-'));
+const root=await mkdtemp(join(tmpdir(),'relentless-pi-worker-'));
 const extension=join(root,'probe.ts');
 await writeFile(extension, `import {processWorker} from ${JSON.stringify(resolve('src/process-worker.ts'))};
 export default async function () {
@@ -128,16 +128,16 @@ export default async function () {
     if(error.kind!=='unknown')throw Error('Worker validation was not reached: '+error.kind);
   }
 }`);
-const result=await discoverAndLoadExtensions([extension,resolve('.pi/extensions/clanker.ts')],root,join(root,'agent'));
+const result=await discoverAndLoadExtensions([extension,resolve('.pi/extensions/relentless.ts')],root,join(root,'agent'));
 if(result.errors.length)throw Error(JSON.stringify(result.errors));
-if(!result.extensions.some(e=>e.commands.has('clanker')))throw Error('Missing command');
+if(!result.extensions.some(e=>e.commands.has('relentless')))throw Error('Missing command');
 const {mkdir}=await import('node:fs/promises');
 await mkdir(join(root,'.pi'));
 await writeFile(join(root,'x.ts'),'export const x=1;');
 const names=['author','review-a','review-b'];
 const candidates=names.map(name=>({name,provider:name,model:name,billing:'subscription',enabled:true,quality:1,preference:1,efforts:['low']}));
-await writeFile(join(root,'.pi/settings.json'),JSON.stringify({clanker:{version:1,routing:{candidates,maxConcurrency:1},roles:{coder:['author'],reviewer:['review-a','review-b']}}}));
-const command=result.extensions.flatMap(e=>[...e.commands.values()]).find(c=>c.name==='clanker');
+await writeFile(join(root,'.pi/settings.json'),JSON.stringify({relentless:{version:1,routing:{candidates,maxConcurrency:1},roles:{coder:['author'],reviewer:['review-a','review-b']}}}));
+const command=result.extensions.flatMap(e=>[...e.commands.values()]).find(c=>c.name==='relentless');
 let notice;
 const task={id:'fix',prompt:'Fix x',minQuality:1,effort:'low'};
 await command.handler('create '+JSON.stringify({task,files:[{path:'x.ts',writable:true}],maxAttempts:1,reviewTask:{...task,id:'review'},maxReviewPairs:1}),{

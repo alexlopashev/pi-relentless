@@ -1,6 +1,6 @@
 # Bounded coding workers
 
-`clanker code` performs a user-initiated coding run: snapshot explicitly named files → ask the selected model for replacements → validate the entire edit batch → apply it to a private copy → check syntax → feed failed checks back, within an attempt limit → save a review candidate. The original project is never modified. This is implemented; unrestricted shell agents and automatic integration are not.
+`relentless code` performs a user-initiated coding run: snapshot explicitly named files → ask the selected model for replacements → validate the entire edit batch → apply it to a private copy → check syntax → feed failed checks back, within an attempt limit → save a review candidate. The original project is never modified. This is implemented; unrestricted shell agents and automatic integration are not.
 
 ```sh
 mise exec -- pnpm build
@@ -147,7 +147,7 @@ Failed review reports now identify the selected route and stage (routing, infere
 
 ## Persisted coding and review workflow
 
-Create a workflow for an existing coding run with `clanker workflow create <coding-id> <workflow.json>`, then use `clanker workflow resume <coding-id>` and `clanker workflow status <coding-id>`. The strict JSON file contains `review` (the same task/config object accepted by coding review) and an explicit `maxReviewPairs` between 1 and 5. Creation makes no inference calls. Resume uses the saved coding and reviewer configurations, preserving their billing permissions and effort constraints.
+Create a workflow for an existing coding run with `relentless workflow create <coding-id> <workflow.json>`, then use `relentless workflow resume <coding-id>` and `relentless workflow status <coding-id>`. The strict JSON file contains `review` (the same task/config object accepted by coding review) and an explicit `maxReviewPairs` between 1 and 5. Creation makes no inference calls. Resume uses the saved coding and reviewer configurations, preserving their billing permissions and effort constraints.
 
 A resume advances coding, two-provider review, and repairs from structured findings within the original cumulative coding budget and reserved review-pair budget. SQLite checkpoints preserve requirements, reports, repair intent and quota retry times. External revisions block the workflow; a changed candidate invalidates its verification handoff. Artifact references retain the latest 20 projections; older projection directories are not deleted.
 

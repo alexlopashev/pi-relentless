@@ -1,6 +1,6 @@
 {
-  "name": "clanker",
-  "version": "0.1.0-alpha.2",
+  "name": "relentless",
+  "version": "0.1.0-alpha.3",
   "private": true,
   "type": "module",
   "packageManager": "pnpm@11.19.0",
@@ -17,7 +17,7 @@
     "coverage": "vitest run --coverage",
     "ci": "pnpm format-check && pnpm lint && pnpm typecheck && pnpm coverage && pnpm build",
     "demo": "node dist/cli.js demo",
-    "clanker": "node dist/cli.js",
+    "relentless": "node dist/cli.js",
     "prepack": "pnpm build && node scripts/prepare-package.mjs",
     "prepare": "node scripts/prepare-install.mjs"
   },
@@ -44,7 +44,7 @@
       "./skills"
     ],
     "extensions": [
-      "./.pi/extensions/clanker.ts",
+      "./.pi/extensions/relentless.ts",
       "./.pi/extensions/meta-provider.ts",
       "./.pi/extensions/personal-catalog.ts",
       "./.pi/extensions/local-provider.ts"
@@ -55,7 +55,7 @@
     "src/",
     "skills/",
     "docs/",
-    ".pi/extensions/clanker.ts",
+    ".pi/extensions/relentless.ts",
     ".pi/extensions/meta-provider.ts",
     ".pi/extensions/personal-catalog.ts",
     ".pi/extensions/local-provider.ts",

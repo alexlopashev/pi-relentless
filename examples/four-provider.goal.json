@@ -38,7 +38,7 @@
       },
       {
         "name": "local",
-        "provider": "clanker-local",
+        "provider": "relentless-local",
         "model": "qwen3.5-4b",
         "billing": "local",
         "enabled": true,
@@ -106,7 +106,7 @@
       "prompt": "Review this JavaScript function against the rule that adulthood starts at age 18, inclusive: function isAdult(age) { return age > 18; }. Return raw JSON with fixedExpression (the corrected comparison using variable age), testInput (the boundary age), testExpected (the expected boolean). No tools or file operations.",
       "minQuality": 1,
       "effort": "off",
-      "provider": "clanker-local",
+      "provider": "relentless-local",
       "model": "qwen3.5-4b",
       "acceptance": {
         "kind": "json",

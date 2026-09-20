@@ -148,9 +148,9 @@ test("uses the frozen execution contract and reconciles verified work without an
     },
   );
   expect(recovered).toMatchObject({ phase: "verified", action: "reconciled" });
-  const { clankerCommand } = await import("../src/pi-extension.js");
+  const { relentlessCommand } = await import("../src/pi-extension.js");
   const notices: { message: string; type: string }[] = [];
-  await clankerCommand(
+  await relentlessCommand(
     "calibration-step " +
       JSON.stringify({ cohortId: f.input.id, trialId: f.trial.id }),
     {
@@ -195,7 +195,11 @@ test("session shutdown and revoked author role prevent dispatch", async () => {
   await writeFile(
     join(f.root, ".pi/settings.json"),
     JSON.stringify({
-      clanker: { version: 1, routing: f.input.config, roles: { coder: ["b"] } },
+      relentless: {
+        version: 1,
+        routing: f.input.config,
+        roles: { coder: ["b"] },
+      },
     }),
   );
   await expect(

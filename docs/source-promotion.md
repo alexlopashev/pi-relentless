@@ -1,6 +1,6 @@
 # Recoverable source promotion — cycle 029
 
-`clanker workflow promote <coding-id> <promotion-directory>` installs the frozen
+`relentless workflow promote <coding-id> <promotion-directory>` installs the frozen
 candidate from a verified workflow. It revalidates the saved verification proof
 and exact coding checkpoint before invoking the filesystem writer. Repeating the
 same command and directory resumes the saved transaction; it does not run models
@@ -25,7 +25,7 @@ The coding workflow accepts explicit `create: true` declarations for files in
 existing parents. Deletes and new parent directories remain unsupported.
 
 Successful fixture installations and process-death recovery are tested. The real
-Clanker candidate was correctly rejected because a readonly context file had
+Relentless candidate was correctly rejected because a readonly context file had
 changed since review: both tracked files stayed unchanged and no filesystem
 transaction began. This cycle does not claim a successful live repository
 installation. Broader goal-ledger orchestration and measured routing remain work

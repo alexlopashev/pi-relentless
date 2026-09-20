@@ -33,7 +33,7 @@ async function fixture() {
   await writeFile(
     join(cwd, ".pi/settings.json"),
     JSON.stringify({
-      clanker: {
+      relentless: {
         version: 1,
         routing: { candidates },
         roles: { coder: ["author"], reviewer: ["r1", "r2"] },
@@ -126,9 +126,9 @@ test("missing or untrusted status never initializes a journal", async () => {
 
 test("Pi status command reports an existing goal without dispatch", async () => {
   const { goalId, context } = await fixture();
-  const { clankerCommand } = await import("../src/pi-extension.js");
+  const { relentlessCommand } = await import("../src/pi-extension.js");
   const messages: string[] = [];
-  await clankerCommand(
+  await relentlessCommand(
     `goal-status ${goalId}`,
     {
       ...context,

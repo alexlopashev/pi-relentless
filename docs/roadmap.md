@@ -61,9 +61,9 @@ Durability progress: SQLite state/events, goal revisions, constrained provider f
 
 Provider smoke progress: Claude Code Opus 5, Pi OpenAI Codex GPT-5.6 Luna and local Qwen3.5 4B returned checked results. Grok authentication succeeded but inference returned HTTP 403. Native Codex startup failed in this sandbox. Claude included-only billing remains unverified and now blocks future calls without explicit metered authorization. See [evidence](four-provider-smoke.md). M1-A remains incomplete.
 
-Self-improvement checkpoint: the first assisted find/reproduce/fix/review/gate cycle passed on Clanker's own classifier. This is evidence for the review workflow, not completion of M1's isolated coding worker or autonomous repair loop. See [cycle evidence](self-improvement.md).
+Self-improvement checkpoint: the first assisted find/reproduce/fix/review/gate cycle passed on Relentless's own classifier. This is evidence for the review workflow, not completion of M1's isolated coding worker or autonomous repair loop. See [cycle evidence](self-improvement.md).
 
-Coding-worker checkpoint: `clanker code` implements bounded replacement edits in private file snapshots, syntax-check feedback and review artifacts. M1-C remains partial: OS-sandboxed execution, worktrees, behavioral tests and integration are still pending. The separate durable coding path now recovers frozen snapshots with cumulative budgets and fenced writes. See [implemented scope](coding-workers.md).
+Coding-worker checkpoint: `relentless code` implements bounded replacement edits in private file snapshots, syntax-check feedback and review artifacts. M1-C remains partial: OS-sandboxed execution, worktrees, behavioral tests and integration are still pending. The separate durable coding path now recovers frozen snapshots with cumulative budgets and fenced writes. See [implemented scope](coding-workers.md).
 
 Self-improvement cycle 002 implemented an opt-in measured router and bounded host evaluation as M2 groundwork. It does not complete M1 or demonstrate general coding efficiency. Inventory and basic coding checkpoint recovery are now implemented. Shared provider health, execution isolation and statistically meaningful held-out evaluations remain open; see [active program](self-improvement-program.md).
 
@@ -97,14 +97,14 @@ Evaluations now checkpoint completed observations and reserve dispatches in SQLi
 
 Cycle 022 established a bootable local QEMU TCG isolation prototype with fixed unprivileged resource-fault diagnostics. It avoids the earlier VZ limitation, but project behavioral execution remains disabled until the pinned runtime and verification protocol are implemented and validated. See [execution evidence](execution-isolation.md).
 
-Cycle 023 ran pinned Node 24.21.0 and three fixed tests of the reviewed Clanker scheduler inside QEMU, with a separate privileged result channel and source/test hash checks. This supervised prototype is now accessible through the experimental prepared-image command described below; automatic project verification remains unfinished. See [execution evidence](execution-isolation.md).
+Cycle 023 ran pinned Node 24.21.0 and three fixed tests of the reviewed Relentless scheduler inside QEMU, with a separate privileged result channel and source/test hash checks. This supervised prototype is now accessible through the experimental prepared-image command described below; automatic project verification remains unfinished. See [execution evidence](execution-isolation.md).
 
 Cycle 024 adds `verify-vm run/status`: a reusable supervisor for reviewed, prepared images with pinned private snapshots, bounded execution, protected result validation and durable terminal/ambiguous records. It reports execution evidence with acceptance explicitly unassessed. Source-to-image packaging, acceptance-oracle integration, host-memory enforcement and interrupted-run reconciliation remain pending. See [execution evidence](execution-isolation.md).
 
 Cycle 025 adds `verify-vm package`: deterministic multi-file source/test overlays, an explicit test entrypoint, protected bundle digests and before/after file checks. Reviewed base images are still required. Cycle 026 adds `workflow package` to select the exact reviewed journal checkpoint and bind its source/specification hashes; Cycle 027 adds `workflow verify` with an explicit test-process exit rule and checkpoint-bound assessment. Cycle 028 consumes assessments into durable `verified`/repair states, preserves budgets, and reconciles completed assessments without replay. Cycle 029 adds explicit recoverable source promotion from verified checkpoints; see [promotion contract](source-promotion.md). Automatic orchestration and broader goal-ledger/routing integration remain pending. See [packaging contract](execution-isolation.md#reusable-source-and-test-packaging--cycle-025).
 
 Cycle 030 adds a local Pi package with explicit status/resume commands over the
-same engine, and a Clanker-authored optional verification continuation callback.
+same engine, and a Relentless-authored optional verification continuation callback.
 Full CLI verification orchestration and Pi lifecycle controls remain pending.
 See [Pi package architecture and setup](pi-package.md).
 
@@ -152,7 +152,7 @@ do not grant acceptance or capability credit. Verified coding-outcome attributio
 failed-trial accounting and automatic calibration remain pending. See
 [measurement boundaries](coding-workers.md#durable-attempt-measurements--cycle-039).
 
-Cycle 041 adds `/clanker calibration-plan <suite-json>` as a read-only Pi command.
+Cycle 041 adds `/relentless calibration-plan <suite-json>` as a read-only Pi command.
 It derives coding/review eligibility from project roles and Pi model scope, binds
 prospective source/test/runtime pins and budgets, and enumerates every declared
 model/case/repetition slot. It neither verifies artifact bytes nor persists or
@@ -183,15 +183,15 @@ visible; verified states are explicitly unadmitted and no routing observations
 are emitted. Complete workflow metrics and verified admission remain next.
 See [cohort accounting](pi-package.md#cohort-accounting--cycle-045).
 
-The Pi package now includes the discoverable `clanker-configure` skill for model
+The Pi package now includes the discoverable `relentless-configure` skill for model
 discovery, task-specific role proposals and exact configuration diffs reviewed by
 the user. It uses the existing project settings namespace and separates permission,
 availability and measurements. This is an agent-guided workflow; automatic
 background discovery and a runtime-enforced configuration approval transaction
-remain future work. See [the skill](../skills/clanker-configure/SKILL.md).
+remain future work. See [the skill](../skills/relentless-configure/SKILL.md).
 
 Cycle 046 adds explicit verified coding-cohort admission and opt-in
-`clanker.evidence.calibrations` references. Complete-cohort failed slots and unknown
+`relentless.evidence.calibrations` references. Complete-cohort failed slots and unknown
 metrics are retained; successful slots require independent reviews and bound VM
 proofs. Fenced checkpoint checks prevent stale admission commits, and loading
 revalidates evidence without importing permissions. The prospective protocol measures
@@ -309,7 +309,7 @@ and representative full-workflow efficiency evidence remain unfinished. See
 Cycle 069 adds explicit Pi session-start restart intent via project `resumeGoal`
 with an exact goal ID/revision and execution-aware configuration confirmation.
 Session cancellation and exact settings checks fence resumed work; the native
-installer also checks settings authorization. `/clanker pause` is available while
+installer also checks settings authorization. `/relentless pause` is available while
 busy. This is Pi lifecycle attachment, not an OS service or forced takeover of
 draining work. Revision migration, representative calibration and measured
 full-workflow efficiency remain open. See
@@ -374,7 +374,7 @@ project settings. One real Pi/Qwen call passed in 14.3 seconds with confirmed
 cleanup. This is lifecycle evidence, not model qualification or total-cost evidence.
 See [configuration, bounds and limitations](local-inference.md#optional-managed-lifecycle--cycle079).
 
-Cycle080 removes CLI-only goal registration with `/clanker goal-create`, freezing
+Cycle080 removes CLI-only goal registration with `/relentless goal-create`, freezing
 project routing without inference. Next: prepare and complete a representative
 project through Pi, exercising check failure, repair, outage and restart. Do not
 substitute additional tiny calibration cohorts for that product acceptance run.
@@ -403,7 +403,7 @@ Runtime unchanged; cycle080 canonical gate remains the last full gate.
 
 ## Cycle083: actionable output-stage diagnostics
 
-Clanker's own Luna worker added allowlisted parser reasons. The durable journal
+Relentless's own Luna worker added allowlisted parser reasons. The durable journal
 now preserves `outputReason` only for the winning unknown/coding_output failure,
 without raw response data or relaxed acceptance/retry rules. Next: a fresh bounded
 repair exercise using these diagnostics; never reinterpret or reset cycle082.
@@ -432,8 +432,8 @@ application and interactive model execution remain distinct unverified coverage.
 
 ## Cycle087: Pi goal status
 
-A Clanker Luna worker authored a read-only status reader; Pi exposes it through
-`/clanker goal-status`. It distinguishes goal-recorded counters from live coding
+A Relentless Luna worker authored a read-only status reader; Pi exposes it through
+`/relentless goal-status`. It distinguishes goal-recorded counters from live coding
 attempts and labels historical revisions. This makes exhausted unadmitted work
 visible without external SQL inspection. No inference or synchronization occurs.
 See [status scope](pi-package.md#inspecting-goal-progress--cycle087); reviewer
@@ -441,8 +441,8 @@ cooldowns, atomic observations and inspection during a busy command remain open.
 
 ## Cycle088: Pi-native model inventory
 
-Clanker's Luna worker authored a pure session-inventory projection. The native
-`/clanker inventory` command now feeds discovery from Pi's effective registry,
+Relentless's Luna worker authored a pure session-inventory projection. The native
+`/relentless inventory` command now feeds discovery from Pi's effective registry,
 scope, project roles and saved health instead of requiring a separate CLI runtime.
 The configuration skill prefers this path. Eligibility remains policy-only;
 capacity, entitlement and representative task capability require separate evidence.

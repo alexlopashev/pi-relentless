@@ -162,7 +162,7 @@ test("fresh project discovery works before configuration without granting roles 
     await import("node:fs/promises");
   const { existsSync } = await import("node:fs");
   const { tmpdir } = await import("node:os");
-  const { clankerCommand } = await import("../src/pi-extension.js");
+  const { relentlessCommand } = await import("../src/pi-extension.js");
   const cwd = await mkdtemp(join(tmpdir(), "pi-inventory-bootstrap-"));
   const messages: { message: string; type: string }[] = [];
   const context = {
@@ -181,11 +181,11 @@ test("fresh project discovery works before configuration without granting roles 
         await mkdir(join(cwd, ".pi"));
         await writeFile(
           join(cwd, ".pi/settings.json"),
-          '{"packages":["/example/clanker"]}',
+          '{"packages":["/example/relentless"]}',
         );
       }
       messages.length = 0;
-      await clankerCommand("inventory", context, () =>
+      await relentlessCommand("inventory", context, () =>
         Promise.reject(new Error("No dispatch")),
       );
       expect(messages[0]?.type).toBe("info");
@@ -197,19 +197,19 @@ test("fresh project discovery works before configuration without granting roles 
       expect(existsSync(join(cwd, ".harness"))).toBe(false);
       if (installed)
         expect(await readFile(join(cwd, ".pi/settings.json"), "utf8")).toBe(
-          '{"packages":["/example/clanker"]}',
+          '{"packages":["/example/relentless"]}',
         );
       else expect(existsSync(join(cwd, ".pi"))).toBe(false);
     }
     await writeFile(
       join(cwd, ".pi/settings.json"),
-      '{"clanker":{"version":999}}',
+      '{"relentless":{"version":999}}',
     );
     messages.length = 0;
-    await clankerCommand("inventory", context);
+    await relentlessCommand("inventory", context);
     expect(messages[0]?.type).toBe("error");
     messages.length = 0;
-    await clankerCommand("inventory", {
+    await relentlessCommand("inventory", {
       ...context,
       isProjectTrusted: () => false,
     });
@@ -266,16 +266,16 @@ test("Pi inventory command uses session data without initializing journals or di
   const { mkdtemp, mkdir, writeFile, rm } = await import("node:fs/promises");
   const { existsSync } = await import("node:fs");
   const { tmpdir } = await import("node:os");
-  const { clankerCommand } = await import("../src/pi-extension.js");
+  const { relentlessCommand } = await import("../src/pi-extension.js");
   const cwd = await mkdtemp(join(tmpdir(), "pi-inventory-"));
   try {
     await mkdir(join(cwd, ".pi"));
     await writeFile(
       join(cwd, ".pi/settings.json"),
-      JSON.stringify({ clanker: project }),
+      JSON.stringify({ relentless: project }),
     );
     const messages: string[] = [];
-    await clankerCommand(
+    await relentlessCommand(
       "inventory",
       {
         cwd,
@@ -300,13 +300,13 @@ test("Pi inventory command uses session data without initializing journals or di
 test("inventory terminal output pages discovery with an explicit continuation", async () => {
   const { mkdtemp, mkdir, writeFile, rm } = await import("node:fs/promises");
   const { tmpdir } = await import("node:os");
-  const { clankerCommand } = await import("../src/pi-extension.js");
+  const { relentlessCommand } = await import("../src/pi-extension.js");
   const cwd = await mkdtemp(join(tmpdir(), "pi-inventory-page-"));
   try {
     await mkdir(join(cwd, ".pi"));
     await writeFile(
       join(cwd, ".pi/settings.json"),
-      JSON.stringify({ clanker: project }),
+      JSON.stringify({ relentless: project }),
     );
     const pool = Array.from({ length: 25 }, (_, i) => ({
       provider: "new",
@@ -325,12 +325,12 @@ test("inventory terminal output pages discovery with an explicit continuation", 
         },
       },
     };
-    await clankerCommand("inventory", context);
+    await relentlessCommand("inventory", context);
     expect(JSON.parse(messages[0] ?? "null")).toMatchObject({
       unconfiguredTotal: 25,
       nextOffset: 20,
     });
-    await clankerCommand("inventory 20", context);
+    await relentlessCommand("inventory 20", context);
     expect(JSON.parse(messages[1] ?? "null")).toMatchObject({
       unconfiguredTotal: 25,
       nextOffset: null,
