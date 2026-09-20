@@ -1,0 +1,18 @@
+{
+  "id": "controller-recovery-advice",
+  "prompt": "Advise on the current recovery state using project rules. Your answer is evidence only; the deterministic scheduler decides whether anything may run. Return structured JSON for the supplied state.",
+  "minQuality": 1,
+  "effort": "low",
+  "optimization": {
+    "workload": "controller-recovery-classification-v1",
+    "suiteHash": "a420916dc89e02a4be61b51f2e82091f92eada0fb61ffe28ae9b0f8b972ae6b6",
+    "caseIds": ["quota-wait", "policy-block", "expired-lease"],
+    "metric": "latency",
+    "minSamples": 6,
+    "minCases": 3,
+    "minCaseSamples": 2,
+    "minSuccessRate": 1,
+    "minCaseSuccessRate": 1,
+    "maxAgeMs": 86400000
+  }
+}

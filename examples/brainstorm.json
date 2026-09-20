@@ -1,0 +1,23 @@
+[
+  {
+    "id": "architecture",
+    "provider": "openai-codex",
+    "minQuality": 3,
+    "effort": "high",
+    "prompt": "Propose a minimal architecture for a single-developer coding harness built on Pi. Keep orchestration and artifacts local; support multiple model providers, task-specific model tiers, bounded repair loops, independent reviews, and opt-in remote compute for heavy tests. Explain failure recovery and the smallest end-to-end implementation. Do not assume consumer subscriptions include API billing."
+  },
+  {
+    "id": "challenge",
+    "provider": "xai",
+    "minQuality": 3,
+    "effort": "high",
+    "prompt": "Independently critique this proposal: a local Pi-based coding harness dispatches models from multiple providers, chooses cheaper sufficient models for simple subtasks, uses isolated worktrees, and loops build/test/review/fix until acceptance or budget exhaustion. Identify the three most likely failure modes and propose testable mitigations. Distinguish subscription authentication from included billing. Do not assume agents agreeing proves correctness."
+  },
+  {
+    "id": "acceptance",
+    "provider": "openai-codex",
+    "minQuality": 1,
+    "effort": "low",
+    "prompt": "Write a short acceptance checklist for a local task router that selects models by minimum quality tier, supported reasoning effort, provider availability, and permitted billing mode. Include negative and concurrency tests."
+  }
+]

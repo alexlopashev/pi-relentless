@@ -1,0 +1,9 @@
+[
+  {
+    "id": "personal-deepseek-review",
+    "prompt": "Review function isAdult(age) { return age > 18; }. Adulthood begins at age 18 inclusive. Return only raw JSON with fixedExpression, testInput and testExpected. No tools or file operations.",
+    "minQuality": 1,
+    "effort": "high",
+    "provider": "qwen-token-plan-individual"
+  }
+]

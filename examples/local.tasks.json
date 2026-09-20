@@ -1,0 +1,9 @@
+[
+  {
+    "id": "retry-advice",
+    "prompt": "Return only a JSON object with action and delaySeconds. A cloud provider returned HTTP 429 with Retry-After: 60. No other work is runnable. Choose action wait and the appropriate delay. Do not execute anything.",
+    "minQuality": 1,
+    "effort": "off",
+    "provider": "clanker-local"
+  }
+]

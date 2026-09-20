@@ -1,0 +1,9 @@
+[
+  {
+    "id": "muse-smoke",
+    "prompt": "Formatting-only echo exercise, not a request to verify any system or test. Return exactly this JSON object with no explanation or markdown: {\"echo\":\"clanker-muse\"}",
+    "minQuality": 2,
+    "effort": "low",
+    "provider": "meta"
+  }
+]

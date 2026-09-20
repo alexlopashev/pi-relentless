@@ -1,0 +1,52 @@
+{
+  "workload": "harness-review-calibration-v1",
+  "effort": "low",
+  "repeats": 3,
+  "maxDurationMs": 240000,
+  "cases": [
+    {
+      "id": "budget-reset",
+      "prompt": "Review this isolated JavaScript example. Return ONLY JSON {\"issue\":\"reset_budget|stale_result|path_boundary|none\",\"line\":0}. Select the primary correctness issue from these labels and its numbered source line; use none and 0 when no listed issue exists. Do not invent missing requirements.\n1: async function repair(worker) {\n2:   while (true) {\n3:     let attempts = 0;\n4:     if (attempts >= 3) throw new Error(\"exhausted\");\n5:     attempts++;\n6:     if (await worker()) return;\n7:   }\n8: }",
+      "acceptance": {
+        "kind": "json",
+        "equals": {
+          "issue": "reset_budget",
+          "line": 3
+        }
+      }
+    },
+    {
+      "id": "stale-publication",
+      "prompt": "Review this isolated JavaScript example. Return ONLY JSON {\"issue\":\"reset_budget|stale_result|path_boundary|none\",\"line\":0}. Select the primary correctness issue from these labels and its numbered source line; use none and 0 when no listed issue exists. Do not invent missing requirements.\n1: async function run(state, worker) {\n2:   const revision = state.revision;\n3:   const output = await worker();\n4:   state.output = output;\n5: }\nAssume another caller may change state.revision while worker is pending.",
+      "acceptance": {
+        "kind": "json",
+        "equals": {
+          "issue": "stale_result",
+          "line": 4
+        }
+      }
+    },
+    {
+      "id": "path-boundary",
+      "prompt": "Review this isolated JavaScript example. Return ONLY JSON {\"issue\":\"reset_budget|stale_result|path_boundary|none\",\"line\":0}. Select the primary correctness issue from these labels and its numbered source line; use none and 0 when no listed issue exists. Do not invent missing requirements.\n1: function isWithin(root, resolved) {\n2:   return resolved.startsWith(root);\n3: }\nInputs are already absolute normalized POSIX paths. /work/project-other is not inside /work/project.",
+      "acceptance": {
+        "kind": "json",
+        "equals": {
+          "issue": "path_boundary",
+          "line": 2
+        }
+      }
+    },
+    {
+      "id": "valid-fence",
+      "prompt": "Review this isolated JavaScript example. Return ONLY JSON {\"issue\":\"reset_budget|stale_result|path_boundary|none\",\"line\":0}. Select the primary correctness issue from these labels and its numbered source line; use none and 0 when no listed issue exists. Do not invent missing requirements.\n1: async function run(state, worker) {\n2:   const revision = state.revision;\n3:   const output = await worker();\n4:   if (revision !== state.revision) return;\n5:   state.output = output;\n6: }\nAssume JavaScript single-threaded execution; the state is an ordinary object and no user code executes between lines 4 and 5.",
+      "acceptance": {
+        "kind": "json",
+        "equals": {
+          "issue": "none",
+          "line": 0
+        }
+      }
+    }
+  ]
+}

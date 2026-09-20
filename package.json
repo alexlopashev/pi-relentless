@@ -1,0 +1,81 @@
+{
+  "name": "clanker",
+  "version": "0.1.0-alpha.2",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.19.0",
+  "engines": {
+    "node": "24.21.0"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format-check": "prettier --check .",
+    "test": "vitest run",
+    "coverage": "vitest run --coverage",
+    "ci": "pnpm format-check && pnpm lint && pnpm typecheck && pnpm coverage && pnpm build",
+    "demo": "node dist/cli.js demo",
+    "clanker": "node dist/cli.js",
+    "prepack": "pnpm build && node scripts/prepare-package.mjs",
+    "prepare": "node scripts/prepare-install.mjs"
+  },
+  "dependencies": {
+    "@earendil-works/pi-coding-agent": "0.85.1",
+    "@types/node": "22.20.3",
+    "typebox": "1.3.7",
+    "typescript": "6.0.2",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@vitest/coverage-v8": "5.0.1",
+    "eslint": "10.10.0",
+    "prettier": "3.9.7",
+    "typescript-eslint": "8.70.0",
+    "vitest": "5.0.1"
+  },
+  "keywords": [
+    "pi-package"
+  ],
+  "pi": {
+    "skills": [
+      "./skills"
+    ],
+    "extensions": [
+      "./.pi/extensions/clanker.ts",
+      "./.pi/extensions/meta-provider.ts",
+      "./.pi/extensions/personal-catalog.ts",
+      "./.pi/extensions/local-provider.ts"
+    ]
+  },
+  "files": [
+    "dist/",
+    "src/",
+    "skills/",
+    "docs/",
+    ".pi/extensions/clanker.ts",
+    ".pi/extensions/meta-provider.ts",
+    ".pi/extensions/personal-catalog.ts",
+    ".pi/extensions/local-provider.ts",
+    "scripts/package_vm.py",
+    "scripts/verify_vm.py",
+    "scripts/promote_sources.py",
+    "pnpm-workspace.yaml",
+    "release-lock.yaml",
+    "scripts/prepare-install.mjs",
+    "LICENSE"
+  ],
+  "description": "Durable multi-provider coding goals, independent review and verified delivery inside Pi.",
+  "license": "MIT",
+  "author": "alexlopashev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alexlopashev/pi-relentless.git"
+  },
+  "homepage": "https://github.com/alexlopashev/pi-relentless#readme",
+  "bugs": {
+    "url": "https://github.com/alexlopashev/pi-relentless/issues"
+  }
+}

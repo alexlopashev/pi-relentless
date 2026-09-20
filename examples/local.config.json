@@ -1,0 +1,17 @@
+{
+  "candidates": [
+    {
+      "name": "local-controller",
+      "provider": "clanker-local",
+      "model": "qwen3.5-4b",
+      "billing": "local",
+      "enabled": true,
+      "quality": 1,
+      "preference": 10,
+      "efforts": ["off"]
+    }
+  ],
+  "maxConcurrency": 1,
+  "allowMetered": false,
+  "timeoutMs": 60000
+}

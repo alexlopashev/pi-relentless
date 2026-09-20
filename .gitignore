@@ -1,0 +1,18 @@
+node_modules/
+dist/
+coverage/
+.harness/
+.env
+.env.*
+!.env.example
+.DS_Store
+.pnpm-store/
+release-lock.yaml
+
+# Project state is never part of the distributable repository.
+.pi/settings.json
+.pi/auth.json
+.pi/git/
+.pi/npm/
+__pycache__/
+*.pyc

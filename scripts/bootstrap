@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+set -eu
+case "${1-}" in
+  --help) echo 'Usage: scripts/bootstrap [--check]'; exit 0 ;;
+  ''|--check) ;;
+  *) echo 'Unknown option' >&2; exit 2 ;;
+esac
+[ "$#" -le 1 ] || { echo 'Too many arguments' >&2; exit 2; }
+root=$(CDPATH='' cd -- "$(dirname -- "$0")/.." && pwd)
+case "$(uname -s)" in Darwin|Linux) ;; *) echo 'Supported platforms: Darwin and Linux' >&2; exit 1 ;; esac
+command -v mise >/dev/null 2>&1 || { echo 'Install mise first: https://mise.jdx.dev' >&2; exit 1; }
+[ -f "$root/package.json" ] || { echo 'Repository manifest is missing' >&2; exit 1; }
+if [ "${1-}" = --check ]; then echo 'Bootstrap prerequisites present; no changes made'; exit 0; fi
+cd "$root"
+mise install
+mise exec -- pnpm install --frozen-lockfile
+mise run ci
+echo 'Ready. Run mise exec -- pnpm demo'

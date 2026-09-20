@@ -1,0 +1,23 @@
+{
+  "workload": "typescript-reasoning-probe-v1",
+  "effort": "low",
+  "repeats": 1,
+  "maxDurationMs": 180000,
+  "cases": [
+    {
+      "id": "nullish",
+      "prompt": "Evaluate this JavaScript expression: (0 ?? 7) + (null ?? 4). Return only JSON {\"answer\":number} with its numeric result.",
+      "acceptance": { "kind": "json", "equals": { "answer": 4 } }
+    },
+    {
+      "id": "closure",
+      "prompt": "What is JSON.stringify([0,1,2].map(i => () => i).map(f => f()))? Return only a JSON object with key answer whose value is the resulting string.",
+      "acceptance": { "kind": "json", "equals": { "answer": "[0,1,2]" } }
+    },
+    {
+      "id": "mutation",
+      "prompt": "Given const a=[1,2]; const b=a; b.push(3); what is a.length? Return only JSON {\"answer\":number}.",
+      "acceptance": { "kind": "json", "equals": { "answer": 3 } }
+    }
+  ]
+}

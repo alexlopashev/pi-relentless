@@ -1,0 +1,44 @@
+{
+  "objective": "Verify local durable inference by producing retry advice",
+  "constraints": [
+    "No tools, file edits, cloud access, or policy overrides.",
+    "Return advice only; scheduling remains deterministic code."
+  ],
+  "config": {
+    "candidates": [
+      {
+        "name": "local-controller",
+        "provider": "clanker-local",
+        "model": "qwen3.5-4b",
+        "billing": "local",
+        "enabled": true,
+        "quality": 1,
+        "preference": 10,
+        "efforts": ["off"]
+      }
+    ],
+    "maxConcurrency": 1,
+    "allowMetered": false,
+    "timeoutMs": 60000
+  },
+  "tasks": [
+    {
+      "id": "retry-advice",
+      "prompt": "Return only JSON with action wait and delaySeconds 60 for HTTP 429 with Retry-After: 60.",
+      "minQuality": 1,
+      "effort": "off",
+      "provider": "clanker-local",
+      "model": "qwen3.5-4b",
+      "acceptance": {
+        "kind": "json",
+        "equals": {
+          "action": "wait",
+          "delaySeconds": 60
+        }
+      }
+    }
+  ],
+  "maxAttempts": 5,
+  "retryBaseMs": 1000,
+  "retryMaxMs": 60000
+}

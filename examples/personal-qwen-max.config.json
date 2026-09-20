@@ -1,0 +1,18 @@
+{
+  "candidates": [
+    {
+      "name": "personal-qwen-max",
+      "provider": "qwen-token-plan-individual",
+      "model": "qwen3.8-max",
+      "billing": "subscription",
+      "enabled": true,
+      "quality": 1,
+      "preference": 1,
+      "efforts": ["low"]
+    }
+  ],
+  "maxConcurrency": 1,
+  "allowMetered": false,
+  "readOnlyAuth": true,
+  "timeoutMs": 90000
+}

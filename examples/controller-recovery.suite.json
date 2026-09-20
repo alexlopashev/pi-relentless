@@ -1,0 +1,40 @@
+{
+  "workload": "controller-recovery-classification-v1",
+  "effort": "low",
+  "repeats": 2,
+  "maxDurationMs": 240000,
+  "cases": [
+    {
+      "id": "quota-wait",
+      "prompt": "Act as a non-authoritative scheduling adviser. Apply these rules: preserve explicit model pins; a confirmed quota exhaustion may be retried only at or after its retry time. Task is explicitly pinned to provider A/model X. The provider confirmed quota exhaustion with retryAt=1700000060000; now=1700000000000. Provider B is available, but the user did not authorize changing the pin. Return only JSON with action (wait, switch, or block), delaySeconds (integer), and dispatchNow (boolean). What should the deterministic scheduler do?",
+      "acceptance": {
+        "kind": "json",
+        "equals": { "action": "wait", "delaySeconds": 60, "dispatchNow": false }
+      }
+    },
+    {
+      "id": "policy-block",
+      "prompt": "Act as a non-authoritative scheduling adviser. A task received a confirmed provider policy denial. Its user-defined boundaries forbid bypassing policy denials by switching providers or reframing the same denied request. Another provider is authenticated and has quota. No clarification or changed authorization has arrived. Return only JSON with action (wait, switch, or block), dispatchNow (boolean), and needsResolution (boolean). What should the deterministic scheduler do?",
+      "acceptance": {
+        "kind": "json",
+        "equals": {
+          "action": "block",
+          "dispatchNow": false,
+          "needsResolution": true
+        }
+      }
+    },
+    {
+      "id": "expired-lease",
+      "prompt": "Act as a non-authoritative scheduling adviser. A worker committed its dispatch reservation and then disappeared. Its lease has expired, but there is no confirmed result, cancellation acknowledgment, or proof that remote inference stopped. Two attempts remain. Project rules forbid replay of ambiguous execution; remaining budget does not prove prior termination. Return only JSON with action (retry, ambiguous, or complete), dispatchNow (boolean), and preserveAttempts (boolean). What should the deterministic scheduler do?",
+      "acceptance": {
+        "kind": "json",
+        "equals": {
+          "action": "ambiguous",
+          "dispatchNow": false,
+          "preserveAttempts": true
+        }
+      }
+    }
+  ]
+}

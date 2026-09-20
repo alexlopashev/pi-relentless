@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+set -eu
+case "${1-}" in
+  --help) echo 'Usage: scripts/teardown [--check]'; exit 0 ;;
+  ''|--check) ;;
+  *) echo 'Unknown option' >&2; exit 2 ;;
+esac
+[ "$#" -le 1 ] || { echo 'Too many arguments' >&2; exit 2; }
+# This phase owns no daemons, containers, or remote instances. Preserve reports.
+echo 'No background services to stop. Local run reports and dependencies preserved.'

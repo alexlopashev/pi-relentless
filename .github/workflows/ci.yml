@@ -1,0 +1,25 @@
+name: CI
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  check:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: jdx/mise-action@v3
+      - run: pnpm install --frozen-lockfile
+      - run: mise run ci
+      - name: Check Pi Git-source installation
+        run: python3 tests/package_git_install_test.py
+      - name: Check packed distribution
+        run: |
+          mkdir -p .harness/releases
+          npm pack --pack-destination .harness/releases
+          package_store=$(pnpm store path)
+          python3 tests/package_release_test.py .harness/releases/clanker-0.1.0-alpha.2.tgz "$(dirname "$package_store")"

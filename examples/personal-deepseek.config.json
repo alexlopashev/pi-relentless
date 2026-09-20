@@ -1,0 +1,18 @@
+{
+  "candidates": [
+    {
+      "name": "personal-deepseek",
+      "provider": "qwen-token-plan-individual",
+      "model": "deepseek-v4.1-flash",
+      "billing": "subscription",
+      "enabled": true,
+      "quality": 1,
+      "preference": 1,
+      "efforts": ["high"]
+    }
+  ],
+  "maxConcurrency": 1,
+  "allowMetered": false,
+  "readOnlyAuth": true,
+  "timeoutMs": 90000
+}
