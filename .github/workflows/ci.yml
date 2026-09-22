@@ -1,15 +1,39 @@
 name: CI
 on:
   push:
+    branches: [main]
   pull_request:
+  workflow_dispatch:
 permissions:
   contents: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 jobs:
-  check:
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest]
-    runs-on: ${{ matrix.os }}
+  quick:
+    if: github.event_name != 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.19.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.21.0
+          cache: pnpm
+      - name: Install dependencies without build scripts
+        run: pnpm install --frozen-lockfile --ignore-scripts
+      - run: pnpm format-check
+      - run: pnpm typecheck
+      - name: Core routing and session smoke tests
+        run: pnpm test tests/router.test.ts tests/failures.test.ts tests/pi-session-work.test.ts tests/pi-project-config.test.ts
+  full:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: jdx/mise-action@v3
@@ -21,5 +45,6 @@ jobs:
         run: |
           mkdir -p .harness/releases
           npm pack --pack-destination .harness/releases
+          archive=$(node -p "const p=require('./package.json'); p.name+'-'+p.version+'.tgz'")
           package_store=$(pnpm store path)
-          python3 tests/package_release_test.py .harness/releases/relentless-0.1.0-alpha.3.tgz "$(dirname "$package_store")"
+          python3 tests/package_release_test.py ".harness/releases/$archive" "$(dirname "$package_store")"

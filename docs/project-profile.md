@@ -8,7 +8,7 @@
 - Canonical CI: `mise run ci`.
 - Domain checks: model/effort floors; explicit billing policy; bounded concurrency; Pi session cleanup; failure/truncation handling; no tool/resource discovery in brainstorm mode.
 - Evidence: `docs/validation.md`; architecture and roadmap are local canonical documents.
-- Target OS: macOS and Linux. Real macOS checks performed; GitHub Actions defines Linux/macOS checks. Check remote run results separately.
+- Target OS: macOS and Linux. Real macOS checks performed; GitHub Actions runs lightweight Ubuntu checks automatically and the full Ubuntu gate manually; see [CI policy](ci.md).
 - GitHub adapter, if enabled: gh; native `blockedBy` relationships authoritative with body mirrors.
 - Future remote labels: `status:*`, `priority:*`, `kind:*`, `risk:*`, `area:*`, `concurrency:parallel`, `mutex:*`, `semaphore:*:<capacity>`.
 - Future lock namespaces: `codex-locks/project-bootstrap`, `codex-locks/issues/<id>`, `codex-locks/mutex/<resource>`, `codex-locks/semaphore/<resource>/<slot>`; compare-and-create acquisition and fenced compare-and-delete release only.
