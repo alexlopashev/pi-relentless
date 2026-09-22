@@ -240,7 +240,7 @@ async function main(): Promise<void> {
     return;
   }
   throw new Error(
-    "Usage: pnpm clanker demo | models | inventory <config.json> | plan <config.json> <tasks.json> | swarm <config.json> <tasks.json> | code <config.json> <coding.json> | evaluate <config.json> <suite.json>",
+    "Usage: pnpm relentless demo | models | inventory <config.json> | plan <config.json> <tasks.json> | swarm <config.json> <tasks.json> | code <config.json> <coding.json> | evaluate <config.json> <suite.json>",
   );
 }
 main().catch((error: unknown) => {

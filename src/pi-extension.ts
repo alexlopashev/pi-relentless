@@ -56,14 +56,14 @@ interface Context {
 }
 
 /** Explicit user commands; extension loading never dispatches workers. */
-export async function clankerCommand(
+export async function relentlessCommand(
   args: string,
   context: Context,
   execute?: (args: string[], root: string) => Promise<unknown>,
 ): Promise<void> {
   if (context.signal?.aborted) return;
   if (!context.isProjectTrusted()) {
-    context.ui.notify("Clanker requires a trusted Pi project.", "error");
+    context.ui.notify("Relentless requires a trusted Pi project.", "error");
     return;
   }
   if (args.trim() === "inventory" || args.trim().startsWith("inventory ")) {
@@ -118,7 +118,7 @@ export async function clankerCommand(
       );
     } catch {
       context.ui.notify(
-        "Clanker inventory unavailable. Check project configuration, Pi session models and intact health journals. No providers were probed.",
+        "Relentless inventory unavailable. Check project configuration, Pi session models and intact health journals. No providers were probed.",
         "error",
       );
     }
@@ -145,7 +145,7 @@ export async function clankerCommand(
       context.ui.notify(JSON.stringify(result, null, 2), "info");
     } catch {
       context.ui.notify(
-        "Clanker authentication recovery unavailable; require an intact setup-auth failure, current workflow digest and remaining review budget. No work was dispatched.",
+        "Relentless authentication recovery unavailable; require an intact setup-auth failure, current workflow digest and remaining review budget. No work was dispatched.",
         "error",
       );
     }
@@ -159,7 +159,7 @@ export async function clankerCommand(
       context.ui.notify(JSON.stringify(result, null, 2), "info");
     } catch {
       context.ui.notify(
-        "Clanker goal status unavailable. Check the goal ID, project trust and journal integrity. No work was started.",
+        "Relentless goal status unavailable. Check the goal ID, project trust and journal integrity. No work was started.",
         "error",
       );
     }
@@ -171,7 +171,7 @@ export async function clankerCommand(
       context.ui.notify(JSON.stringify(result, null, 2), "info");
     } catch {
       context.ui.notify(
-        "Clanker goal creation failed. Supply a valid goal contract without config in an active trusted project with configured routing. No workers were started.",
+        "Relentless goal creation failed. Supply a valid goal contract without config in an active trusted project with configured routing. No workers were started.",
         "error",
       );
     }
@@ -190,7 +190,7 @@ export async function clankerCommand(
       context.ui.notify(JSON.stringify(result, null, 2), "info");
     } catch {
       context.ui.notify(
-        "Clanker configuration proposal was not applied; require an intact proposal, unchanged settings, active trust and interactive confirmation. Inspect current settings before retrying.",
+        "Relentless configuration proposal was not applied; require an intact proposal, unchanged settings, active trust and interactive confirmation. Inspect current settings before retrying.",
         "error",
       );
     }
@@ -224,7 +224,7 @@ export async function clankerCommand(
       context.ui.notify(JSON.stringify(result, null, 2), "info");
     } catch {
       context.ui.notify(
-        "Clanker trial preparation or advancement failed; inspect saved pins, permissions and verification artifacts before retrying.",
+        "Relentless trial preparation or advancement failed; inspect saved pins, permissions and verification artifacts before retrying.",
         "error",
       );
     }
@@ -239,7 +239,7 @@ export async function clankerCommand(
       context.ui.notify(JSON.stringify(result, null, 2), "info");
     } catch {
       context.ui.notify(
-        "Clanker calibration admission failed; require a complete prospective cohort with intact independent review and verification proofs.",
+        "Relentless calibration admission failed; require a complete prospective cohort with intact independent review and verification proofs.",
         "error",
       );
     }
@@ -254,7 +254,7 @@ export async function clankerCommand(
       context.ui.notify(JSON.stringify(result, null, 2), "info");
     } catch {
       context.ui.notify(
-        "Clanker cohort accounting failed; inspect journal integrity and trial bindings.",
+        "Relentless cohort accounting failed; inspect journal integrity and trial bindings.",
         "error",
       );
     }
@@ -269,7 +269,7 @@ export async function clankerCommand(
       context.ui.notify(JSON.stringify(result, null, 2), "info");
     } catch {
       context.ui.notify(
-        "Clanker calibration inspection failed; check the cohort ID and project journal.",
+        "Relentless calibration inspection failed; check the cohort ID and project journal.",
         "error",
       );
     }
@@ -295,7 +295,7 @@ export async function clankerCommand(
       context.ui.notify(JSON.stringify(result, null, 2), "info");
     } catch {
       context.ui.notify(
-        "Clanker calibration planning or creation failed; check cases, project roles, Pi scope and independent reviewers.",
+        "Relentless calibration planning or creation failed; check cases, project roles, Pi scope and independent reviewers.",
         "error",
       );
     }
@@ -378,7 +378,7 @@ export async function clankerCommand(
       );
     } catch {
       context.ui.notify(
-        "Clanker creation failed; check task, project policy and independent review availability.",
+        "Relentless creation failed; check task, project policy and independent review availability.",
         "error",
       );
     }
@@ -558,11 +558,11 @@ export async function clankerCommand(
       context.ui.notify(
         config
           ? JSON.stringify(config, null, 2)
-          : "No clanker section in project Pi settings.",
+          : "No relentless section in project Pi settings.",
         "info",
       );
     } catch {
-      context.ui.notify("Invalid Clanker project configuration.", "error");
+      context.ui.notify("Invalid Relentless project configuration.", "error");
     }
     return;
   }
@@ -575,7 +575,7 @@ export async function clankerCommand(
       : extra.length > 0 || (command !== "status" && command !== "resume"))
   ) {
     context.ui.notify(
-      "Usage: /clanker explain <role> <task-json-with-optimization> | /clanker explain-proposal <proposal-id> <role> <task-json-with-optimization> | /clanker inventory | /clanker goal-status <goal-id> | /clanker goal-create <contract-json> | /clanker goal-run <goal-id> | /clanker config-propose <clanker-json> | /clanker config-apply <proposal-id> | /clanker goal-step <goal-id> | /clanker goal-sync <coding-id> | /clanker goal-admit <coding-id> | /clanker goal-work <goal-task-json> | /clanker calibration-plan <suite-json> | /clanker create <task-json> | /clanker status <coding-id> | /clanker resume <coding-id> | /clanker run-verified <coding-id> <execution.json>",
+      "Usage: /relentless explain <role> <task-json-with-optimization> | /relentless explain-proposal <proposal-id> <role> <task-json-with-optimization> | /relentless inventory | /relentless goal-status <goal-id> | /relentless goal-create <contract-json> | /relentless goal-run <goal-id> | /relentless config-propose <relentless-json> | /relentless config-apply <proposal-id> | /relentless goal-step <goal-id> | /relentless goal-sync <coding-id> | /relentless goal-admit <coding-id> | /relentless goal-work <goal-task-json> | /relentless calibration-plan <suite-json> | /relentless create <task-json> | /relentless status <coding-id> | /relentless resume <coding-id> | /relentless run-verified <coding-id> <execution.json>",
       "info",
     );
     return;
@@ -598,7 +598,7 @@ export async function clankerCommand(
     context.ui.notify(JSON.stringify(result, null, 2), "info");
   } catch {
     context.ui.notify(
-      "Clanker command failed; inspect the project journal using the CLI.",
+      "Relentless command failed; inspect the project journal using the CLI.",
       "error",
     );
   } finally {
@@ -606,14 +606,14 @@ export async function clankerCommand(
       const progress = await collectPiGoalProgress(id, context);
       if (progress === "pending" && !context.signal?.aborted)
         context.ui.notify(
-          "Clanker goal progress is pending; reconcile the workflow if needed, then run /clanker goal-sync with this coding ID.",
+          "Relentless goal progress is pending; reconcile the workflow if needed, then run /relentless goal-sync with this coding ID.",
           "error",
         );
     }
   }
 }
 
-export function registerClanker(
+export function registerRelentless(
   pi: Pick<ExtensionAPI, "registerCommand" | "on">,
 ): void {
   const work = new PiSessionWork();
@@ -750,21 +750,21 @@ export function registerClanker(
         .catch(() => {
           if (active())
             context.ui.notify(
-              "Clanker automatic resume stopped or another session operation is still settling; inspect the goal journal before resuming.",
+              "Relentless automatic resume stopped or another session operation is still settling; inspect the goal journal before resuming.",
               "error",
             );
         });
     } catch {
       if (active())
         context.ui.notify(
-          "Clanker automatic resume could not read its project configuration.",
+          "Relentless automatic resume could not read its project configuration.",
           "error",
         );
     }
   });
-  pi.registerCommand("clanker", {
+  pi.registerCommand("relentless", {
     description:
-      "Inspect or advance the current project's durable Clanker workflow",
+      "Inspect or advance the current project's durable Relentless workflow",
     handler: async (args, context) => {
       if (args.trim() === "pause") {
         if (!sessionOpen || !context.isProjectTrusted()) return;
@@ -773,7 +773,7 @@ export function registerClanker(
         work.stop();
         work.start();
         context.ui.notify(
-          "Clanker paused for this session. Saved restart opt-in remains for the next session; active work must settle before another command can run.",
+          "Relentless paused for this session. Saved restart opt-in remains for the next session; active work must settle before another command can run.",
           "info",
         );
         return;
@@ -786,7 +786,7 @@ export function registerClanker(
             : signal;
           const stop = progress(args, context, combined, current);
           try {
-            await clankerCommand(args, {
+            await relentlessCommand(args, {
               cwd: context.cwd,
               signal: combined,
               isProjectTrusted: () =>
@@ -848,7 +848,7 @@ export function registerClanker(
       } catch {
         if (sessionOpen && current === generation)
           context.ui.notify(
-            "Clanker is busy or this session has closed.",
+            "Relentless is busy or this session has closed.",
             "error",
           );
       }

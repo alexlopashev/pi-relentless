@@ -126,7 +126,7 @@ export async function goalsCli(args: string[]): Promise<void> {
       return;
     }
     throw new Error(
-      "Usage: clanker goal create <contract.json> | status [id] | events | revise <id> <revision> <contract.json> | cancel|supersede <id> <revision> | run | once | backup|restore <file>",
+      "Usage: relentless goal create <contract.json> | status [id] | events | revise <id> <revision> <contract.json> | cancel|supersede <id> <revision> | run | once | backup|restore <file>",
     );
   } finally {
     ledger.close();

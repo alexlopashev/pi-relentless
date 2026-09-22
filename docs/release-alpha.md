@@ -1,4 +1,4 @@
-# Clanker 0.1.0-alpha.2
+# Relentless 0.1.0-alpha.3
 
 An MIT-licensed Pi package for bounded coding goals across configured providers.
 This alpha is ready for personal trials; general autonomous project delivery is
@@ -11,7 +11,7 @@ of this release.
 pi install -l git:github.com/alexlopashev/pi-relentless
 ```
 
-Pi runs npm install and Clanker builds its workers automatically. Node 24.21.0
+Pi runs npm install and Relentless builds its workers automatically. Node 24.21.0
 and Pi 0.85.1 are the tested versions. No pnpm or manual build is needed for this
 path. npm resolves transitive dependencies; use the frozen archive path below if
 an exact dependency graph is required.
@@ -23,21 +23,21 @@ helpers. Use a stable installation directory; Pi records its path. The source
 checkout is not required after extracting the archive.
 
 ```sh
-mkdir -p "$HOME/.local/share/clanker/0.1.0-alpha.2"
-tar -xzf /absolute/path/clanker-0.1.0-alpha.2.tgz \
-  -C "$HOME/.local/share/clanker/0.1.0-alpha.2" --strip-components=1
-cd "$HOME/.local/share/clanker/0.1.0-alpha.2"
+mkdir -p "$HOME/.local/share/relentless/0.1.0-alpha.3"
+tar -xzf /absolute/path/relentless-0.1.0-alpha.3.tgz \
+  -C "$HOME/.local/share/relentless/0.1.0-alpha.3" --strip-components=1
+cd "$HOME/.local/share/relentless/0.1.0-alpha.3"
 cp release-lock.yaml pnpm-lock.yaml
 pnpm install --prod --frozen-lockfile --ignore-scripts
 cd /absolute/path/to/your-project
-pi install -l "$HOME/.local/share/clanker/0.1.0-alpha.2"
+pi install -l "$HOME/.local/share/relentless/0.1.0-alpha.3"
 pi
 ```
 
-Inside Pi, run `/skill:clanker-configure`, review the proposed roles and billing
-policy, then apply the exact proposal through `/clanker config-apply`. Existing
+Inside Pi, run `/skill:relentless-configure`, review the proposed roles and billing
+policy, then apply the exact proposal through `/relentless config-apply`. Existing
 provider authentication stays in Pi; no keys or project settings ship in the
-archive. Each project's `.pi/settings.json` carries its Clanker namespace, and
+archive. Each project's `.pi/settings.json` carries its Relentless namespace, and
 its `.harness` directory retains goals and receipts. For existing sessions use
 `/reload` after installation.
 
@@ -55,7 +55,7 @@ Development builds remain available:
 mise run ci
 mise exec -- npm pack --pack-destination .harness/alpha-release
 mise exec -- python3 tests/package_release_test.py \
-  .harness/alpha-release/clanker-0.1.0-alpha.2.tgz .pnpm-store
+  .harness/alpha-release/relentless-0.1.0-alpha.3.tgz .pnpm-store
 ```
 
 `npm pack` builds workers first and refreshes the release lock. Packaging allows
@@ -90,3 +90,19 @@ coordination and broader deployment operations remain roadmap work. The local
 LLM is optional and disabled by default; loading this package does not download
 weights or provision compute. See [roadmap](roadmap.md) and
 [validation evidence](validation.md).
+
+## Upgrading from an earlier alpha
+
+This alpha renames the package, `/relentless` command, `relentless` project settings
+namespace, `/skill:relentless-configure`, model-callable tools and
+`relentless-local` provider. After updating, reload Pi and use the setup skill to
+review a fresh project configuration before creating new goals.
+
+Existing journals, proposals and verification/promotion artifacts are not migrated.
+Their contracts and hashes include identifiers that changed. Finish or pause old
+work with the previous package revision. Keep that revision and its saved state
+available for recovery; do not bulk-edit journals or signed/hashed proof bundles.
+Prepared VM images must use the new `/relentless-init` entrypoint and
+`relentless.result` controller channel. Rebuild them using the updated packaging
+instructions before verification. Previously generated service definitions must
+also be reviewed and regenerated rather than running both versions together.

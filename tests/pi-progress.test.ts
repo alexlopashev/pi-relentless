@@ -17,22 +17,22 @@ test("progress is immediate, tracks phases, and clears after settlement", async 
     read: () => Promise.resolve(phase),
   });
   expect(setStatus).toHaveBeenCalledWith(
-    "clanker",
+    "relentless",
     expect.stringContaining("goal-step"),
   );
   await vi.advanceTimersByTimeAsync(2000);
   expect(setStatus).toHaveBeenLastCalledWith(
-    "clanker",
+    "relentless",
     expect.stringContaining("Coding"),
   );
   phase = "Independent review";
   await vi.advanceTimersByTimeAsync(2000);
   expect(setStatus).toHaveBeenLastCalledWith(
-    "clanker",
+    "relentless",
     expect.stringContaining("Independent review"),
   );
   stop();
-  expect(setStatus).toHaveBeenLastCalledWith("clanker", undefined);
+  expect(setStatus).toHaveBeenLastCalledWith("relentless", undefined);
   const count = setStatus.mock.calls.length;
   await vi.advanceTimersByTimeAsync(10000);
   expect(setStatus).toHaveBeenCalledTimes(count);
@@ -62,7 +62,7 @@ test("abort clears progress and a stale reader cannot overwrite the next session
   await vi.advanceTimersByTimeAsync(6000);
   expect(read).toHaveBeenCalledTimes(1);
   controller.abort();
-  expect(setStatus).toHaveBeenLastCalledWith("clanker", undefined);
+  expect(setStatus).toHaveBeenLastCalledWith("relentless", undefined);
   current = false;
   const count = setStatus.mock.calls.length;
   finish?.("Old private state");

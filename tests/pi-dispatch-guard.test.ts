@@ -4,7 +4,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { CodingJournal } from "../src/coding-journal.js";
 import { workflowCli } from "../src/workflow-cli.js";
-import { clankerCommand } from "../src/pi-extension.js";
+import { relentlessCommand } from "../src/pi-extension.js";
 import { Failure } from "../src/failures.js";
 import type { Route } from "../src/router.js";
 import { processWorker } from "../src/process-worker.js";
@@ -83,11 +83,11 @@ test("Pi dispatch guard runs before a saved workflow can invoke a worker", async
   await writeFile(
     join(root, ".pi/settings.json"),
     JSON.stringify({
-      clanker: { version: 1, routing: config, roles: { coder: ["cloud"] } },
+      relentless: { version: 1, routing: config, roles: { coder: ["cloud"] } },
     }),
   );
   const notify = vi.fn();
-  await clankerCommand(`resume ${second}`, {
+  await relentlessCommand(`resume ${second}`, {
     cwd: root,
     isProjectTrusted: () => true,
     ui: { notify },
@@ -103,7 +103,7 @@ test("Pi dispatch guard runs before a saved workflow can invoke a worker", async
   expect(processWorker).not.toHaveBeenCalled();
   await workflowCli(["create", third, spec], root);
   let trustChecks = 0;
-  await clankerCommand(`resume ${third}`, {
+  await relentlessCommand(`resume ${third}`, {
     cwd: root,
     isProjectTrusted: () => ++trustChecks < 3,
     ui: { notify },

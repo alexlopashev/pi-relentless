@@ -252,7 +252,7 @@ it.each([false, true])(
       candidates: [
         {
           name: "local",
-          provider: "clanker-local",
+          provider: "relentless-local",
           model: "qwen3.5-4b",
           billing: "local",
           enabled: true,
@@ -295,7 +295,7 @@ it.each([false, true])(
       }),
     );
     expect(registerProvider).toHaveBeenCalledWith(
-      "clanker-local",
+      "relentless-local",
       expect.objectContaining({
         baseUrl: "http://127.0.0.1:18080/v1",
         authHeader: false,
@@ -348,8 +348,8 @@ it("routes xAI subscription inference through the OAuth proxy without changing m
           "X-XAI-Token-Auth": "xai-grok-cli",
           "x-authenticateresponse": "authenticate-response",
           "x-grok-client-version": "0.85.1",
-          "x-grok-client-identifier": "clanker",
-          "User-Agent": "clanker pi/0.85.1",
+          "x-grok-client-identifier": "relentless",
+          "User-Agent": "relentless pi/0.85.1",
         },
       },
       thinkingLevel: "low",
@@ -381,7 +381,7 @@ it("keeps explicitly metered xAI on the public API", async () => {
     expect.objectContaining({ model: original }),
   );
 });
-it("declares the actual Pi transport version and Clanker identity for Grok protocol negotiation", async () => {
+it("declares the actual Pi transport version and Relentless identity for Grok protocol negotiation", async () => {
   await (
     await createPiWorker(config, [selection])
   )(task, selection);
@@ -389,8 +389,8 @@ it("declares the actual Pi transport version and Clanker identity for Grok proto
     model: {
       headers: {
         "x-grok-client-version": "0.85.1",
-        "x-grok-client-identifier": "clanker",
-        "User-Agent": "clanker pi/0.85.1",
+        "x-grok-client-identifier": "relentless",
+        "User-Agent": "relentless pi/0.85.1",
       },
     },
   });
@@ -618,7 +618,7 @@ it("inventory distinguishes stored OAuth presence from refresh-required validity
   const { inventoryRuntime } = await import("../src/inventory-runtime.js");
   const result = await inventoryRuntime(
     config,
-    "/nonexistent-clanker-test-ledger.sqlite",
+    "/nonexistent-relentless-test-ledger.sqlite",
   );
   expect(result.models[0]).toMatchObject({
     authentication: "present",

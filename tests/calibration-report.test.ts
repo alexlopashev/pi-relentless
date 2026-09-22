@@ -94,9 +94,9 @@ test("read-only workflow handles cannot create a missing database or dispatch", 
 
 test("Pi exposes full cohort accounting without starting work", async () => {
   const f = await setup();
-  const { clankerCommand } = await import("../src/pi-extension.js");
+  const { relentlessCommand } = await import("../src/pi-extension.js");
   const notices: { message: string; type: string }[] = [];
-  await clankerCommand("calibration-report " + f.input.id, {
+  await relentlessCommand("calibration-report " + f.input.id, {
     ...f.context,
     models: () => {
       throw new Error("Must stay offline");

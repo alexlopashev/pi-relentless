@@ -2,7 +2,7 @@
   "candidates": [
     {
       "name": "local-controller",
-      "provider": "clanker-local",
+      "provider": "relentless-local",
       "model": "qwen3.5-4b",
       "billing": "local",
       "enabled": true,

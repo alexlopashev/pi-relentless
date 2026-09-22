@@ -66,9 +66,9 @@ test("rejects unavailable scoped authors and untrusted projects", async () => {
 
 test("Pi exposes preparation without invoking a worker", async () => {
   const { input, context, trial } = await setup();
-  const { clankerCommand } = await import("../src/pi-extension.js");
+  const { relentlessCommand } = await import("../src/pi-extension.js");
   const notices: { message: string; type: string }[] = [];
-  await clankerCommand(
+  await relentlessCommand(
     "calibration-prepare " +
       JSON.stringify({ cohortId: input.id, trialId: trial.id }),
     {

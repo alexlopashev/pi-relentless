@@ -2,7 +2,7 @@
 
 ## Decision
 
-Clanker owns the task; a Pi, Claude Code, or Codex session is one attempt at executing it. Maintain a provider-independent checkpoint so a failed session does not strand the work. Native adapters are first-class choices when their tools or authentication are needed. The durable tool-free Pi supervisor now implements persisted retries, constrained fallback and contract handoff; see [operations](durable-operations.md). Native adapters, actual native-session resume and side-effecting coding/desktop recovery in this document remain planned.
+Relentless owns the task; a Pi, Claude Code, or Codex session is one attempt at executing it. Maintain a provider-independent checkpoint so a failed session does not strand the work. Native adapters are first-class choices when their tools or authentication are needed. The durable tool-free Pi supervisor now implements persisted retries, constrained fallback and contract handoff; see [operations](durable-operations.md). Native adapters, actual native-session resume and side-effecting coding/desktop recovery in this document remain planned.
 
 For Codex integration, use local `codex app-server` over stdio when streamed lifecycle, approval and resume controls are required. Simple jobs may use `codex exec --json`. Prefer version-matched generated protocol types. The local 0.154.0 binary supports both interfaces. Native workers do not automatically inherit every desktop-app plugin or computer-use tool.
 
@@ -70,9 +70,9 @@ and historical timeout reports are not retroactively reclassified.
 ## Explicit reviewer authentication recovery
 
 After repairing the provider login, inspect the saved workflow with
-`/clanker review-auth-status <coding-id>`. It returns the current workflow digest
+`/relentless review-auth-status <coding-id>`. It returns the current workflow digest
 and consumed review-pair budget without probing credentials. An explicit
-`/clanker review-auth-retry <coding-id> <workflow-digest>` can reopen review only
+`/relentless review-auth-retry <coding-id> <workflow-digest>` can reopen review only
 when the final saved failure is `auth` from `worker_setup`, its report binds to the
 current candidate/review contract, and review budget remains. It rejects prior
 policy, permission, approval or unknown failures, pending review continuations,

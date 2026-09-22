@@ -73,7 +73,7 @@ The implemented durability is for **tool-free Pi tasks**. Native Claude/Codex se
 ## Grok OAuth routing repair
 
 - Red/green regression for subscription endpoint/header selection; metered xAI stays on the public API and the shared catalog remains immutable.
-- Red/green regression for required client-version/Clanker identity headers and wrapped Pi HTTP errors, including specific Grok balance exhaustion as quota and policy precedence.
+- Red/green regression for required client-version/Relentless identity headers and wrapped Pi HTTP errors, including specific Grok balance exhaustion as quota and policy precedence.
 - Live progression after user refreshed login: corrected endpoint returned HTTP 426 for missing version negotiation; corrected headers reached HTTP 402 “Grok Build usage balance exhausted.” No successful Grok inference or reset-time claim. No retries after recognizing quota exhaustion and no metered fallback.
 - Final full `mise run ci` passed: **94 Vitest tests**, formatting, type-aware lint, TypeScript, build, ShellCheck, lifecycle and two process fault tests. Independent review found no blockers; an offline real-SDK intercepted request also confirmed the proxy endpoint and required headers.
 
@@ -89,7 +89,7 @@ The implemented durability is for **tool-free Pi tasks**. Native Claude/Codex se
 ## Latest Personal coding catalog
 
 - Regression added before implementation for missing Personal models; real Pi runtime checks preserve old pins, subscription endpoint/auth, unrelated providers and idempotency.
-- Project extension and Clanker share the supplement. Independent review loaded the extension with Pi's real resource loader and intercepted fake-credential requests to verify endpoint, reasoning and output cap; no blockers found.
+- Project extension and Relentless share the supplement. Independent review loaded the extension with Pi's real resource loader and intercepted fake-credential requests to verify endpoint, reasoning and output cap; no blockers found.
 - Full `mise run ci`: **97 Vitest tests**, format, lint, types, build, ShellCheck, lifecycle and two process fault tests passed. No dependency upgrade was needed: npm's latest Pi remained 0.85.1.
 - Four sequential live calls completed: Qwen3.8 Flash/Max, DeepSeek V4.1 Flash and GLM5.3. Boundary semantics checked independently; strict-output deviations for Max/GLM recorded in `docs/alibaba-personal.md`. No generated code executed, metered fallback or background service.
 
@@ -103,8 +103,8 @@ The implemented durability is for **tool-free Pi tasks**. Native Claude/Codex se
 
 ## Assisted self-improvement cycle 001
 
-- Real Clanker Qwen worker identified auth evidence being lost behind a quota code. Red regression reproduced it; one-line precedence fix and supervisor regression now pass.
-- Real Clanker Codex worker independently reviewed final source/tests: pass, no findings. Reviewed source matches the final revision; hashes and run IDs are in `.harness/self-improve-001/evidence.json`.
+- Real Relentless Qwen worker identified auth evidence being lost behind a quota code. Red regression reproduced it; one-line precedence fix and supervisor regression now pass.
+- Real Relentless Codex worker independently reviewed final source/tests: pass, no findings. Reviewed source matches the final revision; hashes and run IDs are in `.harness/self-improve-001/evidence.json`.
 - Canonical full gate passed with **100 Vitest tests** plus existing process/lifecycle, lint, types, formatting and build checks. No autonomous patch writer was used; see `docs/self-improvement.md` for exact roles and limits.
 
 ## Bounded coding workers (2026-09-17)
@@ -112,7 +112,7 @@ The implemented durability is for **tool-free Pi tasks**. Native Claude/Codex se
 - Red: the coding-worker contract tests initially had four failures against an unimplemented worker. TypeScript syntax support and no-op handling each had a focused failing regression before their fixes.
 - Independent review reproduced a FIFO input hanging before inference. The fix checks regular-file type before opening, uses nonblocking/no-follow flags, and retains post-open validation. The FIFO regression now passes.
 - Green: 14 coding-worker tests cover private-copy edits, failure feedback, path traversal/hidden paths, symlinks, special files, whole-batch authorization, read-only context, non-execution, attempts, provider blocking, TS/JSON checks and no-op output. Full `mise run ci` passes with 114 Vitest tests plus existing ShellCheck/lifecycle/subprocess checks. Coverage reporting still only targets router/swarm, not the whole harness.
-- Real CLI runs with Qwen3.8 Flash and GPT-5.6 Luna each repaired a missing closing brace in a TypeScript fixture in one attempt. Clanker produced `ready_for_review` and hashed changes. The original stayed unchanged. The outer assistant inspected both exact replacements, then independently checked positive, cancellation-to-zero and zero addition cases; these behavioral assertions are not built-in worker checks.
+- Real CLI runs with Qwen3.8 Flash and GPT-5.6 Luna each repaired a missing closing brace in a TypeScript fixture in one attempt. Relentless produced `ready_for_review` and hashed changes. The original stayed unchanged. The outer assistant inspected both exact replacements, then independently checked positive, cancellation-to-zero and zero addition cases; these behavioral assertions are not built-in worker checks.
 - Retained local artifacts: `.harness/coding-smoke/qwen/`, `.harness/coding-smoke/codex/`, `verify.mjs`, `evidence.json` and the original fixture/request. No credentials copied. Neither model call used metered fallback.
 - Final independent review of worker, CLI, tests and usage documentation found no remaining blockers. No commit, merge or publication occurred. See [coding-worker limits](coding-workers.md): arbitrary project execution, durable coding recovery and automatic integration remain unimplemented.
 
@@ -122,11 +122,11 @@ A catalog regression failed against the initial no-op registration, then passed 
 
 ## Muse live authentication and output contract
 
-Saved direct Meta authentication resolved without exposing credentials. The initial two Contributor calls returned text but failed the requested JSON format because the shared Pi worker system prompt unconditionally demanded reviewer assumptions. A focused test failed on that original prompt. After making the worker role task-neutral and honoring explicit output formats, the third live low-effort call returned exactly `{"echo":"clanker-muse"}`, verified by JSON parsing and equality. The untrusted-evidence boundary and tool restrictions remain intact. Independent review found no actionable issues. Full `mise run ci` passed with 116 tests plus lifecycle/subprocess checks. Evidence: `.harness/muse-smoke/evidence.json`; successful run: `.harness/runs/3da0a345-ad46-4cfb-93a7-2af442c1847b/`. Existing subscription configurations retain their billing restrictions.
+Saved direct Meta authentication resolved without exposing credentials. The initial two Contributor calls returned text but failed the requested JSON format because the shared Pi worker system prompt unconditionally demanded reviewer assumptions. A focused test failed on that original prompt. After making the worker role task-neutral and honoring explicit output formats, the third live low-effort call returned exactly `{"echo":"relentless-muse"}`, verified by JSON parsing and equality. The untrusted-evidence boundary and tool restrictions remain intact. Independent review found no actionable issues. Full `mise run ci` passed with 116 tests plus lifecycle/subprocess checks. Evidence: `.harness/muse-smoke/evidence.json`; successful run: `.harness/runs/3da0a345-ad46-4cfb-93a7-2af442c1847b/`. Existing subscription configurations retain their billing restrictions.
 
 ## Self-improvement cycle 002: measured routing foundation
 
-Clanker Muse reviewed the design; Clanker Luna authored and then repaired the evidence ranker in disposable copies. Initial acceptance tests failed against the stub. Independent review added billing-mode and balanced-case regressions; the second generated revision addressed them. The outer assistant checked before hashes, integrated working files, corrected small typing/lint details and implemented evaluation/routing integration. Further regressions reproduced late acceptance and lost optimization policy; final review also identified cancellation during setup and unknown zero-price cost metadata. Those boundaries are now covered.
+Relentless Muse reviewed the design; Relentless Luna authored and then repaired the evidence ranker in disposable copies. Initial acceptance tests failed against the stub. Independent review added billing-mode and balanced-case regressions; the second generated revision addressed them. The outer assistant checked before hashes, integrated working files, corrected small typing/lint details and implemented evaluation/routing integration. Further regressions reproduced late acceptance and lost optimization policy; final review also identified cancellation during setup and unknown zero-price cost metadata. Those boundaries are now covered.
 
 The final routing-cycle gate passed with 142 tests, static checks, build, ShellCheck, lifecycle and subprocess checks. Test discovery is now restricted to repository `tests/`, so copied model-worker artifacts cannot become automatically executed tests. Coverage thresholds still apply only to router/swarm.
 
@@ -134,11 +134,11 @@ Six live probe calls (three Muse, three Codex) passed host predicates on identic
 
 ## Self-improvement cycle 003: read-only model inventory
 
-A Clanker Luna coding worker authored the inventory core against initially failing tests. The outer assistant added host catalog/checkpoint inspection and CLI wiring. Additional regressions caught incorrect native-provider name guessing and Pi partial effort-map interpretation. Independent review confirmed the final helper matches pinned Pi 0.85.1 semantics and found no remaining issues. Live read-only inventory resolved the saved provider logins without exposing keys or invoking inference. Final `mise run ci` passed with 147 tests and existing lifecycle/subprocess checks. The measured `plan` command also selected GPT-5.6 Luna using the retained live probe observations. Evidence: `.harness/self-improve-002/inventory-proposal/`, `inventory.json`, and `ranking.json`.
+A Relentless Luna coding worker authored the inventory core against initially failing tests. The outer assistant added host catalog/checkpoint inspection and CLI wiring. Additional regressions caught incorrect native-provider name guessing and Pi partial effort-map interpretation. Independent review confirmed the final helper matches pinned Pi 0.85.1 semantics and found no remaining issues. Live read-only inventory resolved the saved provider logins without exposing keys or invoking inference. Final `mise run ci` passed with 147 tests and existing lifecycle/subprocess checks. The measured `plan` command also selected GPT-5.6 Luna using the retained live probe observations. Evidence: `.harness/self-improve-002/inventory-proposal/`, `inventory.json`, and `ranking.json`.
 
 ## Self-improvement cycle 003: durable coding recovery
 
-Clanker's Luna worker produced the coding journal and two runner proposals against failing tests. The outer assistant corrected TypeScript, checkpoint invariants, retry/token lifecycle, syntax-check input and timer handling. Independent review reproduced prototype-key persistence, malformed-database cleanup and inconsistent/missing exports. Added regressions and fixes passed final independent review.
+Relentless's Luna worker produced the coding journal and two runner proposals against failing tests. The outer assistant corrected TypeScript, checkpoint invariants, retry/token lifecycle, syntax-check input and timer handling. Independent review reproduced prototype-key persistence, malformed-database cleanup and inconsistent/missing exports. Added regressions and fixes passed final independent review.
 
 `mise run ci` passed with 168 Vitest tests, ShellCheck, lifecycle checks and three subprocess fault tests. New offline cases cover expired/reused lease owners, cumulative attempts, immutable context, batch rollback, corruption, terminal blocking, late results, reconstructed exports and SIGKILL recovery. Existing legacy coding behavior remains covered. Coverage instrumentation still targets router/swarm rather than the whole harness.
 
@@ -148,7 +148,7 @@ This verifies coding checkpoint durability and fixed syntax checking, not autono
 
 ## Self-improvement cycle 004: coding provider recovery
 
-A Clanker Luna coding worker authored `coding-recovery.ts`; host integration added persisted provider cooldowns, issued attempts, normalized failures and fallback in the durable coding loop. Tests establish exact-model/provider pins, billing/effort constraints, missing optimization evidence, Retry-After, persisted waits without attempt consumption, unchanged source, intermediate patch handoff, and stale-denial precedence. Earlier checkpoint shapes remain readable without budget reset.
+A Relentless Luna coding worker authored `coding-recovery.ts`; host integration added persisted provider cooldowns, issued attempts, normalized failures and fallback in the durable coding loop. Tests establish exact-model/provider pins, billing/effort constraints, missing optimization evidence, Retry-After, persisted waits without attempt consumption, unchanged source, intermediate patch handoff, and stale-denial precedence. Earlier checkpoint shapes remain readable without budget reset.
 
 Independent review exposed missing cancellation forwarding and policy errors lost inside the Pi adapter. Failing tests reproduced both prompt rejection and final-message denial during abort, along with a lease-heartbeat takeover. The corrected adapter drains for up to 250 ms; unresolved settlement becomes an unknown blocker. Final independent review found no remaining blockers. `mise run ci` passed with 192 Vitest tests, ShellCheck, lifecycle checks and three subprocess fault tests. Coverage instrumentation remains scoped to router/swarm.
 
@@ -156,13 +156,13 @@ Live run `0f420498-f04f-47b1-8d6d-57f765e50ea0` first dispatched `xai/grok-4.6`,
 
 ## Self-improvement cycle 005: durable cancellation
 
-A real `coding create/resume` run (`90128fc7-904c-4d4b-9056-a67bbfbdceec`) produced the cancellation proposal through Clanker and Pi Codex. The outer assistant applied the focused cancellation changes instead of the worker's unrelated formatting rewrite. Failing tests preceded implementation. Journal tests cover idle/running/retry cancellation, idempotence, invalid clocks, attempt preservation and late blocking failure retention. An integration test cancels through a second connection; a subprocess test invokes the cancellation CLI from a separate process and verifies abort, unchanged source and the retained attempt count.
+A real `coding create/resume` run (`90128fc7-904c-4d4b-9056-a67bbfbdceec`) produced the cancellation proposal through Relentless and Pi Codex. The outer assistant applied the focused cancellation changes instead of the worker's unrelated formatting rewrite. Failing tests preceded implementation. Journal tests cover idle/running/retry cancellation, idempotence, invalid clocks, attempt preservation and late blocking failure retention. An integration test cancels through a second connection; a subprocess test invokes the cancellation CLI from a separate process and verifies abort, unchanged source and the retained attempt count.
 
 Independent review found no remaining blockers. `mise run ci` passed 197 Vitest tests, ShellCheck, lifecycle checks and four subprocess tests. Artifacts and red/green evidence are retained in `.harness/self-improve-005/`. No live cancellation call or extra inference was needed for deterministic cancellation checks. Contract revision, shared health, execution isolation and autonomous scheduling remain incomplete.
 
 ## Self-improvement cycle 007: per-case evidence guards
 
-A real Clanker durable coding run (`3f19107d-e7ba-4ac5-bfcb-c486c740000a`) produced the confidence helper against failing tests. Host integration added per-case counts, acceptance floors and optional Wilson lower-endpoint thresholds. Regressions cover a failed case hidden by 90% aggregate success, insufficient samples, numerical reference points and invalid counts. Independent review found no blockers.
+A real Relentless durable coding run (`3f19107d-e7ba-4ac5-bfcb-c486c740000a`) produced the confidence helper against failing tests. Host integration added per-case counts, acceptance floors and optional Wilson lower-endpoint thresholds. Regressions cover a failed case hidden by 90% aggregate success, insufficient samples, numerical reference points and invalid counts. Independent review found no blockers.
 
 The canonical gate passed 201 Vitest tests, static checks, build, ShellCheck, lifecycle verification and four subprocess checks. Coverage remains scoped to router/swarm. Red/green logs, the worker proposal and live calibration artifacts are retained in `.harness/self-improve-007/`. No arbitrary project tests, unattended scheduler or automatic integration were enabled.
 
@@ -170,7 +170,7 @@ The bounded live calibration completed 24 calls without provider failure: Muse a
 
 ## Self-improvement cycle 008: versioned coding instructions
 
-Clanker run `4bc174de-1998-4dba-b542-6f89f5e11675` returned a comment-only replacement for the journal. Although syntax checks passed, the host tests failed immediately because the module no longer exported its class. The proposal was rejected, the source restored, and the outer assistant implemented the focused revision feature. This is recorded as a failed worker proposal, not a successful autonomous implementation.
+Relentless run `4bc174de-1998-4dba-b542-6f89f5e11675` returned a comment-only replacement for the journal. Although syntax checks passed, the host tests failed immediately because the module no longer exported its class. The proposal was rejected, the source restored, and the outer assistant implemented the focused revision feature. This is recorded as a failed worker proposal, not a successful autonomous implementation.
 
 New tests establish stale-update rollback, history across reopen, preserved attempts/config/files, review invalidation, exhausted budgets, terminal blockers, running/cancelled rejection, waiting-state CLI updates and delivery of updated instructions to the next worker. Export and CLI distinguish artifact revision from current revision. Independent review verified the final behavior. The full gate passed 205 Vitest tests, static checks/build, ShellCheck, lifecycle and four subprocess checks. No live inference is used by these tests.
 
@@ -178,7 +178,7 @@ Artifacts and red/green evidence: `.harness/self-improve-008/`. The overall goal
 
 ## Self-improvement cycle 009: shared coding cooldowns
 
-Clanker durable run `663e6d52-32a9-47f6-befd-56a48dca255c` authored the cooldown merge helper against failing tests. The host integrated journal reads and corrected strict TypeScript/lint issues. Independent final review found no blockers.
+Relentless durable run `663e6d52-32a9-47f6-befd-56a48dca255c` authored the cooldown merge helper against failing tests. The host integrated journal reads and corrected strict TypeScript/lint issues. Independent final review found no blockers.
 
 Tests prove maximum cooldown preservation across runs/connections, retained evidence after cancellation, zero-attempt waiting, due-time revalidation, constrained fallback and exact-model pin preservation. A subprocess test commits quota failure, exits, and verifies a new process waits on a different run before dispatching at expiry. No provider inference is used in the tests.
 
@@ -186,7 +186,7 @@ The full gate passed 210 Vitest tests, static checks/build, ShellCheck, lifecycl
 
 ## Self-improvement cycle 010: read-only combined inventory
 
-Clanker run `9ba1dfa5-bc85-43b0-9fd4-87e1217cf05b` authored the coding-health read adapter. Host integration added read-only journal inspection and combined local inventory reporting. Regressions prove missing-file noncreation, unchanged database bytes/permissions, mutation rejection, corruption refusal, maximum cooldown selection and consistent snapshots during concurrent commits. Independent final review passed.
+Relentless run `9ba1dfa5-bc85-43b0-9fd4-87e1217cf05b` authored the coding-health read adapter. Host integration added read-only journal inspection and combined local inventory reporting. Regressions prove missing-file noncreation, unchanged database bytes/permissions, mutation rejection, corruption refusal, maximum cooldown selection and consistent snapshots during concurrent commits. Independent final review passed.
 
 The full gate passed 214 Vitest tests, static checks/build, ShellCheck, lifecycle and five subprocess checks. A real read-only inventory call found both local journal sources and the configured Muse/Codex authentication entries; capacity remained explicitly unverified. No inference was triggered by inventory. Red/green logs, worker proposal and inventory report are retained in `.harness/self-improve-010/`.
 
@@ -194,7 +194,7 @@ Goal and coding dispatch state remain separate. This verifies reporting, not syn
 
 ## Self-improvement cycle 011: required export declarations
 
-Clanker run `2c3af8aa-d50b-4918-8654-7bb73c91ad69` authored the non-executing AST helper. Host integration added optional manifest constraints, persistence, first-attempt context and repair feedback in both runners. Red/green tests cover placeholder erasure, misleading strings/comments, erased type/ambient declarations, runtime enum/namespace declarations, aliases, unsupported CommonJS/JSON/read-only manifests and durable retention.
+Relentless run `2c3af8aa-d50b-4918-8654-7bb73c91ad69` authored the non-executing AST helper. Host integration added optional manifest constraints, persistence, first-attempt context and repair feedback in both runners. Red/green tests cover placeholder erasure, misleading strings/comments, erased type/ambient declarations, runtime enum/namespace declarations, aliases, unsupported CommonJS/JSON/read-only manifests and durable retention.
 
 Independent review caught and verified the CommonJS validation fix. The full gate passed 221 Vitest tests, static checks/build, ShellCheck, lifecycle and five subprocess checks. The compiled helper also rejected the actual cycle-008 placeholder for its missing `CodingJournal` export. No model-generated code or imported dependency was executed by that replay. TypeScript remains exactly 6.0.2, now classified as a runtime dependency.
 
@@ -202,7 +202,7 @@ Artifacts, proposal, failing logs, gate and replay: `.harness/self-improve-011/`
 
 ## Self-improvement cycle 012: checkpoint-bound independent review
 
-Clanker run `c9474092-bf89-437e-96df-6309ddef9174` produced the finding validator with the required-export guard enabled. Host integration added serial two-provider review, author-provider exclusion, route preflight, exact-checkpoint checks, deadlines and the review CLI/artifacts. Model findings are validated as bounded structured evidence and never execute commands.
+Relentless run `c9474092-bf89-437e-96df-6309ddef9174` produced the finding validator with the required-export guard enabled. Host integration added serial two-provider review, author-provider exclusion, route preflight, exact-checkpoint checks, deadlines and the review CLI/artifacts. Model findings are validated as bounded structured evidence and never execute commands.
 
 Independent review reproduced late-result acceptance when timers were delayed and stale reads through pinned read-only journal handles. Failing regressions preceded elapsed-time checks and rejection of pinned handles. Final independent review found no blockers. The gate passed 231 Vitest tests, static checks/build, ShellCheck, lifecycle and five subprocess checks.
 
@@ -218,7 +218,7 @@ No executable changes were made in this cycle; the previous 231-test gate remain
 
 ## Self-improvement cycle 014: context persistence and repair
 
-Clanker run `86aed40b-d109-43f5-a193-417f78bc7215` authored the context schema/renderer. Host changes deliver context to both coding paths and independent review; explicit updates preserve old context and invalidate stale review readiness. Tests cover bounded/strict input, prior history, omission preserving context, unchanged permissions/budgets, reopening, CLI persistence and revision during review. Independent review found no blockers. The full gate passed 237 Vitest tests, static checks/build, ShellCheck, lifecycle and five subprocess checks.
+Relentless run `86aed40b-d109-43f5-a193-417f78bc7215` authored the context schema/renderer. Host changes deliver context to both coding paths and independent review; explicit updates preserve old context and invalidate stale review readiness. Tests cover bounded/strict input, prior history, omission preserving context, unchanged permissions/budgets, reopening, CLI persistence and revision during review. Independent review found no blockers. The full gate passed 237 Vitest tests, static checks/build, ShellCheck, lifecycle and five subprocess checks.
 
 The original parser run `c9474092-bf89-437e-96df-6309ddef9174` was revised to include compiler requirements and the observed diagnostic. It resumed at revision 2 and reached a new review candidate with two total attempts out of two; the budget was not reset. Its saved code explicitly guards the indexed value and uses the supported Zod issue code. A fixed TypeScript check with strict, noUncheckedIndexedAccess, exactOptionalPropertyTypes and unused-code checks passed. That repaired proposal was only statically checked and was not copied into the working tree.
 
@@ -230,11 +230,11 @@ The follow-up live review of revision 2 failed before accepting any assessment, 
 
 The full gate passed 248 Vitest tests, lint/types/build, ShellCheck, lifecycle validation and six subprocess checks. Eleven focused workflow/helper/CLI tests cover bounded repairs, external revisions, quota waits across reopening, stale verification handoffs, schema damage, artifact history limits and interrupted repair reconciliation. The new subprocess check kills a worker during review and verifies reservation retention with no replay. Independent final review found no remaining blockers after two regression-backed fixes.
 
-Clanker authored the repair-prompt helper in run `3051ee5a-4776-4404-9842-51ddd7e52b89`; host code supplied orchestration and tests. Red/green and gate logs are under `.harness/self-improve-015/`. No complete live workflow or isolated behavioral acceptance is claimed.
+Relentless authored the repair-prompt helper in run `3051ee5a-4776-4404-9842-51ddd7e52b89`; host code supplied orchestration and tests. Red/green and gate logs are under `.harness/self-improve-015/`. No complete live workflow or isolated behavioral acceptance is claimed.
 
 ## Cycle 016: live persisted independent-review handoff
 
-The workflow resumed existing Clanker coding run `3051ee5a-4776-4404-9842-51ddd7e52b89` (Codex Luna, one coding attempt) with a single explicitly budgeted review pair. Qwen3.8 Flash on the Personal subscription and Muse Spark 1.3 Contributor on the authorized metered route each returned no findings. The workflow persisted `verification_required` at checkpoint `2da1c1806c11e5010c263116db87aec3545e1dd950a8ec5e23e025242c377b05`. Reopening and resuming retained exactly the same state and report.
+The workflow resumed existing Relentless coding run `3051ee5a-4776-4404-9842-51ddd7e52b89` (Codex Luna, one coding attempt) with a single explicitly budgeted review pair. Qwen3.8 Flash on the Personal subscription and Muse Spark 1.3 Contributor on the authorized metered route each returned no findings. The workflow persisted `verification_required` at checkpoint `2da1c1806c11e5010c263116db87aec3545e1dd950a8ec5e23e025242c377b05`. Reopening and resuming retained exactly the same state and report.
 
 A hash-checked copy of the exact reviewed source passed a fixed TypeScript 6.0.2 check with strict, noUncheckedIndexedAccess, exactOptionalPropertyTypes and unused-code checks. The source also matches the previously host-reviewed working-tree helper. No new candidate was integrated in this cycle. Artifacts are retained under `.harness/self-improve-016/`.
 
@@ -268,7 +268,7 @@ Independent final review found no blockers after regression-backed plan-integrit
 
 The full gate passed 271 Vitest tests, static/build checks, ShellCheck, lifecycle validation and seven subprocess checks. Scheduling tests cover due times beyond one sleep chunk, pre-cancellation, waiting cancellation and unexpected errors. Integration regressions cover untouched Personal configurations, shutdown preserving coding attempts/state, and stopping before another reviewer dispatch.
 
-Independent final review repeated the SIGINT fixture and observed one call, one attempt, coding `ready`, workflow `coding`, and no blocker. Clanker authored and repaired the runner in run `2f4e7f23-c35e-4088-bc3f-72cd3ad5b80b`; host integration and lint adaptation are documented separately. Red/green, run artifacts, source evidence and gate logs are in `.harness/self-improve-021/`. No background service or project-code execution was enabled.
+Independent final review repeated the SIGINT fixture and observed one call, one attempt, coding `ready`, workflow `coding`, and no blocker. Relentless authored and repaired the runner in run `2f4e7f23-c35e-4088-bc3f-72cd3ad5b80b`; host integration and lint adaptation are documented separately. Red/green, run artifacts, source evidence and gate logs are in `.harness/self-improve-021/`. No background service or project-code execution was enabled.
 
 ## Cycle 022: local VM feasibility breakthrough
 
@@ -276,13 +276,13 @@ A QEMU 11.0.3 TCG guest successfully booted under software emulation, avoiding t
 
 Independent evidence review supports a feasibility prototype only. No product executable changes or model inference occurred, so cycle 021's 271-test/seven-subprocess gate remains the code baseline. A pinned language runtime, trusted task/result protocol, host resource limits and adversarial validation remain required before project behavioral execution is enabled. See `docs/execution-isolation.md` for exact evidence and limitations.
 
-## Cycle 023: isolated Node and a real Clanker helper
+## Cycle 023: isolated Node and a real Relentless helper
 
-A digest-pinned official Node 24.21.0 ARM64 image ran under local QEMU TCG as UID 65534. A separate root-controlled result channel rejected a stdout success spoof and reported the true failure exit code. The reviewed Clanker scheduler helper then passed three fixed host-authored tests inside the VM; protected candidate/test hashes matched the exact packaged files and current source. Independent evidence review found no blockers to these narrow claims.
+A digest-pinned official Node 24.21.0 ARM64 image ran under local QEMU TCG as UID 65534. A separate root-controlled result channel rejected a stdout success spoof and reported the true failure exit code. The reviewed Relentless scheduler helper then passed three fixed host-authored tests inside the VM; protected candidate/test hashes matched the exact packaged files and current source. Independent evidence review found no blockers to these narrow claims.
 
 The TypeScript probe initially failed under `--jitless` (WebAssembly unavailable); normal guest Node settings passed. Host RSS monitoring through `ps` was denied, so no hard host-memory bound is claimed. All emulator processes were reaped. Evidence, digest-pinned downloads, prototype scripts and retained per-run records are under `.harness/self-improve-023/`.
 
-This is a supervised experiment using Clanker-authored/host-reviewed code, not a general verification command or autonomous promotion. Product executable code did not change; cycle 021's 271-test/seven-subprocess gate remains the baseline. Runtime packaging, acceptance semantics and production lifecycle integration remain active work.
+This is a supervised experiment using Relentless-authored/host-reviewed code, not a general verification command or autonomous promotion. Product executable code did not change; cycle 021's 271-test/seven-subprocess gate remains the baseline. Runtime packaging, acceptance semantics and production lifecycle integration remain active work.
 
 ## Cycle 024: reusable experimental VM supervisor
 
@@ -308,7 +308,7 @@ seven packaging checks. Packaging regressions cover deterministic content bindin
 path/file collisions, supplied entrypoints, digest mismatch, final image limits,
 no overwrite and the public CLI. No live inference or emulation runs in CI.
 
-Real public-command runs used the existing reviewed Node image and Clanker
+Real public-command runs used the existing reviewed Node image and Relentless
 scheduler helper. Three scheduler cases passed; an expanded fixture verified
 readonly source/tests, protected metadata/channel and loopback-only interfaces.
 A separate deliberate assertion failure correctly produced protected exit 1.
@@ -374,7 +374,7 @@ while the writer retains its checkpoint fence, process death during partial and
 complete staging, exclusive capture, developer edits and corrupted state.
 Independent final review found no remaining blockers after recovered-stage sync.
 
-Fixture promotion succeeds and resumes. The real verified Clanker candidate
+Fixture promotion succeeds and resumes. The real verified Relentless candidate
 correctly failed preflight on changed readonly review context: both tracked files
 remained unchanged and no transaction was created. No live repository installation
 or model inference occurred. Evidence is in `.harness/self-improve-029/`, including
@@ -383,7 +383,7 @@ See [promotion scope and limitations](source-promotion.md).
 
 ## Cycle 030: worker-authored continuation and Pi integration
 
-A Clanker Codex worker produced the verification continuation in one attempt;
+A Relentless Codex worker produced the verification continuation in one attempt;
 independent review preceded its integration. Runner regressions cover repair and
 fresh review, unresolved verification, cancellation and propagated errors. The Pi
 adapter has registration, current-project selection, malformed command, trust and
@@ -391,7 +391,7 @@ error tests. A real Pi-loader subprocess test reproduced and fixed the source vs
 compiled worker path issue without provider inference. The loaded command also
 read the existing verified workflow successfully.
 
-Project policy now reads a validated `clanker` namespace in Pi settings. Tests
+Project policy now reads a validated `relentless` namespace in Pi settings. Tests
 cover local billing constraints, role references, versioning, trust, symlink
 rejection and preservation by Pi's own settings writer. Configuration display is
 implemented; session-scoped routing and lifecycle integration remain pending.
@@ -405,7 +405,7 @@ integration. The full Pi-native goal/routing lifecycle is still unfinished.
 ## Cycle 031: scoped roles and real dispatch guards
 
 The final canonical gate passed 317 Vitest tests and 43 Python checks, plus
-formatting, lint, types, build and ShellCheck. A Clanker worker authored the role
+formatting, lint, types, build and ShellCheck. A Relentless worker authored the role
 intersection in one attempt; independent review preceded integration. Additional
 review found a trust-revocation race during settings reads. Its regression failed
 before the fix and passed with no worker dispatch afterward. Reviewer-specific
@@ -421,7 +421,7 @@ Red/green, real-loader and gate evidence is under `.harness/self-improve-031/`.
 ## Cycle 032: normal Pi shutdown and session replacement
 
 The final canonical gate passed 321 Vitest tests and 44 Python checks, plus lint,
-types, build, formatting and ShellCheck. Clanker's worker authored the local
+types, build, formatting and ShellCheck. Relentless's worker authored the local
 session controller; independent review preceded integration and found no final
 blockers. Failure tests preceded external-signal propagation and suppression of
 closed-session UI publication. The real Pi-loader lifecycle fixture covers a
@@ -444,7 +444,7 @@ The SIGKILL coding fixture now proves zero replacement calls after reopening,
 with original source and one consumed attempt retained. Independent review found
 no blockers in the journal change.
 
-The Clanker worker's two-attempt large-file replacement failed required-export
+The Relentless worker's two-attempt large-file replacement failed required-export
 checks and was not integrated. The host's minimal implementation followed the
 failing regression. Both outcomes remain in `.harness/self-improve-033/`.
 Evidence-based reconciliation and efficient worker edits remain unfinished.
@@ -466,7 +466,7 @@ capability certification. Artifacts are in `.harness/self-improve-034/`.
 
 ## Cycle 035: Pi-native task creation
 
-A Clanker Codex Luna worker authored the role-policy builder in one attempt
+A Relentless Codex Luna worker authored the role-policy builder in one attempt
 (`2bf24322-db45-459c-abb5-06d27c548f60`). The host integrated Pi command creation,
 source snapshots, current-policy/trust checks, and refined independent-review
 preflight to preserve overlapping model roles. Initial policy and command tests
@@ -493,7 +493,7 @@ blockers. The documented separate-commit recovery gap remains unresolved.
 
 ## Cycle 036: recoverable, idempotent Pi creation
 
-A Clanker Codex Luna coding worker authored the checkpoint-fenced attachment core
+A Relentless Codex Luna coding worker authored the checkpoint-fenced attachment core
 in one attempt (`b5506ab2-6720-40ee-9f50-57f762a6c511`). Host integration added the
 strict intent schema, atomic source+intent transaction, task-ID/request-hash
 binding, early replay and preservation of progressed workflow state. Initial
@@ -523,7 +523,7 @@ and autonomous goal loop remain active work.
 
 ## Cycle 037: local evaluation evidence in Pi routing
 
-Clanker's Codex Luna worker authored the evidence merge core in one attempt
+Relentless's Codex Luna worker authored the evidence merge core in one attempt
 (`800e6acf-634b-473f-8b63-814585eb3d4d`). Host integration adds explicit project
 source references, read-only checkpoint inspection, complete-cohort checks and
 Pi route/create wiring. Initial merge/loader/read-only tests failed before the
@@ -551,7 +551,7 @@ calibration. The broader autonomous goal remains unfinished.
 
 ## Cycle 038: live controller classification and Pi adoption
 
-The independently reviewed controller-recovery suite ran through Clanker's owned
+The independently reviewed controller-recovery suite ran through Relentless's owned
 process/Pi workers using the existing authorized Luna subscription and Muse
 Contributor metered configuration. All 12 planned calls completed without a pending
 reservation or stopped evaluation; both providers passed six declared JSON-field
@@ -579,7 +579,7 @@ automatic calibration and the complete autonomous goal loop remain unfinished.
 
 ## Cycle 039: fenced durable coding measurements
 
-Clanker's Luna worker authored the collector in one attempt
+Relentless's Luna worker authored the collector in one attempt
 (`18b6f3ac-f3cd-4f14-b27f-06c89215f077`). Initial collector and durable-runner tests
 failed before implementation. Journal integration records at most one measurement
 per committed epoch and only under the current unexpired lease. Tests cover late
@@ -607,7 +607,7 @@ CLI/workflow cost forwarding. No scope or billing permissions changed.
 ## Cycle 040: live measured coding-to-verification pilot
 
 Existing measured Muse candidate `ea650f02-d047-4ccd-b3e7-6653fc6d37aa` received one
-bounded independent review pair through Clanker's workers: OpenAI Codex Luna and
+bounded independent review pair through Relentless's workers: OpenAI Codex Luna and
 Alibaba Qwen3.8 Flash. Both returned no findings; coding attempts remained one and
 review pairs used one. Review configuration allowed subscription routes only.
 
@@ -639,8 +639,8 @@ change and VM outcomes, with no blocking evidence mismatches.
 
 ## Cycle 041: Pi prospective coding-calibration preview
 
-A Clanker Luna worker authored the planner in one attempt; host integration wired
-it into `/clanker calibration-plan` using project role policy and Pi model scope.
+A Relentless Luna worker authored the planner in one attempt; host integration wired
+it into `/relentless calibration-plan` using project role policy and Pi model scope.
 Red evidence is retained in `.harness/self-improve-041/`: `red.log`,
 `refinement-red.log`, `pi-red.log` and `review-red.log`. Six focused tests cover
 stable contracts, source/test/prompt/time-budget identity, eligibility, independent
@@ -655,7 +655,7 @@ source promotion or capability observation was produced by this preview.
 
 ## Cycle 042: durable Pi calibration cohorts
 
-Clanker's Luna worker authored the journal in one attempt. Red evidence in
+Relentless's Luna worker authored the journal in one attempt. Red evidence in
 `.harness/self-improve-042/` covers missing implementation (`red.log`), Pi command
 integration (`pi-red.log`), the worker's overly strict nested parse
 (`worker-red.log`), read-only mutation rejection (`readonly-red.log`) and the
@@ -675,7 +675,7 @@ identity and verifies pinned inputs before dispatch.
 
 ## Cycle 043: pinned trial preparation through Pi
 
-Clanker's Luna worker authored the bounded artifact reader in one attempt.
+Relentless's Luna worker authored the bounded artifact reader in one attempt.
 `.harness/self-improve-043/red.log`, `prepare-red.log` and `pi-red.log` retain
 failing tests before implementation and command integration. Six focused tests
 cover exact author selection, source/runtime pin rejection, current scope/trust,
@@ -697,7 +697,7 @@ verified outcome attribution and routing-evidence admission remain unfinished.
 
 ## Cycle 044: explicit trial advancement and cancellation
 
-Clanker's Luna worker authored optional session cancellation for the verification
+Relentless's Luna worker authored optional session cancellation for the verification
 supervisor in one attempt. Red evidence in `.harness/self-improve-044/` includes
 `red.log` (cancellation), `step-red.log` (advancement), `contract-red.log` (expected
 execution binding) and `repair-red.log` (retained failed receipt versus repaired
@@ -723,7 +723,7 @@ aggregate measurements and routing-evidence admission remain unfinished.
 
 ## Cycle 045: read-only cohort accounting
 
-Clanker's Luna worker authored the informational trial-state classifier in one
+Relentless's Luna worker authored the informational trial-state classifier in one
 attempt. Host type checks caught nullable receipt handling and an invalid enum
 comparison before integration (`worker-types.log`). Red evidence in
 `.harness/self-improve-045/` also covers initial classification (`red.log`),
@@ -747,7 +747,7 @@ and verified evidence admission remain unfinished.
 
 ## Pi configuration skill — 2026-09-17
 
-- The package manifest exposes `skills/clanker-configure/SKILL.md`. Pi 0.85.1's
+- The package manifest exposes `skills/relentless-configure/SKILL.md`. Pi 0.85.1's
   real skill loader found it with automatic discovery enabled and no diagnostics;
   an independent review also exercised Pi's package resolver.
 - The skill-creator validator passed using isolated temporary Python dependencies.
@@ -803,7 +803,7 @@ and verified evidence admission remain unfinished.
 
 - Failing tests demonstrated missing reason codes and missing report/attempt detail
   before implementation (`.harness/self-improve-048/red.log` and
-  `integration-red.log`). Clanker's Luna worker authored the parser change in one
+  `integration-red.log`). Relentless's Luna worker authored the parser change in one
   attempt; source identity was checked before integration.
 - Sixteen focused parser/review tests passed. Independent review ran eighteen
   focused cases and found no blockers. An additional workflow regression passed
@@ -820,7 +820,7 @@ and verified evidence admission remain unfinished.
 
 - Pure and integration tests failed before the accounting implementation and report
   fields existed (`.harness/self-improve-049/red.log`, `integration-red.log`).
-- Clanker's Luna worker authored the aggregator in one attempt. Host integration
+- Relentless's Luna worker authored the aggregator in one attempt. Host integration
   added report fields; lint prompted equivalent Zod 4 API updates. Ten focused
   tests passed, and independent review found no material issues.
 - Canonical gate passed: 414 Vitest tests, 49 Python tests, coverage thresholds,
@@ -836,7 +836,7 @@ and verified evidence admission remain unfinished.
 
 - Pure timing, receipt persistence and report-field tests failed before
   implementation (`.harness/self-improve-050/red.log`, `integration-red.log`,
-  `report-red.log`). Clanker's Luna worker authored the helper in one attempt;
+  `report-red.log`). Relentless's Luna worker authored the helper in one attempt;
   strict types exposed unchecked array reads (`worker-types-red.log`), corrected
   before integration.
 - Tests cover successful/failed receipt persistence, unchanged timing on
@@ -854,7 +854,7 @@ and verified evidence admission remain unfinished.
 ## Cycle 051 — durable verification history
 
 - Intent and accounting tests failed before implementation (`red.log` and
-  `accounting-red.log` under `.harness/self-improve-051`). Clanker's Luna worker
+  `accounting-red.log` under `.harness/self-improve-051`). Relentless's Luna worker
   supplied the accounting helper in one attempt; host integration preserves all
   recorded verification attempts across repair and reserves identity before pack.
 - Regression coverage includes packaging failure, reopening an intent before
@@ -876,7 +876,7 @@ and verified evidence admission remain unfinished.
 - Two new tests failed before implementation (`.harness/self-improve-052/red.log`):
   a clock exception escaped review, and accounting rejected unknown latency.
   Additional coverage checks end-clock failure preserving quota, cost and abort.
-- Clanker's Luna worker produced the fix in one attempt. Host corrections addressed
+- Relentless's Luna worker produced the fix in one attempt. Host corrections addressed
   the missed nullable report type and a test's optional signal
   (`worker-types-red.log`). Independent review passed 21 focused tests without
   blocking findings.
@@ -891,7 +891,7 @@ and verified evidence admission remain unfinished.
 ## Cycle 053 — continuous verification and repair
 
 - Contract/step and Pi command tests failed before implementation (`red.log`,
-  `pi-red.log` under `.harness/self-improve-053`). Clanker's Luna worker authored
+  `pi-red.log` under `.harness/self-improve-053`). Relentless's Luna worker authored
   the step adapter in one attempt. Host integration connects it to the existing
   runner and binds execution contracts in the journal.
 - Tests exercise failed verification through repair and a second independent
@@ -916,7 +916,7 @@ and verified evidence admission remain unfinished.
 ## Cycle 054 — recover interrupted assessment storage
 
 - Receipt-helper and interrupted-assessment regressions failed before
-  implementation (`.harness/self-improve-054/red.log`). Clanker's Luna worker
+  implementation (`.harness/self-improve-054/red.log`). Relentless's Luna worker
   supplied the validator in one attempt; host integration persists the receipt
   before the assessment and reconstructs only absent assessments.
 - Tests simulate a completed VM driver followed by failed assessment rename,
@@ -940,7 +940,7 @@ and verified evidence admission remain unfinished.
   values were emitted. The original error remains unknown rather than being
   retroactively labeled quota or definitively attributed to expiry.
 - Freshness and preflight tests failed before implementation (`red.log`,
-  `inventory-red.log` under `.harness/self-improve-055`). Clanker's Luna worker
+  `inventory-red.log` under `.harness/self-improve-055`). Relentless's Luna worker
   supplied the helper in one attempt. Tests cover expiry/clock boundaries,
   fresh-token use, zero-runtime expired-token rejection and inventory separation.
 - A check using actual saved expiry and a guarded runtime factory returned `auth`
@@ -953,7 +953,7 @@ and verified evidence admission remain unfinished.
 ## Cycle 056 — durable reviewer retry waits
 
 - Retry eligibility and journal restart tests failed before implementation
-  (`.harness/self-improve-056/red.log`). Clanker's Luna worker supplied the helper
+  (`.harness/self-improve-056/red.log`). Relentless's Luna worker supplied the helper
   in one attempt; host corrections reject malformed retry metadata and remove a
   redundant phase check.
 - Tests prove Retry-After survives reopening, no calls or pair spending before
@@ -972,7 +972,7 @@ and verified evidence admission remain unfinished.
 
 - Routing, cooldown persistence and inventory regressions failed before changes
   (`.harness/self-improve-057/red.log`, `cooldown-red.log`, `inventory-red.log`).
-  Clanker's Luna worker supplied the pair planner in one attempt.
+  Relentless's Luna worker supplied the pair planner in one attempt.
 - Tests cover shared cooldowns across workflows, waiting without spending a pair,
   immediate independent alternatives, final-budget cooldown retention, author
   exclusion and pinned-route constraints. Provider calls use controlled doubles.
@@ -990,7 +990,7 @@ and verified evidence admission remain unfinished.
 ## Cycle 058 — replace an unavailable reviewer within its pair
 
 - New reviewer and workflow regressions failed before implementation
-  (`.harness/self-improve-058/red.log`, `workflow-red.log`). Clanker's Luna worker
+  (`.harness/self-improve-058/red.log`, `workflow-red.log`). Relentless's Luna worker
   supplied the route refresh in one attempt; host integration preserved its code
   after checking original source equality.
 - Tests prove a newly cooled second reviewer is replaced by a permitted independent
@@ -1009,7 +1009,7 @@ and verified evidence admission remain unfinished.
 ## Cycle 059 — durable partial-review continuation
 
 - Continuation, routing and workflow regressions failed before implementation
-  (`.harness/self-improve-059/continuation-red.log`, `workflow-red.log`). Clanker's
+  (`.harness/self-improve-059/continuation-red.log`, `workflow-red.log`). Relentless's
   Luna worker supplied the validator in one attempt. A further failing test found
   missing equality between assessment and attempt routes (`worker-red.log`); host
   corrections added that check and removed an unchecked cast. Deprecated Zod
@@ -1036,7 +1036,7 @@ and verified evidence admission remain unfinished.
 ## Cycle 060 — bind goal tasks to coding workflows
 
 - Projection and Pi handoff regressions failed before implementation
-  (`.harness/self-improve-060/red.log`, `integration-red.log`). Clanker's Luna
+  (`.harness/self-improve-060/red.log`, `integration-red.log`). Relentless's Luna
   worker supplied the pure projection in one attempt; integration preserved its
   source after checking original equality, with host lint/style corrections.
 - Tests cover scoped constraints and memories, dependency evidence, stable task
@@ -1069,7 +1069,7 @@ and verified evidence admission remain unfinished.
 
 - Completion, integration and Pi command tests failed before implementation
   (`.harness/self-improve-061/red.log`, `integration-red.log`, `command-red.log`).
-  Clanker's Luna worker supplied the pure completion transition in one attempt;
+  Relentless's Luna worker supplied the pure completion transition in one attempt;
   host integration retained its source after original-content comparison and
   made lint-only adjustments to receipt field extraction.
 - Real verification inspection with controlled author/reviewer and VM drivers
@@ -1100,7 +1100,7 @@ and verified evidence admission remain unfinished.
 ## Cycle 062 — account for unfinished goal workflows
 
 - The missing progress command/schema failed integration tests before changes
-  (`.harness/self-improve-062/red.log`). Clanker's Luna worker supplied the pure
+  (`.harness/self-improve-062/red.log`). Relentless's Luna worker supplied the pure
   projection in one attempt; integration retained it after source comparison.
   A failing admission regression preceded final-progress integration
   (`admission-red.log`); an invalid test lease argument was also corrected.
@@ -1126,7 +1126,7 @@ and verified evidence admission remain unfinished.
 ## Cycle 063 — collect progress after Pi execution
 
 - Pi execution regressions failed before integration
-  (`.harness/self-improve-063/red.log`). Clanker's Luna worker supplied the
+  (`.harness/self-improve-063/red.log`). Relentless's Luna worker supplied the
   best-effort collector in one attempt; host integration retained its source
   after original-content comparison and attached it to command settlement.
 - Controlled tests cover both resume and run-verified quota outcomes, thrown
@@ -1145,7 +1145,7 @@ and verified evidence admission remain unfinished.
 
 ## Cycle 064 — bounded Pi goal scheduling
 
-- Clanker's Luna worker (`dea46883-8530-46b2-b474-a3f15ce12e64`, one attempt)
+- Relentless's Luna worker (`dea46883-8530-46b2-b474-a3f15ce12e64`, one attempt)
   supplied the pure planner. Host integration adds explicit work declarations,
   stable workflow creation, journal-derived waits, dependency source checks,
   coding/review/verification/admission actions and shared supervisor ownership.
@@ -1176,7 +1176,7 @@ and verified evidence admission remain unfinished.
 
 ## Cycle 065 — reviewed Pi configuration application
 
-- Clanker's bounded Luna attempt `69eccfc7-1bc9-44ff-a082-84e120c32616` failed
+- Relentless's bounded Luna attempt `69eccfc7-1bc9-44ff-a082-84e120c32616` failed
   with `unknown` after one consumed attempt, about 19.5 seconds and unknown cost.
   It made no source change. The host implemented the proposal builder and Pi
   application path; the failure was not retried with a reset budget.
@@ -1203,14 +1203,14 @@ and verified evidence admission remain unfinished.
   formatting, strict lint/types, build and ShellCheck (`ci.log`). The earlier
   six-row calibration admission revalidated with its original timestamp and no
   inference or VM replay (`legacy-validation.json`).
-- This is approval enforcement for the Clanker command path, not a restriction on
+- This is approval enforcement for the Relentless command path, not a restriction on
   arbitrary direct filesystem edits. Chat/memory constraint interpretation,
   provider entitlement validation, continuous discovery, automatic goal integration
   and representative full-workflow efficiency remain separate unfinished work.
 
 ## Cycle 066 — continuous foreground goal execution
 
-- Clanker Luna authored the pure wait planner in one attempt
+- Relentless Luna authored the pure wait planner in one attempt
   (`892c7ea9-9c49-4cb9-9cf1-d14153ad90b9`). The host compared its original
   source before application, then added the foreground controller and Pi command.
   The planner performs no inference, filesystem writes or permission decisions.
@@ -1242,7 +1242,7 @@ and verified evidence admission remain unfinished.
 
 ## Cycle 067 — scheduler-fenced source publication
 
-- Clanker Luna authored promotion-lease validation in one attempt
+- Relentless Luna authored promotion-lease validation in one attempt
   (`69ee5e16-61dc-42d3-987d-85187f9bebbc`). The host removed redundant deprecated
   Zod `safe()` calls after lint reported them; `int()` retains safe-integer
   validation in the pinned version. Original-source comparison preceded application.
@@ -1272,7 +1272,7 @@ and verified evidence admission remain unfinished.
 
 ## Cycle 068 — verified source installation before goal admission
 
-- Clanker Luna's single allowed attempt (`7f2ecb9c-34b1-417d-a3fb-982e5679906f`)
+- Relentless Luna's single allowed attempt (`7f2ecb9c-34b1-417d-a3fb-982e5679906f`)
   failed with `unknown`. The consumed attempt is retained; the host implemented
   the receipt helper and integration. This is not autonomous worker success.
 - Receipt, contract/integration and native workflow-reference regressions failed
@@ -1300,7 +1300,7 @@ and verified evidence admission remain unfinished.
 
 ## Cycle 069 — explicit Pi session restart
 
-- Clanker Luna produced the pure planner in one attempt
+- Relentless Luna produced the pure planner in one attempt
   (`f02c1d73-f08a-4a32-9a22-a81e30f05275`). The host retained safe-integer
   validation through Zod `int()` while removing its redundant deprecated `safe()`.
   Original-source comparison preceded installation of the helper.
@@ -1331,7 +1331,7 @@ and verified evidence admission remain unfinished.
 
 ## Cycle 070 — summed measured workflow active time
 
-- Clanker Luna authored the pure aggregator in one attempt
+- Relentless Luna authored the pure aggregator in one attempt
   (`39406643-bc61-475e-9771-ce57d52b3470`). Original-source comparison preceded
   installation; the host integrated report, admission and routing paths.
 - Pure and integration regressions failed before implementation (`red.log`,
@@ -1384,7 +1384,7 @@ and verified evidence admission remain unfinished.
 
 ## Cycle072 — prospective malformed-review diagnostics
 
-- A bounded Clanker Luna subscription worker supplied the pure helper in one
+- A bounded Relentless Luna subscription worker supplied the pure helper in one
   checked attempt. Host-authored meaningful tests failed first, then passed with
   the helper and report integration; logs are in `.harness/self-improve-072`.
 - Tests cover UTF-8 byte caps, shape precedence, no raw-content retention, strict
@@ -1508,7 +1508,7 @@ and process/file limits do not establish a hard host-memory ceiling.
 Canonical `mise run ci` passed with 604 Vitest and 64 Python tests. Focused
 registration/extension tests cover preserving policy and constraints without
 dispatch, rejecting configuration overrides, dependency cycles, invalid contracts,
-cancellation and revoked trust before ledger creation. A Clanker Luna worker
+cancellation and revoked trust before ledger creation. A Relentless Luna worker
 authored the adapter; host corrections addressed refined-schema projection and
 the local test fixture's concurrency requirement. This validates goal registration,
 not the still-pending representative end-to-end project run.
@@ -1542,7 +1542,7 @@ lint, types, coverage and build. Independent review passed 96 focused parser,
 runner, journal, failure and legacy-worker tests. Skill validation passed.
 The cycle082 journal reopens under the new build with its three consumed attempts
 and unspecified output cause intact. No live inference was used in unit tests;
-one separate Clanker Luna author call produced the parser proposal. Red/green,
+one separate Relentless Luna author call produced the parser proposal. Red/green,
 gate and legacy inspection evidence is retained in `.harness/self-improve-083`.
 
 ## Cycles084–085: verified feedback repair
@@ -1574,7 +1574,7 @@ The new command was exercised in an actual Pi PTY against cycle084: it displayed
 zero goal-recorded attempts alongside two of two consumed author attempts and the
 saved `invalid_replacement` failure. No dispatch or progress synchronization was
 performed; the session exited cleanly. The test used an isolated Pi agent directory
-and an explicit local Clanker extension. Evidence is in `.harness/self-improve-087`,
+and an explicit local Relentless extension. Evidence is in `.harness/self-improve-087`,
 including `ui-status.json`. This is actual interactive status coverage, not live
 inference coverage. Existing journals remain authoritative.
 
@@ -1590,7 +1590,7 @@ An actual Pi terminal run rendered session inventory but exposed excessive outpu
 from hundreds of available unconfigured models. That prompted pages of20 with
 totals/continuation; the final pagination was verified offline, not rerun in the
 terminal. Evidence and the truncated initial capture are in
-`.harness/self-improve-088`. One separate Clanker Luna call authored the projection;
+`.harness/self-improve-088`. One separate Relentless Luna call authored the projection;
 no provider probes or live inference occur in inventory or unit tests.
 
 ## Cycle089: completed outage-recovery drill
@@ -1616,7 +1616,7 @@ Cycle088 remains the canonical gate (617 Vitest/64 Python). See
 ## Cycle091: bounded review cancellation settlement
 
 Four regressions reproduced lost late blocking failures and unconfirmed shutdown.
-Clanker's Luna worker authored the fix; strict typing/lint corrections were
+Relentless's Luna worker authored the fix; strict typing/lint corrections were
 integrated locally. Canonical `mise run ci` passed 625 Vitest and 64 Python tests,
 plus format, lint, types, coverage and build. Final independent review passed
 47 focused checks with no actionable findings. Tests include late auth/policy/
@@ -1628,8 +1628,8 @@ timeouts remain unchanged; ordinary review timeouts still do not authorize retry
 
 ## Cycle092: explain task-specific routing evidence
 
-Clanker's Luna worker refactored the scorer into a shared assessment used by both
-ranking and the new read-only `/clanker explain` command. Red tests reproduced
+Relentless's Luna worker refactored the scorer into a shared assessment used by both
+ranking and the new read-only `/relentless explain` command. Red tests reproduced
 missing assessment/command behavior; canonical `mise run ci` passed 629 Vitest and
 64 Python tests, with format, lint, types, coverage and build. Skill validation
 passed. The admitted cycle090 evidence explains Terra's per-case sample shortage
@@ -1654,7 +1654,7 @@ Canonical `mise run ci` passed 637 Vitest and 64 Python tests plus format, lint,
 types, coverage and build. Independent review passed 42 focused checks. Initial
 regressions covered missing recovery and command behavior; a review-found stale
 publication race gained its own red/green cancellation test. Final save now holds
-the exact coding checkpoint and rechecks goal authority. The Clanker author call
+the exact coding checkpoint and rechecks goal authority. The Relentless author call
 failed edit validation; the host implemented the change and retained that failure.
 
 Synthetic tests prove preserved candidates/counts/reports, setup-auth-only gating,
@@ -1698,7 +1698,7 @@ stock CLI sandbox restrictions and the read-only SDK credential adapter.
 
 ## Cycle098: workflow-aware status
 
-Four status regressions failed before Clanker's Luna worker patch; all seven
+Four status regressions failed before Relentless's Luna worker patch; all seven
 status tests pass afterward. Independent review passed 14 focused checks.
 Canonical `mise run ci` passed 641 Vitest and 64 Python tests, plus formatting,
 lint, types, coverage and build. Documentation edited afterward passed its scoped
@@ -1710,7 +1710,7 @@ No status read dispatches inference or revalidates installation proof. Evidence:
 ## Cycle099: absent-original installation primitive
 
 New creation regressions failed against the original installer before executable
-changes. A single Clanker Luna proposal was rejected before execution because it
+changes. A single Relentless Luna proposal was rejected before execution because it
 removed existing authority fences. The host implemented targeted changes while
 preserving those guards. All 30 promotion tests passed, including eight new tests;
 independent review found no actionable issue. Canonical `mise run ci` passed 641
@@ -1736,7 +1736,7 @@ was installed and no goal acceptance was recorded; see cycle100 acceptance scope
 
 ## Cycle101: repair guidance and execution facts
 
-One prompt contract regression failed before a Clanker Luna proposal was applied;
+One prompt contract regression failed before a Relentless Luna proposal was applied;
 36 focused tests passed in independent review. Canonical `mise run ci` passed
 649 Vitest and 72 Python tests, formatting, lint, types, coverage and build. The
 later skill/document edits received scoped formatting and independent review.
@@ -1763,7 +1763,7 @@ See cycle102 acceptance scope; documentation edits passed scoped formatting.
 
 A routing regression demonstrated that qualified higher-effort evidence was
 ignored whenever a lower effort was supported. A separate Pi explanation
-regression exposed the same omission. Clanker's Luna worker extracted a shared
+regression exposed the same omission. Relentless's Luna worker extracted a shared
 eligible-route enumerator; the host connected Pi explanation to it. With explicit
 optimization it considers all supported efforts at or above the task floor;
 without optimization it preserves the original minimum-effort choice.
@@ -1825,7 +1825,7 @@ passed. Evidence: `.harness/self-improve-105`.
 
 ## Cycle106: proposed configuration evidence preview
 
-A command regression failed before a Clanker Luna worker implemented the read-only
+A command regression failed before a Relentless Luna worker implemented the read-only
 proposal reader and Pi `explain-proposal` command. The first proposal retained an
 overescaped command regex; the same regression caught it before host integration
 corrected parsing, strict capture guards and shared timestamp use. Tests cover no
@@ -1841,7 +1841,7 @@ estimate; this is not a known billed charge. The session was stopped and exited;
 no settings or project sources changed. A subsequent startup assertion rejected an
 incorrect loader option before exposing a terminal or making an inference call.
 The corrected launcher uses the installed SDK's `resourceLoaderOptions`, explicitly
-loads Clanker extensions and requires command registration before startup.
+loads Relentless extensions and requires command registration before startup.
 
 Actual Pi SDK terminal commands then saved a proposal referencing both admitted
 cohorts and explained its model/effort evidence successfully, reporting
@@ -1853,12 +1853,12 @@ captures are in `.harness/self-improve-106`; the setup failure remains separate.
 ## Cycle107: ordinary Pi installation and initial discovery
 
 The stock Pi CLI installed this local package into a fresh external project at
-`/tmp/clanker-install-107-sh7P8N`, using an isolated writable Pi agent directory.
+`/tmp/relentless-install-107-sh7P8N`, using an isolated writable Pi agent directory.
 Verbose terminal startup loaded all four extensions and the configuration skill.
-Initial inventory then exposed a real bootstrap bug: missing Clanker policy was
+Initial inventory then exposed a real bootstrap bug: missing Relentless policy was
 treated as an error, preventing discovery before configuration.
 
-A command regression failed first. One Clanker Luna subscription coding call
+A command regression failed first. One Relentless Luna subscription coding call
 proposed the applied fix: null project policy yields no configured candidates and
 lists native session-visible models; malformed policy still rejects. Tests also
 cover missing settings, install-only settings, unchanged settings, no journal
@@ -1867,7 +1867,7 @@ across three suites without actionable findings. The canonical gate passed 656
 Vitest and 72 Python tests, formatting, lint, types, coverage and build.
 
 The restarted stock CLI successfully returned inventory and a final pagination
-page with no Clanker policy or health journal creation. The main inventory capture
+page with no Relentless policy or health journal creation. The main inventory capture
 is truncated; startup, original failure and final page are separately retained.
 All terminals and the coding worker exited. No inference was requested by these
 terminal commands; the one development worker call is separate. Pi's offline flag
@@ -1882,8 +1882,8 @@ Rechecking stock Pi with the existing global login store reproduced EPERM for
 settings/auth lock creation. That terminal exited without inference. This remains
 an environment limitation for stock-CLI subscription-backed goal acceptance.
 
-A real Pi loader regression then failed on missing `clanker_inventory`. One
-Clanker Luna worker supplied the new read-only tool; host integration corrected
+A real Pi loader regression then failed on missing `relentless_inventory`. One
+Relentless Luna worker supplied the new read-only tool; host integration corrected
 its legacy TypeBox import, optional abort-signal handling and number formatting.
 The tool reuses command inventory, validates pagination input, checks trust and
 session lifecycle before/after reading, and returns model metadata to the caller.
@@ -1898,7 +1898,7 @@ diagnostic had not initialized native availability and correctly returned zero
 models; its result is retained separately. After explicitly refreshing the native
 registry, the second returned 386 session-visible entries, paginated, with no
 configured candidates. The count is not quota, capability or billing entitlement.
-Both sessions allowed only `clanker_inventory`, used existing read-only OAuth,
+Both sessions allowed only `relentless_inventory`, used existing read-only OAuth,
 disabled automatic retries, created no project settings or journals and exited.
 These are tool-call acceptance checks, not full setup-skill or coding-goal runs.
 
@@ -1913,8 +1913,8 @@ Evidence and retained failures: `.harness/self-improve-108`.
 
 ## Cycle109: setup skill drafts a reviewable policy
 
-A real Pi loader regression failed on the absent proposal tool. One Clanker Luna
-worker supplied `clanker_config_propose`, applied unchanged with host extension
+A real Pi loader regression failed on the absent proposal tool. One Relentless Luna
+worker supplied `relentless_config_propose`, applied unchanged with host extension
 registration. It accepts only a configuration object, reuses bounded proposal
 persistence, checks trust/cancellation/session generation, and returns the exact
 proposal and human apply command. It exposes no confirmation or apply operation.
@@ -1925,7 +1925,7 @@ passed 656 Vitest and 74 Python tests plus formatting, lint, types, coverage and
 build; subsequent documentation/skill formatting passed.
 
 A bounded Pi SDK Luna low subscription session invoked the installed
-`/skill:clanker-configure` with only read, inventory and proposal tools. Its scope
+`/skill:relentless-configure` with only read, inventory and proposal tools. Its scope
 was a fresh small TypeScript project, two named OpenAI candidates, no metered use,
 no probes, no restart intent and no application. Nine tool calls and four assistant
 responses produced one valid proposal:
@@ -2004,7 +2004,7 @@ explicit release scope/install instructions. No publication occurred.
 
 Red evidence: the original npm archive omitted `dist/worker-entry.js` and included
 this checkout's `.pi/settings.json`; the package assertion failed. Four new
-progress tests failed before `src/pi-progress.ts` existed. Clanker's first bounded
+progress tests failed before `src/pi-progress.ts` existed. Relentless's first bounded
 Luna author attempt returned `invalid_edits` and remains in private evidence. A
 second, smaller request produced the progress helper; host review corrected stale
 cleanup, elapsed-only updates, callback typing and wiring. Both attempts remain
@@ -2036,7 +2036,7 @@ these counts do not imply whole-product coverage.
 ## GitHub Pi distribution — 0.1.0-alpha.2
 
 The user selected the public `alexlopashev/pi-relentless` repository and MIT
-license. The package keeps the Clanker name and `/clanker` interface, adds
+license. The package keeps the Relentless name and `/relentless` interface, adds
 repository metadata and a Git-install prepare hook, and supplies public setup
 instructions. npm publication is separate and was not requested.
 
@@ -2068,3 +2068,23 @@ tests plus formatting, lint, types, build and shell checks), fresh production-on
 source installation, packed-distribution smoke, and independent re-review after
 the missing-types fix. These are local results; GitHub Actions results are
 reported separately after publication.
+
+## Relentless naming — 0.1.0-alpha.3
+
+Renamed the package, Pi command, configuration namespace, setup skill, tool names,
+local-provider identity, service identifiers and VM proof-channel paths to
+Relentless. Examples, documentation and tests use the same names. Source changes
+were prepared in an isolated worktree on `codex/relentless-rename`.
+
+Two new regressions failed before the change: the package did not expose the
+Relentless extension/skill and the configuration loader ignored the new namespace.
+Both now pass. The canonical gate passed 663 Vitest and 74 Python tests, plus
+formatting, lint, types, build and shell checks. A fresh production-only source
+installation also passed extension/skill loading, demo and worker validation.
+Independent review found no actionable naming or upgrade blockers.
+
+This is a breaking alpha change. Existing runtime journals, proposals and proof
+bundles are not rewritten. Upgrade instructions require retaining the previous
+revision for old work and rebuilding affected VM/service assets. The original
+main-branch GitHub Actions run had macOS VM test failures before this rename;
+those are separate from the local green gate and remain outside this naming change.

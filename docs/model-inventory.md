@@ -35,7 +35,7 @@ author/goal dispatchers do not yet share one transactional health ledger.
 
 ## Active Pi session
 
-Prefer `/clanker inventory` for project configuration inside Pi. The native command
+Prefer `/relentless inventory` for project configuration inside Pi. The native command
 uses that session's full/available registries and scope, alongside project roles
 and recorded provider health. The CLI remains useful outside Pi but can load a
 different set of extensions. Neither interface proves capacity or task competence;

@@ -33,7 +33,7 @@ export async function setup() {
   await writeFile(
     join(root, ".pi/settings.json"),
     JSON.stringify({
-      clanker: {
+      relentless: {
         version: 1,
         routing: { candidates },
         roles: { coder: ["a", "b"], reviewer: ["review-a", "review-b"] },

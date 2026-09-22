@@ -27,7 +27,7 @@ const c = (provider: string) => ({
   efforts: ["low"],
 });
 function fixture(reviewProviders = ["a", "b"], maxReviewPairs = 2) {
-  const root = mkdtempSync(join(tmpdir(), "clanker-workflow-"));
+  const root = mkdtempSync(join(tmpdir(), "relentless-workflow-"));
   roots.push(root);
   const coding = new CodingJournal(join(root, "coding.sqlite"));
   handles.push(coding);

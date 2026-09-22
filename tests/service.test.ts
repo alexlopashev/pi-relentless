@@ -3,8 +3,8 @@ import { launchAgent } from "../src/service.js";
 it("renders an explicit restartable service with safe path encoding", () => {
   const plist = launchAgent(
     "/path/Node & tools/node",
-    "/my project/clanker/dist/cli.js",
-    "/my project/clanker",
+    "/my project/relentless/dist/cli.js",
+    "/my project/relentless",
   );
   expect(plist).toContain("/path/Node &amp; tools/node");
   expect(plist).toContain("<key>KeepAlive</key><true/>");

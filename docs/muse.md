@@ -1,6 +1,6 @@
 # Muse Spark 1.3 Contributor — direct Meta API
 
-The user selected Contributor and has a key issued by dev.meta.ai. Clanker now registers a direct `meta` provider with Pi, using `https://api.meta.ai/v1`, the Responses API, and exact model ID `muse-spark-1.3-contributor`. OpenRouter is not required. The project extension `.pi/extensions/meta-provider.ts` and Clanker workers share the same provider definition. Built-in gateway models remain unchanged.
+The user selected Contributor and has a key issued by dev.meta.ai. Relentless now registers a direct `meta` provider with Pi, using `https://api.meta.ai/v1`, the Responses API, and exact model ID `muse-spark-1.3-contributor`. OpenRouter is not required. The project extension `.pi/extensions/meta-provider.ts` and Relentless workers share the same provider definition. Built-in gateway models remain unchanged.
 
 Endpoint/protocol and reasoning support are based on [OpenClaw's direct Meta integration documentation](https://docs.openclaw.ai/providers/meta), which links Meta's model, pricing and reasoning references. Those Meta pages require login in this environment. Direct inference with the user's saved Pi key is now verified at low effort; see live evidence below.
 
@@ -12,7 +12,7 @@ From this project directory:
 mise exec -- pnpm exec pi
 ```
 
-Run `/login`, select **Meta Model API** (`meta`), and enter the Meta-issued key in the secret prompt. Restart Pi if it was already running before this extension was added. Pi saves the key in its credential store; do not paste it into chat or project files. The runtime resolves only credentials stored for `meta`, never an OpenRouter key. When Clanker is used from other repositories, its direct worker registration still works; the project-local interactive login extension must be loaded explicitly if logging in elsewhere.
+Run `/login`, select **Meta Model API** (`meta`), and enter the Meta-issued key in the secret prompt. Restart Pi if it was already running before this extension was added. Pi saves the key in its credential store; do not paste it into chat or project files. The runtime resolves only credentials stored for `meta`, never an OpenRouter key. When Relentless is used from other repositories, its direct worker registration still works; the project-local interactive login extension must be loaded explicitly if logging in elsewhere.
 
 ## Activation and limits
 
@@ -31,6 +31,6 @@ Contributor pricing metadata is $0.10/M input, $0.20/M output and $0.002/M cache
 
 ## Live verification
 
-The saved `meta` API-key login resolved successfully. Three user-initiated direct Contributor requests were made. The first two received responses but failed the requested JSON-only format because Clanker's shared system prompt mandated reviewer assumptions. A failing regression reproduced that prompt conflict; the system prompt now honors each task's output format and makes reviewer commentary conditional. The third response parsed exactly as `{"echo":"clanker-muse"}`.
+The saved `meta` API-key login resolved successfully. Three user-initiated direct Contributor requests were made. The first two received responses but failed the requested JSON-only format because Relentless's shared system prompt mandated reviewer assumptions. A failing regression reproduced that prompt conflict; the system prompt now honors each task's output format and makes reviewer commentary conditional. The third response parsed exactly as `{"echo":"relentless-muse"}`.
 
 Verified run: `.harness/runs/3da0a345-ad46-4cfb-93a7-2af442c1847b/`. Local activated single-provider config and machine-checked evidence: `.harness/muse-smoke/`. The checked-in example stays disabled; existing subscription configs were not given metered fallback. No credentials were copied or printed. This proves authentication and a simple low-effort request, not coding quality or every reasoning level.

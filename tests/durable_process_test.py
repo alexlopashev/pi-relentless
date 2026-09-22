@@ -24,7 +24,7 @@ def run(code, env):
 
 class RecoveryTests(unittest.TestCase):
     def test_sigkill_after_dispatch_preserves_goal_and_budget(self):
-        with tempfile.TemporaryDirectory(prefix="clanker-crash-") as directory:
+        with tempfile.TemporaryDirectory(prefix="relentless-crash-") as directory:
             env = {**os.environ, "FIXTURE_DB": str(Path(directory) / "ledger.sqlite")}
             code = IMPORTS + f"""
 const ledger = new Ledger(process.env.FIXTURE_DB);
@@ -60,7 +60,7 @@ console.log(JSON.stringify({before, after, calls}));
             self.assertEqual(data["calls"], 1)
 
     def test_sqlite_commit_failure_rejects_dispatch(self):
-        with tempfile.TemporaryDirectory(prefix="clanker-full-") as directory:
+        with tempfile.TemporaryDirectory(prefix="relentless-full-") as directory:
             env = {**os.environ, "FIXTURE_DB": str(Path(directory) / "ledger.sqlite")}
             value = run(f"""
 import {{DatabaseSync}} from 'node:sqlite';
@@ -79,7 +79,7 @@ console.log(JSON.stringify({{failed,calls,state:reopened.read().goals[0].tasks[0
             self.assertEqual(data["state"], "ready")
 
     def test_coding_sigkill_preserves_snapshot_and_consumed_attempt(self):
-        with tempfile.TemporaryDirectory(prefix="clanker-coding-crash-") as directory:
+        with tempfile.TemporaryDirectory(prefix="relentless-coding-crash-") as directory:
             env = {**os.environ, "FIXTURE_DB": str(Path(directory) / "coding.sqlite")}
             imports = f"""
 import {{CodingJournal}} from {json.dumps((ROOT / 'dist/coding-journal.js').as_uri())};
@@ -113,7 +113,7 @@ journal.close(); console.log(JSON.stringify({before,after,calls}));
             self.assertEqual(data["calls"], 0)
 
     def test_coding_cli_cancel_stops_a_separate_worker_process(self):
-        with tempfile.TemporaryDirectory(prefix="clanker-cancel-") as directory:
+        with tempfile.TemporaryDirectory(prefix="relentless-cancel-") as directory:
             env = {**os.environ, "FIXTURE_DB": str(Path(directory) / ".harness/coding.sqlite"), "FIXTURE_ROOT": directory}
             imports = f"""
 import {{CodingJournal}} from {json.dumps((ROOT / 'dist/coding-journal.js').as_uri())};
@@ -155,7 +155,7 @@ console.log(JSON.stringify({{status:result.status,attempts:state.attempts,aborte
                     process.communicate(timeout=5)
 
     def test_coding_cooldown_survives_process_exit_and_blocks_other_run(self):
-        with tempfile.TemporaryDirectory(prefix="clanker-shared-health-") as directory:
+        with tempfile.TemporaryDirectory(prefix="relentless-shared-health-") as directory:
             env = {**os.environ, "FIXTURE_DB": str(Path(directory) / "coding.sqlite")}
             imports = f"""
 import {{CodingJournal}} from {json.dumps((ROOT / 'dist/coding-journal.js').as_uri())};
@@ -187,7 +187,7 @@ j.close(); console.log(JSON.stringify({{early,before,due,after}}));
             self.assertEqual(result["after"]["attempts"], 1)
 
     def test_workflow_crash_during_review_preserves_reservation_without_replay(self):
-        with tempfile.TemporaryDirectory(prefix="clanker-workflow-crash-") as directory:
+        with tempfile.TemporaryDirectory(prefix="relentless-workflow-crash-") as directory:
             env = {**os.environ, "FIXTURE_ROOT": directory}
             imports = f"""
 import {{CodingJournal}} from {json.dumps((ROOT / 'dist/coding-journal.js').as_uri())};
@@ -247,7 +247,7 @@ workflows.close();coding.close();
             self.assertEqual(data["calls"], 0)
 
     def test_evaluation_kill_retains_observation_and_ambiguous_reservation(self):
-        with tempfile.TemporaryDirectory(prefix="clanker-eval-crash-") as directory:
+        with tempfile.TemporaryDirectory(prefix="relentless-eval-crash-") as directory:
             env = {**os.environ, "FIXTURE_DB": str(Path(directory) / "evaluation.sqlite")}
             setup = f"""
 import {{EvaluationCheckpoint}} from {json.dumps((ROOT / 'dist/evaluation-checkpoint.js').as_uri())};

@@ -70,7 +70,7 @@ export async function snapshotLocalRuntime(
 ): Promise<{ directory: string; config: ManagedLocalConfig }> {
   const config = managedLocalSchema.parse(input);
   signal?.throwIfAborted();
-  const directory = await mkdtemp(join(tmpdir(), "clanker-local-owned-"));
+  const directory = await mkdtemp(join(tmpdir(), "relentless-local-owned-"));
   try {
     const executable = {
       ...config.executable,

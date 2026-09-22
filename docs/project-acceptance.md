@@ -3,7 +3,7 @@
 ## Cycle081: dependent local dispatcher
 
 A fresh project in `.harness/self-improve-081/project` completed a declared goal
-through Clanker's real Pi command handler. The entry script called `clankerCommand`
+through Relentless's real Pi command handler. The entry script called `relentlessCommand`
 with an explicit trusted project and the authenticated Pi model registry; this
 was an API-level integration exercise, not an interactive Pi UI session.
 
@@ -99,7 +99,7 @@ text, paths or replacement content is stored in this field. Retry eligibility,
 attempt budgets, billing and scope requirements are unchanged. Historical failures
 without the field stay unresolved, including cycle082.
 
-Clanker's Luna worker authored the parser changes. Host integration added the
+Relentless's Luna worker authored the parser changes. Host integration added the
 failure and journal boundary, with regressions for rejection reasons, persistence
 and late denial precedence. This diagnostic work enables a fresh repair exercise;
 it does not itself establish successful repair.
@@ -117,7 +117,7 @@ budgets in another fresh project, with an added task instruction requesting one
 complete-file `content` edit and raw JSON. The objective wording and isolated test
 path also changed. Both reviewers again rejected the synthetic candidate. The
 real Luna repair preserved that feedback, passed the second Qwen/Muse review pair,
-passed isolated VM verification, and was installed by Clanker. The ledger marks
+passed isolated VM verification, and was installed by Relentless. The ledger marks
 the goal completed with two consumed author slots. No manual source copying or
 budget reset was used.
 
@@ -137,9 +137,9 @@ general coding or authorize retries beyond the declared budget.
 
 ## Cycle086: actual Pi terminal installation and configuration review
 
-Pi0.85.1 was launched in a real PTY in a fresh project with the local Clanker
-package installed using `pi install -l`. Its startup listed `clanker-configure`
-and all four package extensions. `/clanker config` correctly reported missing
+Pi0.85.1 was launched in a real PTY in a fresh project with the local Relentless
+package installed using `pi install -l`. Its startup listed `relentless-configure`
+and all four package extensions. `/relentless config` correctly reported missing
 policy. A local-only, non-metered proposal was prepared through the terminal;
 `config-apply` displayed the actual confirmation dialog. Selecting No returned
 `declined`, and the settings retained only the installed package reference.
@@ -177,7 +177,7 @@ review estimate is $0.0003174. No capability cohort was admitted from this drill
 
 ## Cycle090: four-task coding cohort and real feedback repair
 
-Frozen suite `clanker-utilities-090` compared Luna and Terra at low effort on
+Frozen suite `relentless-utilities-090` compared Luna and Terra at low effort on
 revision merging, dependency validation, retry-header parsing and event replay.
 Independent oracle review preceded freezing; all four starting implementations
 failed isolated baseline tests. Eight terminal trials consumed nine author calls,
@@ -186,7 +186,7 @@ workflow stopped on a Qwen review timeout before verification. That failure is
 retained as workflow evidence, not attributed to author correctness.
 
 Luna's first event implementation used a numeric sequence to look up a string-keyed
-map. Both reviewers found it; Clanker relayed their feedback, and a second author
+map. Both reviewers found it; Relentless relayed their feedback, and a second author
 attempt passed both reviews and isolated tests. This was a real generated defect,
 not an injected one. Independent inspection verified all seven successful proofs
 and source pins before all eight rows were admitted.
@@ -210,7 +210,7 @@ root-configured Grok subscription route; independent preflight approved the stat
 pool while keeping remaining quota unknown. The original baseline failed isolated
 tests. No root routing settings changed.
 
-One synthetic OpenAI outage consumed author slot1. Clanker immediately selected
+One synthetic OpenAI outage consumed author slot1. Relentless immediately selected
 permitted Muse and retained its completed candidate in slot2 before the original
 60-second provider cooldown expired. Qwen returned no findings. Grok then failed
 with `auth` at `worker_setup`; this is not evidence of quota exhaustion. The same
@@ -275,10 +275,10 @@ thresholds remain intact.
 ## Cycle097: Pi SDK terminal restart and verified delivery
 
 A fresh dispatcher fixture failed its pinned isolated baseline test. The goal was
-created with `/clanker goal-create` in Pi's actual SDK `InteractiveMode` terminal.
+created with `/relentless goal-create` in Pi's actual SDK `InteractiveMode` terminal.
 An out-of-band, inference-free test driver injected one synthetic provider outage
 into the first author slot. Terminal status showed the saved coding ID, attempt
-and cooldown; the terminal exited. A new terminal session's `/clanker goal-step`
+and cooldown; the terminal exited. A new terminal session's `/relentless goal-step`
 returned `idle / waiting` with the same deadline, without spending another slot.
 
 After cooldown, explicit terminal goal-step commands ran one real Luna author and
@@ -312,8 +312,8 @@ phase. Those are concrete usability gaps. Artifacts and terminal captures are in
 ## Cycle098: workflow-aware goal status
 
 The cycle097 drill exposed a completed goal whose coding snapshot still said
-`ready_for_review`. Clanker's Luna worker added a separate, read-only workflow
-summary to `/clanker goal-status`, preserving the coding snapshot label and failure
+`ready_for_review`. Relentless's Luna worker added a separate, read-only workflow
+summary to `/relentless goal-status`, preserving the coding snapshot label and failure
 history. It shows recorded phase/reason, review budget/deadline and whether the
 workflow refers to the current coding revision. Missing workflow state is `null`;
 corruption fails rather than pretending the state is absent. This is observational
@@ -351,7 +351,7 @@ including `analysis.json`, `final.json` and terminal captures. The artifact name
 
 ## Cycle101: execution-context repair diagnostics
 
-A Clanker Luna worker updated generic repair instructions to trace the reported
+A Relentless Luna worker updated generic repair instructions to trace the reported
 failure to its source cause while preserving requirements, JSON output and
 untrusted-evidence boundaries. A separate one-author-call probe on a copy of the
 failed cycle100 candidate still failed: it changed the import to `./graph.js`,

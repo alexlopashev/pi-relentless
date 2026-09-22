@@ -117,7 +117,7 @@ def validate_state(state,request):
         if not (item['identity'] is None if file['original'] is None else valid_identity(item['identity'])) or not valid_identity(item['parentIdentity']) or type(item['mode']) is not int or not 0<=item['mode']<=0o777:raise ValueError('Invalid file identity')
         if item['phase'] not in ['planned','moving','applied','unchanged']:raise ValueError('Invalid phase')
         if not isinstance(item['retiredStages'],list) or len(item['retiredStages'])>3:raise ValueError('Invalid staging history')
-        pattern=rf'\.clanker-[0-9a-f]{{32}}-{index}\.new'
+        pattern=rf'\.relentless-[0-9a-f]{{32}}-{index}\.new'
         for stage in item['retiredStages']+([item['stage']] if item['stage'] is not None else []):
             if not isinstance(stage,str) or not re.fullmatch(pattern,stage):raise ValueError('Invalid stage path')
         if file['original'] is None:
@@ -126,7 +126,7 @@ def validate_state(state,request):
             if item['stage'] is not None or item['retiredStages'] or item['phase']!='unchanged':raise ValueError('Invalid unchanged entry')
         elif (not file['writable'] or item['stage'] is None or not isinstance(item['backup'],str)
               or str(Path(item['backup']).parent)!=str(Path(file['path']).parent)
-              or not re.fullmatch(rf'\.clanker-[0-9a-f]{{32}}-{index}\.before',Path(item['backup']).name)):
+              or not re.fullmatch(rf'\.relentless-[0-9a-f]{{32}}-{index}\.before',Path(item['backup']).name)):
             raise ValueError('Invalid backup path')
 
 
@@ -237,7 +237,7 @@ def _apply(request,directory,after_move=None,guard=lambda:None):
             files=[];aliases=set();token=uuid.uuid4().hex
             for index,(file,parent) in enumerate(zip(request['files'],parents)):
                 visible(parent,file['path']);data,info=read_at(parent,Path(file['path']).name)
-                prefix=f'.clanker-{token}-{index}'
+                prefix=f'.relentless-{token}-{index}'
                 if file['original'] is None:
                     if data is not None:raise ValueError('New target already exists')
                     files.append({'path':file['path'],'identity':None,'parentIdentity':identity(os.fstat(parent)),'mode':0o600,
@@ -247,7 +247,7 @@ def _apply(request,directory,after_move=None,guard=lambda:None):
                 alias=tuple(identity(info))
                 if alias in aliases:raise ValueError('Aliased input files')
                 aliases.add(alias)
-                prefix=f'.clanker-{token}-{index}'
+                prefix=f'.relentless-{token}-{index}'
                 changed=data!=file['current'].encode()
                 files.append({'path':file['path'],'identity':identity(info),'parentIdentity':identity(os.fstat(parent)),'mode':stat.S_IMODE(info.st_mode)&0o777,
                               'backup':str(Path(file['path']).parent/(prefix+'.before')) if changed else None,
@@ -300,7 +300,7 @@ def _apply(request,directory,after_move=None,guard=lambda:None):
             elif staged!=file['current'].encode():
                 if len(item['retiredStages'])>=3:raise ValueError('Staging recovery limit reached')
                 item['retiredStages'].append(stage)
-                item['stage']=f'.clanker-{uuid.uuid4().hex}-{request["files"].index(file)}.new'
+                item['stage']=f'.relentless-{uuid.uuid4().hex}-{request["files"].index(file)}.new'
                 save(journal,state)
                 # Preserve the interrupted stage and retry with a freshly journaled name.
                 return _apply(request,directory,after_move,guard)

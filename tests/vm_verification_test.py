@@ -166,9 +166,9 @@ class VerificationTest(unittest.TestCase):
         self.assertEqual(json.loads(result.stdout)['outcome'], 'ambiguous')
 
     def test_credentials_are_not_inherited(self):
-        os.environ['CLANKER_TEST_SECRET'] = 'do-not-inherit'
-        self.addCleanup(os.environ.pop, 'CLANKER_TEST_SECRET')
-        report = vm.run(self.request("assert 'CLANKER_TEST_SECRET' not in os.environ\n" + self.controller()), self.output)
+        os.environ['RELENTLESS_TEST_SECRET'] = 'do-not-inherit'
+        self.addCleanup(os.environ.pop, 'RELENTLESS_TEST_SECRET')
+        report = vm.run(self.request("assert 'RELENTLESS_TEST_SECRET' not in os.environ\n" + self.controller()), self.output)
         self.assertEqual(report['outcome'], 'executed')
 
 

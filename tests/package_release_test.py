@@ -13,14 +13,14 @@ import tempfile
 
 archive = pathlib.Path(sys.argv[1]).resolve()
 store = pathlib.Path(sys.argv[2]).resolve()
-with tempfile.TemporaryDirectory(prefix="clanker-release-") as directory:
+with tempfile.TemporaryDirectory(prefix="relentless-release-") as directory:
     root = pathlib.Path(directory)
     with tarfile.open(archive) as package:
         members = package.getmembers()
         names = {m.name.removeprefix("package/") for m in members}
         required = {"LICENSE", "scripts/prepare-install.mjs", "dist/worker-entry.js", "dist/managed-local-entry.js", "release-lock.yaml",
                     "scripts/verify_vm.py", "scripts/package_vm.py", "scripts/promote_sources.py",
-                    ".pi/extensions/clanker.ts", "skills/clanker-configure/SKILL.md"}
+                    ".pi/extensions/relentless.ts", "skills/relentless-configure/SKILL.md"}
         assert required <= names, required - names
         for member in members:
             path = pathlib.PurePosixPath(member.name)
@@ -49,13 +49,13 @@ export default async function () {
 }`);
 const loaded=await discoverAndLoadExtensions([...manifest.pi.extensions.map(p=>resolve(p)),probe],project,join(project,'agent'));
 assert.deepEqual(loaded.errors,[]);
-const command=loaded.extensions.find(e=>e.commands.has('clanker'))?.commands.get('clanker');
+const command=loaded.extensions.find(e=>e.commands.has('relentless'))?.commands.get('relentless');
 assert.ok(command);
 const notices=[];const statuses=[];
 await command.handler('inventory',{cwd:project,hasUI:true,isProjectTrusted:()=>true,scopedModels:[],modelRegistry:{getAll:()=>[],getAvailable:()=>[]},ui:{notify:(text,type)=>notices.push({text,type}),setStatus:(key,text)=>statuses.push(text)}});
 assert.equal(notices.at(-1)?.type,'info');
 assert.ok(statuses.some(s=>typeof s==='string'));assert.equal(statuses.at(-1),undefined);
-assert.ok(loadSkillsFromDir({dir:resolve('skills'),source:'release'}).skills.some(s=>s.name==='clanker-configure'));
+assert.ok(loadSkillsFromDir({dir:resolve('skills'),source:'release'}).skills.some(s=>s.name==='relentless-configure'));
 console.log('Archive extensions, skill, inventory progress, and worker IPC passed without inference.');
 '''
     subprocess.run(["node", "--input-type=module", "-"], input=script, text=True, cwd=installed, check=True)

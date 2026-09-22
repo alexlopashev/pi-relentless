@@ -29,13 +29,13 @@ export async function inventory(
 
   const authCache = new Map<string, "present" | "missing" | "unverified">();
   const nativeCli = (provider: string) =>
-    ["clanker-local", "claude-code", "codex-cli"].includes(provider);
+    ["relentless-local", "claude-code", "codex-cli"].includes(provider);
 
   const getAuth = async (provider: string) => {
     const cached = authCache.get(provider);
     if (cached) return cached;
     let result: "present" | "missing" | "unverified";
-    if (provider === "clanker-local" || nativeCli(provider)) {
+    if (provider === "relentless-local" || nativeCli(provider)) {
       result = "unverified";
     } else {
       try {

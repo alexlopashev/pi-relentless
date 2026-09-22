@@ -34,7 +34,7 @@ async function fixture() {
   await writeFile(
     join(root, ".pi/settings.json"),
     JSON.stringify({
-      clanker: {
+      relentless: {
         version: 1,
         routing: { candidates },
         roles: { coder: ["author"], reviewer: ["a", "b"] },
@@ -153,9 +153,9 @@ test("cancellation and revised context cannot use unchanged-progress fast paths;
 });
 test("Pi exposes progress sync without starting an inference executor", async () => {
   const f = await fixture();
-  const { clankerCommand } = await import("../src/pi-extension.js");
+  const { relentlessCommand } = await import("../src/pi-extension.js");
   const messages: string[] = [];
-  await clankerCommand(
+  await relentlessCommand(
     `goal-sync ${f.id}`,
     {
       ...f.context,
@@ -240,9 +240,9 @@ test.each(["resume", "run-verified"])(
   "Pi %s automatically records settled quota progress",
   async (command) => {
     const f = await fixture();
-    const { clankerCommand } = await import("../src/pi-extension.js");
+    const { relentlessCommand } = await import("../src/pi-extension.js");
     const messages: string[] = [];
-    await clankerCommand(
+    await relentlessCommand(
       `${command} ${f.id}${command === "run-verified" ? " execution.json" : ""}`,
       {
         ...f.context,
@@ -263,9 +263,9 @@ test.each(["resume", "run-verified"])(
 );
 test("automatic collection runs after a thrown workflow action without hiding its failure", async () => {
   const f = await fixture();
-  const { clankerCommand } = await import("../src/pi-extension.js");
+  const { relentlessCommand } = await import("../src/pi-extension.js");
   const messages: string[] = [];
-  await clankerCommand(
+  await relentlessCommand(
     `resume ${f.id}`,
     {
       ...f.context,
@@ -276,7 +276,7 @@ test("automatic collection runs after a thrown workflow action without hiding it
       return Promise.reject(new Error("workflow failed"));
     },
   );
-  expect(messages[0]).toContain("errorClanker command failed");
+  expect(messages[0]).toContain("errorRelentless command failed");
   expect(f.ledger.goal(f.goalId).tasks[0]?.workflowProgress).toMatchObject({
     authorAttempts: 1,
     codingStatus: "running",
@@ -285,9 +285,9 @@ test("automatic collection runs after a thrown workflow action without hiding it
 test("status remains read-only and shutdown prevents automatic goal writes", async () => {
   for (const command of ["status", "resume"]) {
     const f = await fixture();
-    const { clankerCommand } = await import("../src/pi-extension.js");
+    const { relentlessCommand } = await import("../src/pi-extension.js");
     const controller = new AbortController();
-    await clankerCommand(
+    await relentlessCommand(
       `${command} ${f.id}`,
       {
         ...f.context,
@@ -304,7 +304,7 @@ test("status remains read-only and shutdown prevents automatic goal writes", asy
 });
 test("collection failure reports pending without replacing a successful workflow result", async () => {
   const f = await fixture();
-  const { clankerCommand } = await import("../src/pi-extension.js");
+  const { relentlessCommand } = await import("../src/pi-extension.js");
   const messages: string[] = [];
   const { DatabaseSync } = await import("node:sqlite");
   const db = new DatabaseSync(f.ledger.path);
@@ -312,7 +312,7 @@ test("collection failure reports pending without replacing a successful workflow
     db.exec(
       "CREATE TRIGGER progress_fault BEFORE INSERT ON events WHEN NEW.kind='goal_work_progress' BEGIN SELECT RAISE(ABORT,'fault'); END",
     );
-    await clankerCommand(
+    await relentlessCommand(
       `resume ${f.id}`,
       {
         ...f.context,

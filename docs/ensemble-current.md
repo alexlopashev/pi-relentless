@@ -1,8 +1,8 @@
-# Clanker ensemble: current implementation and next steps
+# Relentless ensemble: current implementation and next steps
 
 ## What runs today
 
-Clanker is a local orchestration layer on Pi with two execution paths. It can coordinate tool-free model tasks, persist goals and recover from provider failure. It cannot yet autonomously implement and verify patches in another project.
+Relentless is a local orchestration layer on Pi with two execution paths. It can coordinate tool-free model tasks, persist goals and recover from provider failure. It cannot yet autonomously implement and verify patches in another project.
 
 ```mermaid
 flowchart TD
@@ -50,9 +50,9 @@ Alibaba Personal is intended for interactive coding/agent-tool use; its document
 
 ## Failure and restart behavior
 
-On quota/outage/unavailability, the supervisor records a provider-wide cooldown and retains the task, contract, cumulative attempts and verified dependency outputs. An immediately eligible alternative may run on the next tick. If a provider/model is pinned, Clanker waits instead. If every eligible provider is cooling down, it waits until a cooldown expires. `Retry-After` is honored when available; otherwise bounded exponential backoff with jitter is used. A fallback success clears only that fallback provider's health record, leaving Grok's cooldown intact.
+On quota/outage/unavailability, the supervisor records a provider-wide cooldown and retains the task, contract, cumulative attempts and verified dependency outputs. An immediately eligible alternative may run on the next tick. If a provider/model is pinned, Relentless waits instead. If every eligible provider is cooling down, it waits until a cooldown expires. `Retry-After` is honored when available; otherwise bounded exponential backoff with jitter is used. A fallback success clears only that fallback provider's health record, leaving Grok's cooldown intact.
 
-The current cooldown key is provider ID, not account or model ID. All Personal models share one ID and therefore cool down together. Different IDs that share credentials are not yet linked into a common quota pool. There is no proactive quota/reset-time API integration. A cooldown ending means a retry is eligible, not proof that capacity is restored. Without a Retry-After value, Clanker does not know the actual Grok subscription reset time.
+The current cooldown key is provider ID, not account or model ID. All Personal models share one ID and therefore cool down together. Different IDs that share credentials are not yet linked into a common quota pool. There is no proactive quota/reset-time API integration. A cooldown ending means a retry is eligible, not proof that capacity is restored. Without a Retry-After value, Relentless does not know the actual Grok subscription reset time.
 
 Policy/permission blocks are not bypassed by provider switching. Unknown/auth/approval failures wait for input. Retry attempts, deadlines and no-progress limits remain binding; a persistent goal can remain blocked rather than spin forever. A local model cannot overrule these boundaries. Killing a worker does not prove remote inference stopped.
 

@@ -63,7 +63,7 @@ class CalibrationProcessTests(unittest.TestCase):
 
     def test_kill_schema_registration_and_reservation_commits(self):
         for cut in ['1:before','1:after','2:before','2:after','3:before','3:after']:
-            with self.subTest(cut=cut), tempfile.TemporaryDirectory(prefix='clanker-cohort-') as directory:
+            with self.subTest(cut=cut), tempfile.TemporaryDirectory(prefix='relentless-cohort-') as directory:
                 root=Path(directory);source=root/'input.json';source.write_text(json.dumps(fixture()))
                 env={**os.environ,'INPUT':str(source),'DB':str(root/'cohorts.sqlite')}
                 child=subprocess.Popen(['node','--input-type=module','-e',SCRIPT],cwd=ROOT,
@@ -87,7 +87,7 @@ class CalibrationProcessTests(unittest.TestCase):
                     self.assertEqual(saved['bindings'],first['state']['bindings'])
 
     def test_competing_processes_share_reservation(self):
-        with tempfile.TemporaryDirectory(prefix='clanker-cohort-race-') as directory:
+        with tempfile.TemporaryDirectory(prefix='relentless-cohort-race-') as directory:
             root=Path(directory);source=root/'input.json';source.write_text(json.dumps(fixture()))
             env={**os.environ,'INPUT':str(source),'DB':str(root/'cohorts.sqlite')}
             # Exercise independent processes against an initialized WAL database.
@@ -155,7 +155,7 @@ class CalibrationPreparationRecoveryTests(unittest.TestCase):
             item['sourceHashes']={'x.ts':hashlib.sha256(content.encode()).hexdigest()}
             item['execution']['package'].update(emulator=artifact,kernel=artifact,baseImage=artifact,tests={'test.mjs':artifact})
         candidates=contract['config']['candidates']+contract['review']['config']['candidates']
-        (root/'.pi/settings.json').write_text(json.dumps(dict(clanker=dict(version=1,routing=dict(candidates=candidates),roles=dict(coder=['a','b'],reviewer=['r1','r2'])))))
+        (root/'.pi/settings.json').write_text(json.dumps(dict(relentless=dict(version=1,routing=dict(candidates=candidates),roles=dict(coder=['a','b'],reviewer=['r1','r2'])))))
         (root/'input.json').write_text(json.dumps(contract))
         env={**os.environ,'FIXTURE_ROOT':str(root)}
         init="""
@@ -178,7 +178,7 @@ new CodingJournal(root+'/.harness/coding.sqlite').close();
 
     def test_preparation_recovers_one_coding_workflow_across_four_boundaries(self):
         for cut in ['reserved','uncommitted','before-workflow','after-workflow']:
-            with self.subTest(cut=cut), tempfile.TemporaryDirectory(prefix='clanker-trial-') as directory:
+            with self.subTest(cut=cut), tempfile.TemporaryDirectory(prefix='relentless-trial-') as directory:
                 env=self.setup_project(directory)
                 child=subprocess.Popen(['node','--input-type=module','-e',PREP_SCRIPT],cwd=ROOT,env={**env,'CUT':cut},stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True)
                 try:

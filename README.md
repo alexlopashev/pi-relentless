@@ -1,7 +1,7 @@
-# Clanker · Pi Relentless
+# Relentless
 
 A Pi package for durable, local-first coding goals across model providers.
-Clanker adds persisted progress, constrained model routing, bounded coding and
+Relentless adds persisted progress, constrained model routing, bounded coding and
 independent review, isolated verification, and guarded installation of verified
 changes. Its commands and configuration live inside Pi.
 
@@ -30,16 +30,16 @@ not yet listed in [Pi's npm package catalog](https://pi.dev/packages).
 Authenticate through Pi's `/login`, then run:
 
 ```text
-/clanker inventory
-/skill:clanker-configure
+/relentless inventory
+/skill:relentless-configure
 ```
 
 The skill discovers session-visible models and proposes role assignments and
-routing policy. Review the proposal, then use its exact `/clanker config-apply`
+routing policy. Review the proposal, then use its exact `/relentless config-apply`
 command to approve it. Discovery does not authorize model calls or prove account
 capacity or model competence.
 
-Project configuration uses the `clanker` namespace in `.pi/settings.json`.
+Project configuration uses the `relentless` namespace in `.pi/settings.json`.
 Private goals, budgets, cooldowns and receipts live in that project's `.harness/`.
 The package ships no credentials, personal configuration or run journals.
 
@@ -50,11 +50,11 @@ Define the task, permitted files, verification contract and attempt limits using
 Then use:
 
 ```text
-/clanker goal-create <contract-json>
-/clanker goal-step <goal-id>
-/clanker goal-status <goal-id>
-/clanker goal-run <goal-id>
-/clanker pause
+/relentless goal-create <contract-json>
+/relentless goal-step <goal-id>
+/relentless goal-status <goal-id>
+/relentless goal-run <goal-id>
+/relentless pause
 ```
 
 `goal-step` advances one eligible action. `goal-run` advances a permitted foreground
@@ -63,7 +63,7 @@ retains journals and consumed budgets. A local cancellation does not prove that
 remote inference has stopped.
 
 Verification requires separately provisioned execution assets and Python 3; see
-[execution isolation](docs/execution-isolation.md). Merely installing Clanker does
+[execution isolation](docs/execution-isolation.md). Merely installing Relentless does
 not provision VMs, download model weights, run coding workers or spend on cloud
 compute.
 
@@ -98,7 +98,7 @@ mise exec -- python3 tests/package_git_install_test.py
 mkdir -p .harness/releases
 mise exec -- npm pack --pack-destination .harness/releases
 mise exec -- python3 tests/package_release_test.py \
-  .harness/releases/clanker-0.1.0-alpha.2.tgz .pnpm-store
+  .harness/releases/relentless-0.1.0-alpha.3.tgz .pnpm-store
 ```
 
 Development uses pinned mise/pnpm tools and a frozen pnpm lockfile. Pi's Git
@@ -106,7 +106,7 @@ installer uses npm; transitive resolution there is not locked by pnpm. The
 [archive installation](docs/release-alpha.md) preserves the frozen production
 dependency graph when reproducibility is required.
 
-The Pi SDK is a runtime dependency because Clanker also launches separate worker
+The Pi SDK is a runtime dependency because Relentless also launches separate worker
 processes; those processes cannot rely on Pi's in-process extension module loader.
 No Pi dependency is bundled into the archive. This is intentional rather than a
 claim that host-provided extension imports cover subprocesses.

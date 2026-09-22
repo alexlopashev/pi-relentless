@@ -8,7 +8,7 @@
     "candidates": [
       {
         "name": "local-controller",
-        "provider": "clanker-local",
+        "provider": "relentless-local",
         "model": "qwen3.5-4b",
         "billing": "local",
         "enabled": true,
@@ -27,7 +27,7 @@
       "prompt": "Return only JSON with action wait and delaySeconds 60 for HTTP 429 with Retry-After: 60.",
       "minQuality": 1,
       "effort": "off",
-      "provider": "clanker-local",
+      "provider": "relentless-local",
       "model": "qwen3.5-4b",
       "acceptance": {
         "kind": "json",

@@ -99,7 +99,7 @@ function syncDirectory(path: string): void {
   }
 }
 function writeTemp(parent: string, content: string): string {
-  const path = join(parent, `.clanker-${randomUUID()}.tmp`);
+  const path = join(parent, `.relentless-${randomUUID()}.tmp`);
   const fd = openSync(
     path,
     constants.O_WRONLY | constants.O_CREAT | constants.O_EXCL,
@@ -203,7 +203,7 @@ export async function applyPiConfigProposal(id: string, context: Context) {
   if (!context.ui?.confirm)
     throw new Error("Interactive confirmation required");
   const approved = await context.ui.confirm(
-    "Apply Clanker configuration?",
+    "Apply Relentless configuration?",
     JSON.stringify(
       {
         proposal: id,
@@ -217,7 +217,7 @@ export async function applyPiConfigProposal(id: string, context: Context) {
     ) +
       (proposal.after.resumeGoal
         ? "\nThis authorizes automatic execution of the named goal at the exact revision on future trusted Pi session starts, within its existing attempt, billing, verification and source-integration permissions and current project policy. Removing or changing these settings stops automatic execution. It does not authorize entitlement probes or migrate active workflows."
-        : "\nThis changes only the Clanker namespace. Billing and enabled models above become policy. No inference, entitlement check or active-workflow migration is authorized by this confirmation.") +
+        : "\nThis changes only the Relentless namespace. Billing and enabled models above become policy. No inference, entitlement check or active-workflow migration is authorized by this confirmation.") +
       (proposal.after.routing.managedLocal
         ? "\nManaged local runtime: this permits launching the pinned executable and model for separately authorized local dispatches, using CPU resources and loopback port 18080. Each owned server is stopped after the call. It does not start now, download files, adopt an external server, or grant inference permissions."
         : ""),

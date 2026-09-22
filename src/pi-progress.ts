@@ -24,7 +24,7 @@ export function startPiProgress(options: PiProgressOptions): () => void {
 
   const safeStatus = (value?: string): void => {
     try {
-      options.setStatus("clanker", value);
+      options.setStatus("relentless", value);
     } catch {
       // UI failures are deliberately ignored.
     }

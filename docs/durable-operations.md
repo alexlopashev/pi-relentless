@@ -1,20 +1,20 @@
 # Durable goals: operating guide
 
-The `goal` commands add durable execution to Clanker's existing **tool-free Pi workers**. SQLite holds the contract, every task's attempt count, cooldowns, dependencies, outputs, verification revision and append-only transition events. A process restart does not reset budgets or discard goals. This is not yet an autonomous coding/worktree engine or a native Claude/Codex session manager.
+The `goal` commands add durable execution to Relentless's existing **tool-free Pi workers**. SQLite holds the contract, every task's attempt count, cooldowns, dependencies, outputs, verification revision and append-only transition events. A process restart does not reset budgets or discard goals. This is not yet an autonomous coding/worktree engine or a native Claude/Codex session manager.
 
 ## Create and run
 
 From this checkout, after `mise exec -- pnpm build`:
 
 ```sh
-mise exec -- pnpm clanker goal create examples/local.goal.json
-mise exec -- pnpm clanker goal status
-mise exec -- pnpm clanker goal run
+mise exec -- pnpm relentless goal create examples/local.goal.json
+mise exec -- pnpm relentless goal status
+mise exec -- pnpm relentless goal run
 ```
 
 `create` prints a goal ID and does not invoke a model. `run` stays in the foreground, working on eligible tasks and waiting when providers are cooling down. Ctrl-C stops its child and releases the supervisor lease. `goal once` performs at most one dispatch/reconciliation tick, useful for inspecting recovery. Starting a second supervisor while a live lease exists fails closed.
 
-The local example requires the foreground llama.cpp server described in [local inference](local-inference.md). The scheduler itself does not need that server. When it is unavailable, Clanker persists a retry; it does not start or download it automatically. The example pins the local provider/model, so no cloud substitute is permitted.
+The local example requires the foreground llama.cpp server described in [local inference](local-inference.md). The scheduler itself does not need that server. When it is unavailable, Relentless persists a retry; it does not start or download it automatically. The example pins the local provider/model, so no cloud substitute is permitted.
 
 The ledger is `.harness/ledger.sqlite` in the current project directory. Run the CLI with that project as the working directory. The compiled CLI path can be absolute when operating in another project; it will use that project's `.harness`. Keep the pinned Node runtime and package dependencies available. The supervisor intentionally dispatches one worker at a time in this release, even if a swarm configuration allows more.
 
@@ -33,16 +33,16 @@ Workers cannot mark goals complete by saying “done.” Every task must pass it
 
 Known outages, quota failures, timeouts, context exhaustion and broken-session codes are retryable within the budget. Eligible alternative providers may run when a provider is cooling down, subject to the same exact pins, quality/effort floors and billing policy. Subscription access is still checked by the adapter. There is no silent opt-in to metered usage. Unknown errors, login requirements and approvals wait for input; policy and permission denials remain blocked, including when received after an unrelated contract revision.
 
-The Pi SDK sometimes exposes only textual provider errors. Classification is conservative; an unrecognized error waits for input rather than being guessed to be an outage. Retry-After is honored when available as structured metadata. Where Pi has discarded it, Clanker uses its configured backoff rather than inventing a reset time. Native provider-session resumption is not implemented: known session failures here start a fresh tool-free attempt with the durable contract and evidence.
+The Pi SDK sometimes exposes only textual provider errors. Classification is conservative; an unrecognized error waits for input rather than being guessed to be an outage. Retry-After is honored when available as structured metadata. Where Pi has discarded it, Relentless uses its configured backoff rather than inventing a reset time. Native provider-session resumption is not implemented: known session failures here start a fresh tool-free attempt with the durable contract and evidence.
 
 ## Update, cancel and inspect
 
 ```sh
-mise exec -- pnpm clanker goal status GOAL_ID
-mise exec -- pnpm clanker goal events
-mise exec -- pnpm clanker goal revise GOAL_ID CURRENT_REVISION updated-contract.json
-mise exec -- pnpm clanker goal cancel GOAL_ID CURRENT_REVISION
-mise exec -- pnpm clanker goal supersede GOAL_ID CURRENT_REVISION
+mise exec -- pnpm relentless goal status GOAL_ID
+mise exec -- pnpm relentless goal events
+mise exec -- pnpm relentless goal revise GOAL_ID CURRENT_REVISION updated-contract.json
+mise exec -- pnpm relentless goal cancel GOAL_ID CURRENT_REVISION
+mise exec -- pnpm relentless goal supersede GOAL_ID CURRENT_REVISION
 ```
 
 Revisions use compare-and-set checks and preserve task IDs and consumed attempts. All completion evidence is invalidated conservatively when the contract changes. The supervisor interrupts a stale worker; its result cannot satisfy the new contract. Policy blocks remain sticky. Known waiting/input states may be reconsidered by an explicit operator revision; this is not automatic policy clearance. Cancelled and superseded goals are not revived by pending retries.
@@ -62,14 +62,14 @@ On sleep, no work executes. On restart, the absolute due times reconcile overdue
 Stop the supervisor first. Use a new backup filename:
 
 ```sh
-mise exec -- pnpm clanker goal backup /absolute/path/clanker-backup.sqlite
+mise exec -- pnpm relentless goal backup /absolute/path/relentless-backup.sqlite
 ```
 
 Restore into a project with **no destination ledger**:
 
 ```sh
 # Run from that project's directory; use the absolute compiled CLI path if needed.
-node /absolute/path/clanker/dist/cli.js goal restore /absolute/path/clanker-backup.sqlite
+node /absolute/path/relentless/dist/cli.js goal restore /absolute/path/relentless-backup.sqlite
 ```
 
 Restore opens the source read-only, validates it and refuses to overwrite a destination. It does not erase the original project or its ledger. A backup with a supervisor lease is rejected. Inspect `goal status` before restarting. Restoring an older backup restores its older budgets and evidence; do not run restored and original copies as concurrent controllers of the same real work. Backups contain private prompts and outputs.
@@ -77,7 +77,7 @@ Restore opens the source read-only, validates it and refuses to overwrite a dest
 ## Automatic process restart on macOS
 
 ```sh
-mise exec -- pnpm clanker goal service
+mise exec -- pnpm relentless goal service
 ```
 
 This generates a project-specific launchd plist under `.harness/service/` with absolute Node/CLI paths, working directory, KeepAlive and a 30-second restart throttle. It does **not** install a background service. Install the generated plist in `~/Library/LaunchAgents/` and load it with `launchctl bootstrap gui/$(id -u) /absolute/path/to/the.plist` when enabling login persistence. Use `launchctl bootout` before removing it. Regenerate it after moving the project or changing the pinned runtime path. Service stdout/stderr are discarded; inspect the ledger with `goal status` and foreground startup for diagnostics.

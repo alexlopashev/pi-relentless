@@ -13,7 +13,7 @@ test("local dispatch cannot use a removed or changed managed runtime permission"
       candidates: [
         {
           name: "local",
-          provider: "clanker-local",
+          provider: "relentless-local",
           model: "qwen3.5-4b",
           billing: "local",
           enabled: true,
@@ -39,7 +39,11 @@ test("local dispatch cannot use a removed or changed managed runtime permission"
       isProjectTrusted: () => true,
       models: () => ({
         available: [
-          { provider: "clanker-local", model: "qwen3.5-4b", efforts: ["off"] },
+          {
+            provider: "relentless-local",
+            model: "qwen3.5-4b",
+            efforts: ["off"],
+          },
         ],
         scoped: [],
       }),
@@ -48,7 +52,7 @@ test("local dispatch cannot use a removed or changed managed runtime permission"
       writeFile(
         join(root, ".pi/settings.json"),
         JSON.stringify({
-          clanker: { version: 1, routing, roles: { coder: ["local"] } },
+          relentless: { version: 1, routing, roles: { coder: ["local"] } },
         }),
       );
     await save(config);

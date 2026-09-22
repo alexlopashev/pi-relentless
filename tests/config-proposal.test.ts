@@ -21,7 +21,7 @@ const config = {
 test("proposal binds exact source bytes and project without retaining unrelated settings", () => {
   const original = JSON.stringify({
     unrelated: "private-do-not-copy",
-    clanker: config,
+    relentless: config,
   });
   const next = {
     ...config,
@@ -55,7 +55,11 @@ test("proposal rejects invalid policy, malformed settings and oversized input", 
     }),
   ).toThrow();
   expect(() =>
-    buildConfigProposal("/p", '{"clanker":{"apiKey":"do-not-emit"}}', config),
+    buildConfigProposal(
+      "/p",
+      '{"relentless":{"apiKey":"do-not-emit"}}',
+      config,
+    ),
   ).toThrow();
 });
 test("missing settings are bound distinctly from empty settings", () => {

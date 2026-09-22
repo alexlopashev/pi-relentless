@@ -47,7 +47,7 @@ async function fixture() {
   const original = JSON.stringify({
     theme: "dark",
     privateSetting: "do-not-copy",
-    clanker: config,
+    relentless: config,
   });
   await writeFile(path, original);
   const confirm = vi.fn<(title: string, body: string) => Promise<boolean>>(() =>
@@ -94,7 +94,7 @@ test("proposal is durable and only confirmed exact namespace changes apply", asy
   expect(JSON.parse(await readFile(f.path, "utf8"))).toMatchObject({
     theme: "dark",
     privateSetting: "do-not-copy",
-    clanker: { routing: { allowMetered: true } },
+    relentless: { routing: { allowMetered: true } },
   });
   expect((await applyPiConfigProposal(p.id, f.context)).status).toBe(
     "already_matches",
@@ -193,11 +193,11 @@ test("redirected settings and proposal directories are rejected", async () => {
 });
 
 test("Pi command exposes review and uses confirmation rather than an approved argument", async () => {
-  const { clankerCommand } = await import("../src/pi-extension.js");
+  const { relentlessCommand } = await import("../src/pi-extension.js");
   const f = await fixture();
   const notify = vi.fn();
   const context = { ...f.context, ui: { notify, confirm: f.confirm } };
-  await clankerCommand("config-propose " + JSON.stringify(f.next), context);
+  await relentlessCommand("config-propose " + JSON.stringify(f.next), context);
   const message: unknown = notify.mock.calls[0]?.[0];
   if (typeof message !== "string") throw Error("Missing proposal result");
   const parsed: unknown = JSON.parse(message);
@@ -208,7 +208,7 @@ test("Pi command exposes review and uses confirmation rather than an approved ar
     typeof parsed.id !== "string"
   )
     throw Error("Missing proposal ID");
-  await clankerCommand("config-apply " + parsed.id, context);
+  await relentlessCommand("config-apply " + parsed.id, context);
   expect(f.confirm).toHaveBeenCalledTimes(1);
   expect(notify).toHaveBeenLastCalledWith(
     expect.stringContaining("applied"),
@@ -266,7 +266,7 @@ test("resume opt-in confirmation explicitly authorizes future session execution"
   );
 });
 test("proposed routing evidence can be explained without approval or settings mutation", async () => {
-  const { clankerCommand } = await import("../src/pi-extension.js");
+  const { relentlessCommand } = await import("../src/pi-extension.js");
   const f = await fixture();
   const next = {
     ...f.next,
@@ -302,7 +302,7 @@ test("proposed routing evidence can be explained without approval or settings mu
     },
   };
   const command = `explain-proposal ${proposal.id} coder ${JSON.stringify(task)}`;
-  await clankerCommand(command, context, execute);
+  await relentlessCommand(command, context, execute);
   expect(notify).toHaveBeenLastCalledWith(
     expect.stringContaining('"proposed": true'),
     "info",
@@ -315,7 +315,7 @@ test("proposed routing evidence can be explained without approval or settings mu
   expect(await readFile(f.path, "utf8")).toBe(f.original);
   expect(execute).not.toHaveBeenCalled();
   expect(f.confirm).not.toHaveBeenCalled();
-  await clankerCommand(
+  await relentlessCommand(
     command,
     {
       ...context,
@@ -327,7 +327,7 @@ test("proposed routing evidence can be explained without approval or settings mu
     execute,
   );
   expect(notify.mock.calls.at(-1)?.[1]).toBe("error");
-  await clankerCommand(command, context, execute);
+  await relentlessCommand(command, context, execute);
   expect(notify.mock.calls.at(-1)?.[1]).toBe("error");
   expect(execute).not.toHaveBeenCalled();
   expect(f.confirm).not.toHaveBeenCalled();

@@ -17,7 +17,7 @@ const paramsSchema = z.strictObject({
 
 type ConfigParams = z.infer<typeof paramsSchema>;
 
-export function registerClankerConfigTool(
+export function registerRelentlessConfigTool(
   pi: Pick<ExtensionAPI, "registerTool" | "on">,
 ): void {
   let generation = 0;
@@ -33,12 +33,12 @@ export function registerClankerConfigTool(
   });
 
   pi.registerTool({
-    name: "clanker_config_propose",
-    label: "Propose Clanker configuration",
+    name: "relentless_config_propose",
+    label: "Propose Relentless configuration",
     description:
-      "Draft a Clanker configuration proposal only. A human must explicitly use config-apply to confirm it; this tool never applies or dispatches changes.",
+      "Draft a Relentless configuration proposal only. A human must explicitly use config-apply to confirm it; this tool never applies or dispatches changes.",
     promptSnippet:
-      "Draft configuration only; a human must confirm with /clanker config-apply.",
+      "Draft configuration only; a human must confirm with /relentless config-apply.",
     parameters,
     execute: async (_toolCallId, rawParams, signal, _onUpdate, context) => {
       const current = generation;
@@ -97,14 +97,14 @@ export function registerClankerConfigTool(
                 reviewCoverage,
                 applied: false,
                 dispatched: false,
-                applyCommand: `/clanker config-apply ${proposal.id}`,
+                applyCommand: `/relentless config-apply ${proposal.id}`,
               }),
             },
           ],
           details: null,
         };
       } catch {
-        throw new Error("Clanker configuration proposal unavailable");
+        throw new Error("Relentless configuration proposal unavailable");
       }
     },
   });

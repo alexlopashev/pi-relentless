@@ -2,7 +2,7 @@ import { expect, it } from "vitest";
 import { configSchema, route } from "../src/router.js";
 const local = {
   name: "local",
-  provider: "clanker-local",
+  provider: "relentless-local",
   model: "qwen3.5-4b",
   billing: "local",
   enabled: true,
@@ -47,7 +47,7 @@ it("registers a fixed loopback endpoint with bounded context and output", async 
     refreshOnCreate: false,
   });
   registerLocalProvider(runtime);
-  const model = runtime.getModel("clanker-local", "qwen3.5-4b");
+  const model = runtime.getModel("relentless-local", "qwen3.5-4b");
   expect(model).toMatchObject({
     baseUrl: "http://127.0.0.1:18080/v1",
     contextWindow: 8192,
@@ -70,7 +70,7 @@ it("Pi preserves the output budget after its context safety reserve", async () =
     },
   });
   registerLocalProvider(runtime);
-  const model = runtime.getModel("clanker-local", "qwen3.5-4b");
+  const model = runtime.getModel("relentless-local", "qwen3.5-4b");
   if (!model) throw new Error("Missing model");
   let body = "";
   await runtime.completeSimple(

@@ -171,7 +171,7 @@ test("pending reservations are excluded without interrupting the running evaluat
 });
 
 test("Pi routes using local checked latency evidence and freezes it into new work", async () => {
-  const { clankerCommand } = await import("../src/pi-extension.js");
+  const { relentlessCommand } = await import("../src/pi-extension.js");
   const { CodingJournal } = await import("../src/coding-journal.js");
   const f = await fixture();
   f.checkpoint.close();
@@ -225,7 +225,7 @@ test("Pi routes using local checked latency evidence and freezes it into new wor
     await mkdir(join(f.root, ".pi"));
     await writeFile(
       join(f.root, ".pi/settings.json"),
-      JSON.stringify({ clanker: project }),
+      JSON.stringify({ relentless: project }),
     );
     await writeFile(join(f.root, "x.ts"), "export const x=1;");
     const notices: { message: string; type: string }[] = [];
@@ -263,13 +263,13 @@ test("Pi routes using local checked latency evidence and freezes it into new wor
     const { vi } = await import("vitest");
     const clock = vi.spyOn(Date, "now").mockReturnValue(now);
     try {
-      await clankerCommand("route coder " + JSON.stringify(task), context);
+      await relentlessCommand("route coder " + JSON.stringify(task), context);
       expect(JSON.parse(notices[0]?.message ?? "null")).toMatchObject({
         candidate: "fast",
         dispatched: false,
         basis: "local_evaluation_and_configured_evidence",
       });
-      await clankerCommand(
+      await relentlessCommand(
         "create " +
           JSON.stringify({
             task,
