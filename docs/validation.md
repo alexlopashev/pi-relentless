@@ -2088,3 +2088,25 @@ bundles are not rewritten. Upgrade instructions require retaining the previous
 revision for old work and rebuilding affected VM/service assets. The original
 main-branch GitHub Actions run had macOS VM test failures before this rename;
 those are separate from the local green gate and remain outside this naming change.
+
+## Pi host runtime diagnostic
+
+A user installation exposed a coverage gap: package installation succeeded, but
+standalone Pi0.87.0 (Bun1.3.14) could not import `node:sqlite`. Earlier install
+checks exercised Node/npm Pi only. The same installed extension loaded and
+registered successfully under Node24.21.0. Node24.21.0 and SQLite availability
+were also checked from the affected project's directory without reading auth.
+
+The extension now checks its host runtime before importing the durable engine.
+Three regressions cover standalone Bun rejection, a missing SQLite module with
+redacted loader errors, and the supported Node path. The actual standalone Pi
+binary now emits the documented Node launch command instead of the raw import
+error. This is a diagnostic and documented workaround, not a Bun SQLite adapter.
+No credentials, private settings or journals were copied or migrated. The Node
+launch command uses the already-installed package's Pi CLI and existing project.
+
+Final canonical gate passed 666 Vitest and 74 Python tests plus static/build/shell
+checks. The first full run had one source-promotion test failure; its focused
+13-test file and the complete rerun both passed without a runtime-code change.
+The initial failure is retained in local evidence rather than treated as a clean
+first pass. Independent review found no actionable blockers.

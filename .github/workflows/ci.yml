@@ -29,7 +29,7 @@ jobs:
       - run: pnpm format-check
       - run: pnpm typecheck
       - name: Core routing and session smoke tests
-        run: pnpm test tests/router.test.ts tests/failures.test.ts tests/pi-session-work.test.ts tests/pi-project-config.test.ts
+        run: pnpm test tests/pi-runtime.test.ts tests/router.test.ts tests/failures.test.ts tests/pi-session-work.test.ts tests/pi-project-config.test.ts
   full:
     if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
