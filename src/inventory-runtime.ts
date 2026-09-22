@@ -3,7 +3,7 @@ import { dirname, join } from "node:path";
 import { readCodingHealth } from "./coding-inventory.js";
 import { mergeCodingHealth } from "./coding-health.js";
 import { existsSync } from "node:fs";
-import { DatabaseSync } from "node:sqlite";
+import { DatabaseSync } from "./sqlite.js";
 import { oauthFreshness } from "./oauth-freshness.js";
 import {
   readStoredCredential,

@@ -395,3 +395,13 @@ exact proposal confirmation cover this permission; it is absent from active
 project settings. One real Pi/Qwen call passed in 14.3 seconds with confirmed
 cleanup. This is lifecycle evidence, not model qualification or total-cost evidence.
 See [configuration, bounds and limitations](local-inference.md#optional-managed-lifecycle--cycle079).
+
+## Pi host compatibility
+
+Relentless runs inside Node/npm Pi or standalone Bun Pi. A narrow SQLite adapter
+normalizes native driver results and finalizes Bun statements after each
+operation. Bun restores copy a SQLite snapshot into the exclusively reserved
+file and fsync it before returning. The database format and checkpoint hashes
+remain shared with Node and Python tooling. Forked workers, TypeScript erasure
+and syntax checks use an automatically verified Node executable; standalone Pi
+is never used as a worker executable. This does not remove the Node prerequisite.

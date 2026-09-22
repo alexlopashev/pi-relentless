@@ -1,3 +1,4 @@
+import { nodeExecutable } from "./node-runtime.js";
 import { readFile, mkdir, writeFile } from "node:fs/promises";
 import { resolve, dirname } from "node:path";
 import { setTimeout as sleep } from "node:timers/promises";
@@ -26,7 +27,7 @@ export async function goalsCli(args: string[]): Promise<void> {
     await writeFile(
       destination,
       launchAgent(
-        process.execPath,
+        nodeExecutable(),
         fileURLToPath(new URL("./cli.js", import.meta.url)),
         process.cwd(),
       ),

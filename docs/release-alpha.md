@@ -1,4 +1,4 @@
-# Relentless 0.1.0-alpha.3
+# Relentless 0.1.0-alpha.4
 
 An MIT-licensed Pi package for bounded coding goals across configured providers.
 This alpha is ready for personal trials; general autonomous project delivery is
@@ -16,9 +16,10 @@ and the Node/npm distribution of Pi 0.85.1 are the tested versions. No pnpm or m
 path. npm resolves transitive dependencies; use the frozen archive path below if
 an exact dependency graph is required.
 
-The standalone Bun-based Pi executable cannot load the SQLite ledger. See
-[the Node launch command](../README.md#standalone-pi-executable) if installing
-succeeds but opening Pi reports a missing `node:sqlite` module.
+Standalone Pi 0.87.0 (Bun 1.3.14) is also supported. Launch `pi` normally;
+Relentless uses native Bun SQLite and automatically locates Node on `PATH` for
+workers and syntax checks. Node remains required; no separate launch command is
+needed. Saved SQLite journals can be read by either host.
 
 ## Install an archive in another project
 
@@ -27,14 +28,14 @@ helpers. Use a stable installation directory; Pi records its path. The source
 checkout is not required after extracting the archive.
 
 ```sh
-mkdir -p "$HOME/.local/share/relentless/0.1.0-alpha.3"
-tar -xzf /absolute/path/relentless-0.1.0-alpha.3.tgz \
-  -C "$HOME/.local/share/relentless/0.1.0-alpha.3" --strip-components=1
-cd "$HOME/.local/share/relentless/0.1.0-alpha.3"
+mkdir -p "$HOME/.local/share/relentless/0.1.0-alpha.4"
+tar -xzf /absolute/path/relentless-0.1.0-alpha.4.tgz \
+  -C "$HOME/.local/share/relentless/0.1.0-alpha.4" --strip-components=1
+cd "$HOME/.local/share/relentless/0.1.0-alpha.4"
 cp release-lock.yaml pnpm-lock.yaml
 pnpm install --prod --frozen-lockfile --ignore-scripts
 cd /absolute/path/to/your-project
-pi install -l "$HOME/.local/share/relentless/0.1.0-alpha.3"
+pi install -l "$HOME/.local/share/relentless/0.1.0-alpha.4"
 pi
 ```
 
@@ -59,7 +60,7 @@ Development builds remain available:
 mise run ci
 mise exec -- npm pack --pack-destination .harness/alpha-release
 mise exec -- python3 tests/package_release_test.py \
-  .harness/alpha-release/relentless-0.1.0-alpha.3.tgz .pnpm-store
+  .harness/alpha-release/relentless-0.1.0-alpha.4.tgz .pnpm-store
 ```
 
 `npm pack` builds workers first and refreshes the release lock. Packaging allows

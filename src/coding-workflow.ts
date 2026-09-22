@@ -3,7 +3,7 @@ import { validateReviewContinuation } from "./review-continuation.js";
 import { reviewRoutes } from "./review-routing.js";
 import { mergeCodingHealth } from "./coding-health.js";
 import { reviewCooldownAt } from "./review-retry.js";
-import { DatabaseSync } from "node:sqlite";
+import { DatabaseSync } from "./sqlite.js";
 import { createHash, randomUUID } from "node:crypto";
 import { chmodSync, existsSync, mkdirSync } from "node:fs";
 import { dirname, isAbsolute } from "node:path";

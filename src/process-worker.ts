@@ -1,3 +1,4 @@
+import { nodeExecutable } from "./node-runtime.js";
 import { fork } from "node:child_process";
 import { z } from "zod";
 import { failureOriginSchema } from "./failure-origin.js";
@@ -38,6 +39,7 @@ export const processWorker = (
       new URL("../dist/worker-entry.js", import.meta.url),
       [],
       {
+        execPath: nodeExecutable(),
         stdio: ["ignore", "ignore", "ignore", "ipc"],
         execArgv: ["--max-old-space-size=256"],
       },

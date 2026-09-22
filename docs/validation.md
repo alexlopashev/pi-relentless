@@ -2110,3 +2110,28 @@ checks. The first full run had one source-promotion test failure; its focused
 13-test file and the complete rerun both passed without a runtime-code change.
 The initial failure is retained in local evidence rather than treated as a clean
 first pass. Independent review found no actionable blockers.
+
+## Standalone Pi support — 0.1.0-alpha.4
+
+Supersedes the earlier Bun rejection/workaround. Native Node and Bun SQLite
+adapters share the journal format. Node is discovered automatically for worker
+forks and TypeScript checks; ordinary standalone `pi` loads the extension.
+
+Red evidence: the new SQLite regression first failed before the adapter existed.
+Real Bun execution additionally exposed the precreated VACUUM destination,
+unfinalized statements at close, and a remaining static TypeScript-erasure import;
+all were corrected before acceptance. Independent review identified missing
+fsync of the restored destination; the final implementation flushes it before
+success and rejects symlinks, nonempty files and FIFOs without blocking.
+
+Validation on Node24.21.0, Bun1.3.14 and standalone Pi0.87.0: canonical gate passed
+664 Vitest tests and76 Python process tests, including SQLite rollback, WAL read
+snapshots, mixed-runtime locking, Node/Bun persisted checkpoints, safe restore,
+syntax validation, worker IPC and actual standalone extension registration.
+Five additional managed-local process tests passed with a Bun parent; the fresh
+Git-source installation test built workers and loaded extensions/skills. No model
+inference or credentials were used. Independent final source review found no
+remaining actionable blockers. Default CI remains lightweight Ubuntu-only;
+standalone runtime tests require explicit local executable paths.
+
+Evidence: `.harness/bun-support/` (local, excluded from distribution).

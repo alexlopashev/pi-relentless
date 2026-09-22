@@ -1,4 +1,4 @@
-import { DatabaseSync } from "node:sqlite";
+import { DatabaseSync } from "./sqlite.js";
 import { existsSync } from "node:fs";
 import { realpath } from "node:fs/promises";
 import { join } from "node:path";

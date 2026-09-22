@@ -87,9 +87,10 @@ prove the worker subprocess starts and rejects input without provider inference.
 
 ## Runtime requirement
 
-Use the Node/npm Pi runtime. The standalone Bun executable cannot load the SQLite
-ledger; see [the Node launch command](../README.md#standalone-pi-executable). Installing
-the package successfully does not establish host runtime compatibility.
+Use Node/npm Pi or the standalone Bun executable. Both use native SQLite for
+local journals; Bun-hosted sessions locate Node on `PATH` for workers and fixed
+TypeScript checks. Node 24.21.0 remains a prerequisite. See
+[host compatibility](../README.md#standalone-pi-executable).
 
 ## Pi-first direction and project configuration
 

@@ -6,7 +6,7 @@ import { calibrationObservations } from "./calibration-observations.js";
 import { chmodSync, mkdirSync } from "node:fs";
 import { dirname } from "node:path";
 import { randomUUID } from "node:crypto";
-import { DatabaseSync } from "node:sqlite";
+import { DatabaseSync } from "./sqlite.js";
 import { z } from "zod";
 import {
   planCodingCalibration,
