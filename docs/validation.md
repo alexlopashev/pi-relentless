@@ -2135,3 +2135,28 @@ remaining actionable blockers. Default CI remains lightweight Ubuntu-only;
 standalone runtime tests require explicit local executable paths.
 
 Evidence: `.harness/bun-support/` (local, excluded from distribution).
+
+## Configure provider omissions and Grok4.7 worker catalog
+
+A real setup session discovered400 available models, including Astra, Grok4.7 and
+11 Alibaba Personal models, but its proposal omitted Astra/Alibaba and chose
+Grok4.3. Unpaginated provider coverage now makes those omissions visible in both
+inventory and proposal results. The skill requires explicit requested-pool
+accounting, current IDs and frontier escalation policy; native CLI routing gaps
+are reported separately rather than mistaken for absent authentication.
+
+The standalone Pi catalog also proved newer than the bundled worker SDK:
+`xai/grok-4.7` was visible interactively but absent in the worker. A conservative
+additive worker supplement preserves existing entries, transport and OAuth
+registration. It does not prove quota, entitlement or successful inference.
+
+New inventory and real-SDK catalog regressions failed before implementation.
+Final canonical gate passed666 Vitest tests and74 Python process tests; the two
+opt-in standalone tests skipped in this run. Independent final review found no
+remaining actionable findings. A proposal checked against a fresh read-only Pi
+registry snapshot resolved all11 enabled models in the worker catalog and previewed
+Astra, Alibaba Qwen Max and Grok4.7 routes. Cross-provider author pools retained two
+independent reviewer providers. Claude Code remained disabled: native Pi routing
+and strict subscription-only extra-usage enforcement are still unfinished.
+No model inference, billing permission changes or routing settings application.
+Evidence: `.harness/configure-coverage/` (private local diagnostics).

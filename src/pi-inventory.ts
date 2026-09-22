@@ -36,7 +36,38 @@ export interface PiInventoryEntry {
   capability: "unverified";
 }
 
+export interface ProviderCoverage {
+  provider: string;
+  available: number;
+  configured: number;
+  omittedAvailable: number;
+}
+
+/** CLI adapters are execution backends, not models in Pi's session registry. */
+export const nativeAdapters = [
+  {
+    provider: "claude-code",
+    command: "claude",
+    piRoutingSupported: false,
+    authentication: "unverified",
+    requiresMeteredPermission: true,
+    reason:
+      "CLI worker exists, but Pi session routing requires registry membership. Claude extra-usage spending also requires allowMetered. Do not present it as an eligible Pi route.",
+  },
+  {
+    provider: "codex-cli",
+    command: "codex",
+    piRoutingSupported: false,
+    authentication: "unverified",
+    requiresMeteredPermission: false,
+    reason:
+      "CLI worker exists, but Pi session routing requires registry membership. Prefer the discovered openai-codex subscription route when available.",
+  },
+] as const;
+
 export interface PiInventory {
+  providerCoverage: ProviderCoverage[];
+  nativeAdapters: typeof nativeAdapters;
   observedAt: number;
   configured: PiInventoryEntry[];
   unconfiguredAvailable: CatalogEntry[];
@@ -65,8 +96,34 @@ export function projectPiInventory(
   now: number,
 ): PiInventory {
   if (!Number.isSafeInteger(now) || now < 0) throw new Error("Invalid now");
+  const providerNames = new Set([
+    ...models.available.map((entry) => entry.provider),
+    ...(project?.routing.candidates.map((candidate) => candidate.provider) ??
+      []),
+  ]);
+  const providerCoverage = [...providerNames].sort().map((provider) => {
+    const available = new Set(
+      models.available
+        .filter((entry) => entry.provider === provider)
+        .map((entry) => entry.model),
+    );
+    const configured = new Set(
+      project?.routing.candidates
+        .filter((candidate) => candidate.provider === provider)
+        .map((candidate) => candidate.model) ?? [],
+    );
+    return {
+      provider,
+      available: available.size,
+      configured: configured.size,
+      omittedAvailable: [...available].filter((model) => !configured.has(model))
+        .length,
+    };
+  });
   if (project === null) {
     return {
+      providerCoverage,
+      nativeAdapters,
       observedAt: now,
       configured: [],
       unconfiguredAvailable: [...models.available],
@@ -171,5 +228,12 @@ export function projectPiInventory(
     (entry) =>
       !configuredIdentities.has(`${entry.provider}\u0000${entry.model}`),
   );
-  return { observedAt: now, configured, unconfiguredAvailable, reviewCoverage };
+  return {
+    providerCoverage,
+    nativeAdapters,
+    observedAt: now,
+    configured,
+    unconfiguredAvailable,
+    reviewCoverage,
+  };
 }

@@ -69,6 +69,44 @@ Authentication does not establish quota or subscription coverage. Do not refresh
 credentials, start servers, download weights or call providers as a discovery side
 effect. Use the provider/Pi login path if user action is needed.
 
+## Account for the complete requested pool
+
+Start with `providerCoverage`, which summarizes every session-visible provider
+regardless of pagination. Read all relevant pages before selecting candidates.
+Do not let a large aggregator catalog crowd subscription providers out of the
+proposal. A discovered provider with zero configured candidates is an omission
+to explain, not evidence that its subscription is unavailable.
+
+Build a short coverage checklist from the user's explicitly requested providers,
+models and execution backends. For each, report **included**, **disabled with a
+specific blocker**, or **excluded with a reason grounded in the task**. Check that
+list against the proposal tool's returned `providerCoverage` and `nativeAdapters`.
+Never silently omit a requested frontier model because smaller models are defaults:
+retain it for demanding work/escalation unless a constraint excludes it. Quality
+1–3 expresses a proposed routing tier, not measured capability. Show how task
+`minQuality`, effort and explicit model pins reach the retained frontier route.
+
+Prefer the user's requested current model when its exact identity exists in the
+active registry; do not substitute an older model from an example or the first
+catalog entry. Never silently rewrite pins in an existing approved policy. If the
+requested release is absent, report the catalog gap and refresh separately without
+inventing an endpoint or converting a subscription route to an API-billed route.
+
+Preserve the distinction between provider and model vendor. Alibaba's Qwen,
+DeepSeek and GLM may share `qwen-token-plan-individual`; that is one provider for
+the current review-independence rule. Do not substitute OpenRouter variants for
+models on that subscription. Subscription inclusion is a billing classification,
+not proof of low latency, zero marginal cost, remaining quota or superior value.
+
+CLI workers do not appear in Pi's native model registry. Inspect `nativeAdapters`
+and [native worker limitations](../../docs/native-workers.md) instead of silently
+omitting Claude Code or pretending it is a direct Anthropic Pi model. An installed
+and authenticated CLI is distinct from an eligible Pi route. Include a requested
+but unsupported backend as disabled in the proposal with the concrete limitation;
+never enable metered permission merely to make it eligible. Tool-free CLI workers
+return proposed edits through the harness; they are not unrestricted tool-using
+subagents. Do not claim that configuring a role implements the missing integration.
+
 ## Carry execution facts into coding tasks
 
 Before preparing a coding goal or calibration suite, inspect its actual verification
