@@ -28,6 +28,7 @@ vi.mock("@earendil-works/pi-coding-agent", () => ({
   SettingsManager: { inMemory: () => ({}) },
   SessionManager: { inMemory: () => ({}) },
 }));
+vi.mock("../src/xai-catalog.js", () => ({ registerXaiCatalog: vi.fn() }));
 vi.mock("../src/personal-catalog.js", () => ({
   personalProvider: "qwen-token-plan-individual",
   registerPersonalCatalog: vi.fn(),

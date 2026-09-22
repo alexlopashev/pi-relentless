@@ -1,3 +1,4 @@
+import { registerXaiCatalog } from "./xai-catalog.js";
 import { CodingWorkflows } from "./coding-workflow.js";
 import { dirname, join } from "node:path";
 import { readCodingHealth } from "./coding-inventory.js";
@@ -101,6 +102,7 @@ export async function inventoryRuntime(
   });
   registerMetaProvider(runtime);
   registerPersonalCatalog(runtime);
+  registerXaiCatalog(runtime);
   registerLocalProvider(runtime);
   const catalog = runtime.getModels().map((m) => ({
     provider: m.provider,

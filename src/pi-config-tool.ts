@@ -81,12 +81,12 @@ export function registerRelentlessConfigTool(
           join(context.cwd, ".harness/ledger.sqlite"),
           join(context.cwd, ".harness/coding.sqlite"),
         ).health;
-        const reviewCoverage = projectPiInventory(
+        const inventory = projectPiInventory(
           proposal.after,
           models,
           health,
           Date.now(),
-        ).reviewCoverage;
+        );
         if (!active()) throw new Error("Configuration session is not active");
         return {
           content: [
@@ -94,7 +94,9 @@ export function registerRelentlessConfigTool(
               type: "text",
               text: JSON.stringify({
                 ...proposal,
-                reviewCoverage,
+                reviewCoverage: inventory.reviewCoverage,
+                providerCoverage: inventory.providerCoverage,
+                nativeAdapters: inventory.nativeAdapters,
                 applied: false,
                 dispatched: false,
                 applyCommand: `/relentless config-apply ${proposal.id}`,
