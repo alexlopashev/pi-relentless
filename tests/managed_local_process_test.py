@@ -53,7 +53,9 @@ class ManagedLocalProcessTest(unittest.TestCase):
 
     def launch(self):
         script = "import{startManagedLocal}from './dist/managed-local.js';const lease=await startManagedLocal(" + json.dumps(self.config) + ");console.log('ready');process.stdin.once('data',()=>{void lease.close().then(()=>process.exit(0));});"
-        parent = subprocess.Popen([NODE, "--input-type=module", "-e", script], cwd=ROOT, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        host = os.environ.get("RELENTLESS_TEST_MANAGED_HOST", NODE)
+        args = [host, "-e", script] if host != NODE else [NODE, "--input-type=module", "-e", script]
+        parent = subprocess.Popen(args, cwd=ROOT, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         self.parents.append(parent)
         return parent
 

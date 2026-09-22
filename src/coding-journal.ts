@@ -6,7 +6,7 @@ import {
   piCreationIntentSchema,
   type SavedPiCreation,
 } from "./pi-creation-intent.js";
-import { DatabaseSync } from "node:sqlite";
+import { DatabaseSync } from "./sqlite.js";
 import { createHash, randomUUID } from "node:crypto";
 import { chmodSync, existsSync, mkdirSync } from "node:fs";
 import { dirname } from "node:path";

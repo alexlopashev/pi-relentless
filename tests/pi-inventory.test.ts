@@ -340,3 +340,37 @@ test("inventory terminal output pages discovery with an explicit continuation", 
     await rm(cwd, { recursive: true, force: true });
   }
 });
+
+test("discovery and proposals expose omitted providers and models beyond the first page", () => {
+  const models = {
+    available: [
+      ...available,
+      ...Array.from({ length: 50 }, (_, i) => ({
+        provider: "aggregator",
+        model: `m${String(i)}`,
+        efforts: ["low"],
+      })),
+      { provider: "alibaba", model: "qwen", efforts: ["low"] },
+      { provider: "p", model: "frontier", efforts: ["high"] },
+    ],
+    scoped: [],
+  };
+  const result = projectPiInventory(project, models, {}, 100);
+  expect(
+    result.providerCoverage.find((p) => p.provider === "alibaba"),
+  ).toMatchObject({ available: 1, configured: 0, omittedAvailable: 1 });
+  expect(result.providerCoverage.find((p) => p.provider === "p")).toMatchObject(
+    { available: 2, configured: 1, omittedAvailable: 1 },
+  );
+  const fresh = projectPiInventory(null, models, {}, 100);
+  expect(
+    fresh.providerCoverage.find((p) => p.provider === "aggregator"),
+  ).toMatchObject({ available: 50, configured: 0, omittedAvailable: 50 });
+  expect(
+    result.nativeAdapters.find((p) => p.provider === "claude-code"),
+  ).toMatchObject({
+    piRoutingSupported: false,
+    authentication: "unverified",
+    requiresMeteredPermission: true,
+  });
+});

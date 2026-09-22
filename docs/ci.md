@@ -16,3 +16,10 @@ installation checks. That manual job has a twenty-minute limit. It is not a
 prerequisite for every documentation or naming change. The complete local gate
 remains `mise run ci`; full release validation also includes the source-install
 and archive tests documented in the README. No macOS GitHub runner is configured.
+
+Standalone compatibility is an offline local check after building:
+`RELENTLESS_TEST_BUN=/absolute/path/to/bun RELENTLESS_TEST_PI=/absolute/path/to/pi python3 tests/standalone_runtime_test.py`.
+It tests SQLite recovery, mixed-runtime locking/checkpoints, Node worker startup,
+syntax validation and the real standalone extension loader without model calls.
+Without those explicit executables the two tests skip; the lightweight Ubuntu
+PR job does not install additional runtimes.

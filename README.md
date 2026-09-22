@@ -27,20 +27,12 @@ not yet listed in [Pi's npm package catalog](https://pi.dev/packages).
 
 ### Standalone Pi executable
 
-The standalone Bun-based `pi` binary does not support this package's `node:sqlite`
-ledger. Installing Node alongside that binary does not change its runtime.
-If your `pi` command is the standalone executable, install the package as above,
-then launch its included Node-based Pi CLI from the project directory:
-
-```sh
-node .pi/git/github.com/alexlopashev/pi-relentless/node_modules/@earendil-works/pi-coding-agent/dist/cli.js
-```
-
-This uses the project's current directory and normal Pi authentication; it does
-not copy credentials. For a global package installation, use the corresponding
-package path under `~/.pi/agent/git/github.com/alexlopashev/pi-relentless/`.
-The runtime check explains this launch path before importing the durable engine.
-Native Bun support is not implemented.
+Both the Node/npm distribution and standalone Bun-based `pi` executable are
+supported. Install the package, then launch `pi` normally—no alternate command.
+The extension uses the host's native SQLite implementation. Workers and fixed
+TypeScript checks automatically use Node from `PATH` when Pi runs under Bun.
+Node 24.21.0 must remain installed (also used by npm during package installation).
+Tested hosts: Node Pi 0.85.1 and standalone Pi 0.87.0 / Bun 1.3.14.
 
 ## Configure a project
 
@@ -115,7 +107,7 @@ mise exec -- python3 tests/package_git_install_test.py
 mkdir -p .harness/releases
 mise exec -- npm pack --pack-destination .harness/releases
 mise exec -- python3 tests/package_release_test.py \
-  .harness/releases/relentless-0.1.0-alpha.3.tgz .pnpm-store
+  .harness/releases/relentless-0.1.0-alpha.4.tgz .pnpm-store
 ```
 
 Development uses pinned mise/pnpm tools and a frozen pnpm lockfile. Pi's Git

@@ -87,9 +87,10 @@ prove the worker subprocess starts and rejects input without provider inference.
 
 ## Runtime requirement
 
-Use the Node/npm Pi runtime. The standalone Bun executable cannot load the SQLite
-ledger; see [the Node launch command](../README.md#standalone-pi-executable). Installing
-the package successfully does not establish host runtime compatibility.
+Use Node/npm Pi or the standalone Bun executable. Both use native SQLite for
+local journals; Bun-hosted sessions locate Node on `PATH` for workers and fixed
+TypeScript checks. Node 24.21.0 remains a prerequisite. See
+[host compatibility](../README.md#standalone-pi-executable).
 
 ## Pi-first direction and project configuration
 
@@ -1178,3 +1179,19 @@ The command must be registered by the installed Relentless package. The SDK diag
 now checks registration before exposing its terminal: an earlier misconfigured
 launcher lacked the package and Pi treated slash text as a chat request. See
 cycle106 validation for that retained setup failure and successful read-only run.
+
+## Configure provider coverage
+
+Inventory and proposal results include an unpaginated `providerCoverage` summary
+with distinct available/configured model counts and omitted-available counts.
+Configured includes disabled candidates; counts do not assert quota, billing or
+eligibility. The configure skill must account for each requested provider/model,
+including frontier escalation routes, and explain exclusions. Native CLI adapters
+are listed separately with their current [routing limitations](native-workers.md).
+
+Standalone Pi may have a newer catalog than the bundled worker SDK. Workers now
+add `xai/grok-4.7` when absent, preserving the existing Grok4.6 transport/auth and
+older pins. An existing Grok4.7 entry always wins. Metadata follows the official
+[Grok4.7 model page](https://docs.x.ai/developers/models/grok-4.7):500k context,
+low/medium/high/xhigh efforts and API list pricing. Output is conservatively capped
+at8192 tokens; list pricing is not evidence of subscription entitlement or cost.

@@ -1,3 +1,4 @@
+import { nodeExecutable, stripTypes } from "./node-runtime.js";
 import { goalWorkOriginSchema } from "./goal-work-origin.js";
 import { parseCodingEdits, codingEditInstructions } from "./coding-edits.js";
 import { codingContextSchema, renderCodingContext } from "./coding-context.js";
@@ -14,7 +15,6 @@ import {
   writeFile,
 } from "node:fs/promises";
 import { tmpdir } from "node:os";
-import { stripTypeScriptTypes } from "node:module";
 import { dirname, extname, join } from "node:path";
 import { promisify } from "node:util";
 import { z } from "zod";
@@ -121,16 +121,14 @@ export async function checkFiles(
       else {
         let syntaxPath = join(directory, "workspace", path);
         if (/\.[cm]?ts$/.test(path)) {
-          const stripped = stripTypeScriptTypes(files.get(path) ?? "", {
-            mode: "transform",
-          });
+          const stripped = stripTypes(files.get(path) ?? "");
           syntaxPath = join(
             directory,
             path.endsWith(".cts") ? "syntax.cjs" : "syntax.mjs",
           );
           await writeFile(syntaxPath, stripped, { mode: 0o600 });
         }
-        await execute(process.execPath, ["--check", syntaxPath], {
+        await execute(nodeExecutable(), ["--check", syntaxPath], {
           cwd: join(directory, "workspace"),
           env: {},
           timeout: 10000,

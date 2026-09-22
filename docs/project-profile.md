@@ -4,7 +4,7 @@
 - Purpose: personal multi-provider software factory using Pi with local orchestration.
 - Repository identity / visibility: `alexlopashev/pi-relentless`, public, MIT.
 - Current phase: local Pi alpha with durable goals, bounded coding/review/VM delivery, and portable packaging; no installed background service.
-- Release: `0.1.0-alpha.3` with GitHub installation; see `docs/release-alpha.md`. Later cycle sections below retain historical implementation checkpoints.
+- Release: `0.1.0-alpha.4` with GitHub installation; see `docs/release-alpha.md`. Later cycle sections below retain historical implementation checkpoints.
 - Canonical CI: `mise run ci`.
 - Domain checks: model/effort floors; explicit billing policy; bounded concurrency; Pi session cleanup; failure/truncation handling; no tool/resource discovery in brainstorm mode.
 - Evidence: `docs/validation.md`; architecture and roadmap are local canonical documents.

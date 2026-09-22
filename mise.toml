@@ -5,7 +5,7 @@ gh = "2.96.0"
 shellcheck = "0.11.0"
 
 [tasks.ci]
-run = "pnpm run ci && shellcheck --shell=sh scripts/bootstrap scripts/teardown && python3 tests/lifecycle_test.py && python3 tests/durable_process_test.py && python3 tests/vm_verification_test.py && python3 tests/vm_packaging_test.py && python3 tests/source_promotion_test.py && python3 tests/pi_extension_runtime_test.py && python3 tests/pi_role_runtime_test.py && python3 tests/pi_lifecycle_runtime_test.py && python3 tests/pi_creation_process_test.py && python3 tests/calibration_process_test.py && python3 tests/managed_local_process_test.py"
+run = "pnpm run ci && shellcheck --shell=sh scripts/bootstrap scripts/teardown && python3 tests/lifecycle_test.py && python3 tests/durable_process_test.py && python3 tests/vm_verification_test.py && python3 tests/vm_packaging_test.py && python3 tests/source_promotion_test.py && python3 tests/pi_extension_runtime_test.py && python3 tests/pi_role_runtime_test.py && python3 tests/pi_lifecycle_runtime_test.py && python3 tests/pi_creation_process_test.py && python3 tests/calibration_process_test.py && python3 tests/managed_local_process_test.py && python3 tests/standalone_runtime_test.py"
 
 [tasks.test]
 run = "pnpm test"

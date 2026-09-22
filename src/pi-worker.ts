@@ -1,3 +1,4 @@
+import { registerXaiCatalog } from "./xai-catalog.js";
 import { oauthFreshness } from "./oauth-freshness.js";
 import { startManagedLocal } from "./managed-local.js";
 import { z } from "zod";
@@ -131,6 +132,11 @@ export async function createPiWorker(
         signal: AbortSignal.timeout(15_000),
       })
     : undefined;
+  if (
+    cloudRuntime &&
+    selections.some(({ candidate }) => candidate.provider === "xai")
+  )
+    registerXaiCatalog(cloudRuntime);
   if (
     cloudRuntime &&
     selections.some(({ candidate }) => candidate.provider === personalProvider)
@@ -357,6 +363,7 @@ export async function catalog(): Promise<
     refreshOnCreate: false,
   });
   registerPersonalCatalog(runtime);
+  registerXaiCatalog(runtime);
   registerMetaProvider(runtime);
   return runtime
     .getModels()

@@ -1,9 +1,10 @@
+import { registerXaiCatalog } from "./xai-catalog.js";
 import { CodingWorkflows } from "./coding-workflow.js";
 import { dirname, join } from "node:path";
 import { readCodingHealth } from "./coding-inventory.js";
 import { mergeCodingHealth } from "./coding-health.js";
 import { existsSync } from "node:fs";
-import { DatabaseSync } from "node:sqlite";
+import { DatabaseSync } from "./sqlite.js";
 import { oauthFreshness } from "./oauth-freshness.js";
 import {
   readStoredCredential,
@@ -101,6 +102,7 @@ export async function inventoryRuntime(
   });
   registerMetaProvider(runtime);
   registerPersonalCatalog(runtime);
+  registerXaiCatalog(runtime);
   registerLocalProvider(runtime);
   const catalog = runtime.getModels().map((m) => ({
     provider: m.provider,

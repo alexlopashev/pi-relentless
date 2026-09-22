@@ -1,6 +1,6 @@
 import { completeGoalWork } from "./goal-work-completion.js";
 import { goalWorkEvidenceSchema } from "./goal-work-admission-schema.js";
-import { DatabaseSync } from "node:sqlite";
+import { DatabaseSync } from "./sqlite.js";
 import { createHash } from "node:crypto";
 import { join } from "node:path";
 import { stateSchema } from "./goal-types.js";

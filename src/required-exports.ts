@@ -1,11 +1,11 @@
-import { stripTypeScriptTypes } from "node:module";
+import { stripTypes } from "./node-runtime.js";
 import * as ts from "typescript";
 
 export function missingExports(
   source: string,
   required: readonly string[],
 ): string[] {
-  const erased = stripTypeScriptTypes(source, { mode: "transform" });
+  const erased = stripTypes(source);
   const file = ts.createSourceFile(
     "source.js",
     erased,

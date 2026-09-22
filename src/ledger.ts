@@ -1,4 +1,4 @@
-import { DatabaseSync, backup as sqliteBackup } from "node:sqlite";
+import { DatabaseSync, backup as sqliteBackup } from "./sqlite.js";
 import { createHash, randomUUID } from "node:crypto";
 import {
   chmodSync,

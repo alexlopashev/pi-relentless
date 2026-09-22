@@ -1,3 +1,4 @@
+import { nodeExecutable } from "./node-runtime.js";
 import { fork } from "node:child_process";
 import { randomBytes } from "node:crypto";
 import { z } from "zod";
@@ -23,6 +24,7 @@ export async function startManagedLocal(
     new URL("../dist/managed-local-entry.js", import.meta.url),
     [],
     {
+      execPath: nodeExecutable(),
       stdio: ["ignore", "ignore", "ignore", "ipc"],
       execArgv: [],
       env: { PATH: "/usr/bin:/bin", LANG: "C" },
