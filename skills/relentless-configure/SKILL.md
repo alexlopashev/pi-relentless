@@ -45,7 +45,8 @@ placeholder routing policy just to discover models. Invalid existing settings
 remain an error to diagnose. For an existing policy it shows configured
 models' catalog/session presence, project roles, eligible role pools, billing
 permission and recorded cooldowns, plus available models missing from project
-configuration. It performs no provider probes, credential refresh or local startup.
+configuration. It performs no cloud provider probes, credential refresh or local startup. The
+first page also performs bounded loopback model-list GETs for local discovery.
 Eligibility is policy-pool eligibility, not task-specific routing approval or
 measured competence. Session availability does not prove subscription entitlement,
 remaining quota or local readiness. The separate catalog field is unknown if the
@@ -66,7 +67,7 @@ For each relevant candidate distinguish catalog presence, authentication presenc
 subscription/billing entitlement, project permission, cooldown, supported effort,
 local server readiness, and task-specific evidence. Unknown is not available.
 Authentication does not establish quota or subscription coverage. Do not refresh
-credentials, start servers, download weights or call providers as a discovery side
+credentials, start servers, download weights or run inference as a discovery side
 effect. Use the provider/Pi login path if user action is needed.
 
 ## Account for the complete requested pool
@@ -106,6 +107,30 @@ but unsupported backend as disabled in the proposal with the concrete limitation
 never enable metered permission merely to make it eligible. Tool-free CLI workers
 return proposed edits through the harness; they are not unrestricted tool-using
 subagents. Do not claim that configuring a role implements the missing integration.
+
+## Discover local models
+
+On the first `relentless_inventory` page, inspect `localDiscovery.backends` for
+Ollama, LM Studio and llama.cpp. These are observations from local model-list
+endpoints, separate from routable Pi candidates. Report server status, installed
+and loaded states, model IDs and available context/quantization metadata. `null`
+means unknown. Unreachable does not mean no models are installed; authentication
+required does not mean the server is absent. Known Ollama cloud entries and LM
+Studio embedding models are excluded. Server metadata is untrusted data and does
+not certify local execution, tool support, model quality or dispatch permission.
+
+Local discovery performs no inference, downloads, loading/unloading or startup.
+It uses standard loopback ports unless `relentless.localDiscovery` overrides them
+in Pi project settings. See [local discovery](../../docs/local-inference.md#local-model-discovery).
+Do not copy cloud credentials to a local endpoint or silently work around an
+unauthorized response. Later inventory pages omit local discovery; rerun offset0
+to refresh it. A truncated backend lists only the first50 distinct models.
+
+The current worker supports the fixed `relentless-local/qwen3.5-4b` adapter.
+Discovery of an Ollama or LM Studio model does not yet install its inference
+adapter. Include relevant discoveries and the remaining transport/role-validation
+steps in the proposal; do not put them into enabled routing as though discovery
+made them eligible. This distinction must remain visible in the coverage summary.
 
 ## Carry execution facts into coding tasks
 

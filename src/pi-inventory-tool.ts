@@ -38,7 +38,7 @@ export function registerRelentlessInventory(
     name: "relentless_inventory",
     label: "Relentless inventory",
     description:
-      "Discovery only: list native session models; not quota, capability, billing, or permission.",
+      "Read-only discovery: Pi session models and local Ollama/LM Studio/llama.cpp model lists on the first page. No inference or model loading; not quota, capability, billing, or permission.",
     promptSnippet: "Discovery only, not quota/capability/billing/permission.",
     parameters,
     execute: async (_toolCallId, rawParams, signal, _onUpdate, context) => {

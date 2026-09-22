@@ -1,3 +1,4 @@
+import { discoverLocalModels } from "./local-discovery.js";
 import { startPiProgress } from "./pi-progress.js";
 import type { ExtensionContext } from "@earendil-works/pi-coding-agent";
 import { piReviewAuthentication } from "./pi-review-auth.js";
@@ -95,10 +96,16 @@ export async function relentlessCommand(
         Date.now(),
       );
       if (context.signal?.aborted || !context.isProjectTrusted()) return;
+      const localDiscovery =
+        offset === 0
+          ? await discoverLocalModels(project?.localDiscovery, context.signal)
+          : undefined;
+      if (context.signal?.aborted || !context.isProjectTrusted()) return;
       context.ui.notify(
         JSON.stringify(
           {
             ...result,
+            ...(localDiscovery === undefined ? {} : { localDiscovery }),
             unconfiguredAvailable: result.unconfiguredAvailable.slice(
               offset,
               offset + 20,
