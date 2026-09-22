@@ -85,6 +85,12 @@ Validated against the installed Pi 0.85.1 package and its extension/package docs
 An offline regression uses Pi's real loader and a deliberately invalid job to
 prove the worker subprocess starts and rejects input without provider inference.
 
+## Runtime requirement
+
+Use the Node/npm Pi runtime. The standalone Bun executable cannot load the SQLite
+ledger; see [the Node launch command](../README.md#standalone-pi-executable). Installing
+the package successfully does not establish host runtime compatibility.
+
 ## Pi-first direction and project configuration
 
 The packaged [relentless-configure skill](../skills/relentless-configure/SKILL.md)

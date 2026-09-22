@@ -10,7 +10,7 @@ unattended project delivery and globally optimal model selection are not proven.
 
 ## Install
 
-With Node **24.21.0** and Pi **0.85.1** installed, run this from your project:
+With Node **24.21.0** and the Node/npm distribution of Pi **0.85.1**, run this from your project:
 
 ```sh
 pi install -l git:github.com/alexlopashev/pi-relentless
@@ -24,6 +24,23 @@ track the repository by default; append `@<commit-sha>` to pin a reviewed revisi
 
 The package is distributed through GitHub. There is no npm release yet, so it is
 not yet listed in [Pi's npm package catalog](https://pi.dev/packages).
+
+### Standalone Pi executable
+
+The standalone Bun-based `pi` binary does not support this package's `node:sqlite`
+ledger. Installing Node alongside that binary does not change its runtime.
+If your `pi` command is the standalone executable, install the package as above,
+then launch its included Node-based Pi CLI from the project directory:
+
+```sh
+node .pi/git/github.com/alexlopashev/pi-relentless/node_modules/@earendil-works/pi-coding-agent/dist/cli.js
+```
+
+This uses the project's current directory and normal Pi authentication; it does
+not copy credentials. For a global package installation, use the corresponding
+package path under `~/.pi/agent/git/github.com/alexlopashev/pi-relentless/`.
+The runtime check explains this launch path before importing the durable engine.
+Native Bun support is not implemented.
 
 ## Configure a project
 

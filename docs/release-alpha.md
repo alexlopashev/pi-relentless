@@ -12,9 +12,13 @@ pi install -l git:github.com/alexlopashev/pi-relentless
 ```
 
 Pi runs npm install and Relentless builds its workers automatically. Node 24.21.0
-and Pi 0.85.1 are the tested versions. No pnpm or manual build is needed for this
+and the Node/npm distribution of Pi 0.85.1 are the tested versions. No pnpm or manual build is needed for this
 path. npm resolves transitive dependencies; use the frozen archive path below if
 an exact dependency graph is required.
+
+The standalone Bun-based Pi executable cannot load the SQLite ledger. See
+[the Node launch command](../README.md#standalone-pi-executable) if installing
+succeeds but opening Pi reports a missing `node:sqlite` module.
 
 ## Install an archive in another project
 
