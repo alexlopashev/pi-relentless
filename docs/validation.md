@@ -2160,3 +2160,28 @@ independent reviewer providers. Claude Code remained disabled: native Pi routing
 and strict subscription-only extra-usage enforcement are still unfinished.
 No model inference, billing permission changes or routing settings application.
 Evidence: `.harness/configure-coverage/` (private local diagnostics).
+
+## Local model discovery
+
+Pi inventory now reports bounded read-only model-list observations for Ollama,
+LM Studio and llama.cpp, including before a project routing policy exists.
+Installed and loaded states remain distinct from server availability; unknown
+values are preserved. Project `localDiscovery` policy can disable probes or
+replace the default loopback origins. Observations do not register routes or
+start/load/download/invoke models.
+
+Initial discovery regressions failed before implementation. Independent review
+caught a trust boundary: model-registry access could revoke trust before local
+requests. A regression reproduced those requests; the pre-discovery guard now
+prevents them. Final review found no remaining actionable findings.
+
+Canonical gate:673 Vitest tests and74 Python process tests passed; two opt-in
+standalone tests skipped. Tests cover installed/loaded separation, partial outages,
+auth-required replies, remote-model exclusion, response/output bounds, invalid
+origins, disabled discovery, pagination, trust revocation, and real local HTTP
+GET/header/deadline/redirect/cancellation behavior. Read-only Node and Bun probes
+on the developer machine both found the Ollama endpoint reachable with empty
+model lists; LM Studio and llama.cpp default endpoints were unreachable. This
+observation says nothing about offline files or stopped applications.
+No inference, process startup, downloads, credential forwarding or routing changes.
+Evidence: `.harness/local-discovery/` (local, excluded from distribution).

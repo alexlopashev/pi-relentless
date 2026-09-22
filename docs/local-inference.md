@@ -6,6 +6,63 @@ Choice: **Qwen3.5 4B Q4_K_M through llama.cpp**, integrated using Pi 0.85.1's pu
 
 The development machine is an M3 Pro with 18 GB unified memory. The current configuration permits one worker, effort `off`, 8,192 context tokens and at most 512 output tokens. Pi reserves 4,096 context tokens internally; the initially proposed 4K context caused output to clamp to one token, reproduced in a regression test. Server context limits remain authoritative. Retaining all 512 output tokens leaves roughly 3,584 estimated input tokens including system context; larger inputs can reduce the output allowance. Long prompts can fail; this is not a long-context coding worker.
 
+## Local model discovery
+
+`/relentless inventory` and the `relentless_inventory` tool now return a separate
+`localDiscovery` object on their first page, including before routing is configured.
+Discovery runs only in an active trusted project. It does not start a process,
+load/unload/download models, authenticate, or make inference calls.
+
+| Backend   | Default origin           | Read-only endpoints    | Observations                                                       |
+| --------- | ------------------------ | ---------------------- | ------------------------------------------------------------------ |
+| Ollama    | `http://127.0.0.1:11434` | `/api/tags`, `/api/ps` | Installed models, loaded state, running context size, quantization |
+| LM Studio | `http://127.0.0.1:1234`  | `/api/v1/models`       | Installed LLMs, loaded instances, context metadata, quantization   |
+| llama.cpp | `http://127.0.0.1:18080` | `/v1/models`           | Advertised model IDs; installation/load state remains unknown      |
+
+Statuses distinguish successful listings, unreachable/time-limited requests,
+authentication required, HTTP errors and invalid responses. When Ollama's installed
+list works but the running list fails, installed models remain visible and loaded
+state is unknown. Stopped servers cannot reveal their offline installations.
+LM Studio's native v1 API is required; older APIs are not silently assumed to have
+the same semantics. Protected servers report `auth_required`; no credentials are
+forwarded. Model presence is not an inference readiness or capacity test.
+
+Requests use numeric loopback HTTP origins only (`127.0.0.1` or `[::1]`), reject
+redirects, and have a1500ms deadline and256KiB response limit. Each backend returns
+at most50 distinct models and marks truncation. Known Ollama cloud model entries
+and LM Studio embedding models are excluded; remaining metadata still does not
+certify that an endpoint executes locally. Later Pi inventory pages omit these
+probes; rerun the first page for a fresh observation.
+
+Optional project policy, alongside `routing` and `roles` in the existing
+`relentless` namespace of `.pi/settings.json`:
+
+```json
+{
+  "localDiscovery": {
+    "enabled": true,
+    "endpoints": [
+      { "backend": "ollama", "url": "http://127.0.0.1:11434" },
+      { "backend": "lmstudio", "url": "http://127.0.0.1:1234" },
+      { "backend": "llamacpp", "url": "http://127.0.0.1:18080" }
+    ]
+  }
+}
+```
+
+Omitting this policy uses those defaults. `enabled:false` disables probes. A
+supplied endpoint list replaces the defaults (maximum8). Origins cannot contain
+credentials, query strings or paths. Review project policy changes through Pi's
+existing configuration proposal flow.
+
+These observations do not register models or alter routing. General Ollama/LM
+Studio worker transports remain separate work; the existing fixed llama.cpp
+worker described below is unchanged.
+
+API references: [Ollama installed models](https://docs.ollama.com/api/tags),
+[Ollama running models](https://docs.ollama.com/api/ps), and
+[LM Studio model inventory](https://lmstudio.ai/docs/developer/rest/list).
+
 ## Pinned artifacts
 
 Artifacts installed in ignored `.harness/local/`, not system-wide:

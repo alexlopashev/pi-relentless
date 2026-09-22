@@ -1,3 +1,4 @@
+import { localDiscoverySchema } from "./local-discovery.js";
 import { goalResumeIntentSchema } from "./goal-resume-plan.js";
 import { CONFIG_DIR_NAME } from "@earendil-works/pi-coding-agent";
 import { constants } from "node:fs";
@@ -17,6 +18,7 @@ export const projectRoles = z.enum([
 export const piProjectConfigSchema = z
   .strictObject({
     version: z.literal(1),
+    localDiscovery: localDiscoverySchema.optional(),
     resumeGoal: goalResumeIntentSchema.optional(),
     evidence: z
       .strictObject({

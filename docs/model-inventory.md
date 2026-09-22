@@ -40,3 +40,13 @@ uses that session's full/available registries and scope, alongside project roles
 and recorded provider health. The CLI remains useful outside Pi but can load a
 different set of extensions. Neither interface proves capacity or task competence;
 see [session semantics](pi-package.md#session-model-inventory--cycle088).
+
+## Local backend observations in Pi
+
+Pi inventory's first page includes `localDiscovery` independently of native model
+eligibility: Ollama, LM Studio and the configured llama.cpp server are queried
+with bounded loopback model-list requests. Installed, loaded and reachable are
+separate observations; no models are automatically registered or dispatched.
+See [local discovery](local-inference.md#local-model-discovery) for configuration,
+authentication/timeout limitations and the remaining worker-transport gap. The
+standalone CLI `inventory` command remains its existing cloud/catalog view.
